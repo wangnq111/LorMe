@@ -4,6 +4,7 @@ LorMe package for R：Lightening One-code Resolving Microbial Ecology Program
 # Installation
 development version from GitHub :stuck_out_tongue_closed_eyes:
 ```{R}
+if (!require(remotes)) install.packages("remotes")
 remotes::install_github("wangnq111/LorMe-package/LorMe")
 ```
 
