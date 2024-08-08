@@ -1,0 +1,54 @@
+Package: LorMe
+Title: Lightening One-code Resolving Microbial Ecology Solution
+Version: 1.0.0
+Authors@R: 
+    c(person(given = "Ningqi",
+           family = "Wang",
+           role = c("aut", "cre","cph"),
+           email = "2434066068@qq.com",),
+           person(given = "Yaozhong",
+           family = "Zhang",
+           role = c("aut"),
+           email = "18888198926@163.com",),
+           person(given = "Geofei",
+           family = "Jiang",
+           role = c("aut"),
+           email = "gjiang@njau.edu.cn",))
+Description: Data analysis and visualization for microbiome analysis.
+License: GPL-3
+Encoding: UTF-8
+LazyData: true
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.2.3
+Imports: 
+    ape,
+    DESeq2,
+    ggalluvial,
+    ggplot2,
+    grDevices,
+    magrittr,
+    RColorBrewer,
+    scales,
+    stringr,
+    tidyr,
+    vegan,
+    indicspecies,
+    dplyr,
+    igraph,
+    Hmisc,
+    S4Vectors,
+    fdrtool,
+    permute,
+    tibble,
+    agricolae,
+    multcompView,
+    DescTools,
+    HH,
+    coin
+Suggests: 
+    testthat (>= 3.0.0),
+    ggrepel, 
+    readr,
+    patchwork,
+    grid
+Config/testthat/edition: 3
