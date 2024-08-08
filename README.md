@@ -16,30 +16,30 @@ Chinese illustration available at 🏮 [LorMe中文版说明书](https://rural-d
 
 ### Community Feature
 #### Alpha diversity
-<img src="./man/figures/README_Alpha.png" width="50%" style="display: block; margin: auto;" />
+<img src="./man/figures/README_Alpha.png" width="60%" style="display: block; margin: auto;" />
 
 #### Community Structure
-<img src="./man/figures/README_structure.png" width="50%" style="display: block; margin: auto;" />
+<img src="./man/figures/README_structure.png" width="60%" style="display: block; margin: auto;" />
 
 #### Community Composition
-<img src="./man/figures/README_community.png" width="50%" style="display: block; margin: auto;" />
+<img src="./man/figures/README_community.png" width="60%" style="display: block; margin: auto;" />
 
 ### Differential Analysis
 #### Differential Bar
 <img src="./man/figures/README_Diff.png" width="70%" style="display: block; margin: auto;" />
 
 #### Volcano Plot
-<img src="./man/figures/README_volcano.png" width="50%" style="display: block; margin: auto;" />
+<img src="./man/figures/README_volcano.png" width="60%" style="display: block; margin: auto;" />
 
 #### Manhatton Plot
 <img src="./man/figures/README_Manhattan.png" width="100%" style="display: block; margin: auto;" />
 
 ### Network analysis
 #### Classical network
-<img src="./man/figures/README_network.png" width="100%" style="display: block; margin: auto;" />
+<img src="./man/figures/README_network.png" width="60%" style="display: block; margin: auto;" />
 
 #### Meta network
-<img src="./man/figures/README_Metanetwork.png" width="100%" style="display: block; margin: auto;" />
+<img src="./man/figures/README_Metanetwork.png" width="60%" style="display: block; margin: auto;" />
 
 #### Module composition pie chart
-<img src="./man/figures/README_Modulepie.png" width="100%" style="display: block; margin: auto;" />
+<img src="./man/figures/README_Modulepie.png" width="60%" style="display: block; margin: auto;" />
