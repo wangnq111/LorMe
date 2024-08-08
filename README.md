@@ -30,3 +30,6 @@ Chinese illustration available at 🏮 [LorMe中文版说明书](https://rural-d
 
 #### Volcano Plot
 <img src="./man/figures/README_volcano.png" width="50%" style="display: block; margin: auto;" />
+
+#### Manhatton Plot
+<img src="./man/figures/README_Manhatton.png" width="50%" style="display: block; margin: auto;" />
