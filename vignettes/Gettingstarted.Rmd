@@ -1,0 +1,106 @@
+---
+title: "Getting Started with LorMe"
+author: "Wang"
+date: "2024-08-08"
+output: 
+  rmdformats::readthedown:
+    self_contained: true
+    thumbnails: true
+    lightbox: true
+    gallery: false
+    highlight: tango
+output_dir: "./"
+---
+
+```{r setup1, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r setup2 }
+library(LorMe)
+```
+
+# How do LorMe get started?
+
+LorMe started with encapsulation
+
+## Examples
+
+### Example data
+
+```{r, echo=TRUE}
+# Load the example dataset
+data(testotu) # Load the standard Qiime output feature table
+head(testotu) # Display the first few rows, where the first column is the ID,
+              # the last column is the taxonomic annotation, and the others are the feature table values.
+
+# Create metadata
+  groupinformation <- data.frame(
+  group = c(rep("a", 10), rep("b", 10)), # Group column, required for sample grouping
+  factor1 = rnorm(10), # An optional phenotype or environmental factor
+  factor2 = rnorm(mean = 100, 10), # Another optional phenotype or environmental factor
+  subject = factor(c(1:10, 1:10)), # Replication column, required to indicate replicates
+  group2 = c(rep("e", 5), rep("f", 5), rep("e", 5), rep("f", 5)) # An optional secondary grouping variable
+)
+```
+
+### Encapsulation
+
+```{r, echo=TRUE}
+ # Packaging data into a taxonomy summary object
+  test_object <- tax_summary(
+  groupfile = groupinformation, # Metadata file containing sample information
+  inputtable = testotu[, 2:21], # Feature table with operational taxonomic units (OTUs) or ASV or metagenomic features
+  taxonomytable = testotu[, c(1, 22)], # Taxonomy annotation with OTU ID and taxonomic classification
+  reads = TRUE, # Indicates if the feature table is based on read counts
+  into = "standard", # Specified format for taxonomy separation
+  sep = ";", # Separator used in the taxonomy table
+  outputtax = c("Phylum", "Genus") # Taxonomic levels to output in the summary
+)
+```
+
+### Encapsulated object configuration
+
+#### Preferences
+
+LorMe provide built-in color schemes, see in [color_scheme](color_scheme.html)
+
+```{r, echo=TRUE}
+my_col=color_scheme("Plan1") #same length as Group
+my_order=c("b","a")
+my_facet_order=c("e","f")
+```
+
+#### Encapsulated setting
+
+```{r, echo=TRUE}
+ 
+### simple mode ###
+  test_object_plan1 <- object_config(
+    taxobj = test_object,
+    treat_location = 1,
+    rep_location = 4
+  )
+### full mode ###
+ test_object_plan1 <- object_config(
+    taxobj = test_object,
+    treat_location = 1,
+    rep_location = 4,
+    treat_col = my_col,
+    treat_order = my_order
+  )
+
+  ### Facet configuration ###
+  test_object_plan2 <- object_config(
+    taxobj = test_object,
+    treat_location = 1,
+    rep_location = 4,
+    facet_location = 5,
+    subject_location = NULL,
+    treat_col = my_col,
+    treat_order = my_order,
+    facet_order = my_facet_order
+  )
+```
+
+To this,we have finished the configuration and can finally enjoy one-code analysis!!!!
