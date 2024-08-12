@@ -19,12 +19,12 @@ License: GPL-3
 Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.2.3
+RoxygenNote: 7.3.1
 Imports: 
     ape,
-    DESeq2,
     ggalluvial,
     ggplot2,
+    ggpubr,
     grDevices,
     magrittr,
     RColorBrewer,
@@ -32,14 +32,10 @@ Imports:
     stringr,
     tidyr,
     vegan,
-    indicspecies,
     dplyr,
     igraph,
     Hmisc,
-    S4Vectors,
     fdrtool,
-    permute,
-    tibble,
     agricolae,
     multcompView,
     DescTools,
@@ -50,5 +46,10 @@ Suggests:
     ggrepel, 
     readr,
     patchwork,
-    grid
+    grid,
+    permute,
+    indicspecies,
+    S4Vectors,
+    tibble,
+    DESeq2
 Config/testthat/edition: 3
