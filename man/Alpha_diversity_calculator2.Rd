@@ -32,14 +32,13 @@ Alpha_diversity_calculator2(
 \item{reads}{If the input data frame were from reads table or not(relative abundance table).(Useless when taxobj is set).}
 }
 \value{
-when tax taxobj is set, returns column table with group information combined with for α-diversity of each sample,else returns data frame for α-diversity of each sample
+when tax taxobj is set, returns column table with group information combined with for alpha-diversity of each sample,else returns data frame for alpha-diversity of each sample
 }
 \description{
 Calculate alpha diversity of each sample
 }
 \note{
-1.All the calculation function were from package \code{\link{vegan}}. When input data frame is
-relative abundance table,Chao and ACE are not available
+1.When input data frame is in relative abundance table,Chao and ACE are not available
 }
 \examples{
 ### Data preparation ####
@@ -88,8 +87,7 @@ library(magrittr)
 Alpha <- Filter_function(
   input = testotu,
   threshold = 0,
-  format = 1,
-  outformat = 2
+  format = 1
 ) \%>\%
   Alpha_diversity_calculator2(
     input = .,

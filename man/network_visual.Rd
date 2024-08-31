@@ -39,7 +39,7 @@ Visualizes a network based on a network object from \code{\link{network_analysis
 {
   # Data preparation
   data("Two_group")
-
+  set.seed(999)
   # Analysis
   network_results <- network_analysis(
     taxobj = Two_group,

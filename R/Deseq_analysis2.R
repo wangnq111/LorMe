@@ -6,7 +6,7 @@
 #' @param condition A character string which indicates group of samples
 #' @param cutoff threshold of log2(Foldchange).Detail see in \code{\link[DESeq2]{DESeq}}
 #' @param control_name A character indicating the control group name
-#' @param paired Logical to determine if paired comparision would be used. T or F.
+#' @param paired Logical to determine if paired comparision would be used. TRUE or FALSE.
 #' @param subject A character string which indicates paired design of samples
 #'
 #' @return Statistics dataframe of all otu/gene/taxa
@@ -25,6 +25,7 @@
 #' @importFrom stats relevel
 #' @seealso \code{\link[DESeq2]{DESeqDataSetFromMatrix}}, \code{\link[DESeq2]{DESeq}}, \code{\link[S4Vectors]{DataFrame}}, \code{\link[tibble]{as_tibble}}
 #' @examples
+#' \donttest{
 #' {
 #'   ### Data preparation ###
 #'   data(testotu)
@@ -56,15 +57,16 @@
 #'     )
 #'   }
 #'}
+#'}
 Deseq_analysis2<-function(inputframe,condition,cutoff,control_name,paired,subject){
   if (!requireNamespace("DESeq2", quietly = TRUE) ||
       !requireNamespace("S4Vectors", quietly = TRUE) ||
       !requireNamespace("tibble", quietly = TRUE)) {
     stop("The 'DESeq2', 'S4Vectors', and 'tibble' package(s) are required but not installed. Please install them to use this function.")
   }
-  if(missing(paired)){paired=F}
+  if(missing(paired)){paired=FALSE}
   if(missing(subject)){subject=NULL}
-  if(paired==T){
+  if(paired==TRUE){
     ofdds = DESeq2::DESeqDataSetFromMatrix(countData = inputframe, S4Vectors::DataFrame(condition,subject),
                                     ~subject+condition)
   }else{

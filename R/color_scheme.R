@@ -39,7 +39,7 @@
 #' color_scheme(Plan = "Plan8")
 #' color_scheme(Plan = "Plan9")
 #' color_scheme(Plan = "Plan10")
-color_scheme=function(Plan,expand=NULL,names=NULL,show=T){
+color_scheme=function(Plan,expand=NULL,names=NULL,show=TRUE){
   if(inherits(Plan, "character") && length(Plan) == 1){
   if(Plan=="Plan1"){
     color_Plan=c("#E69F00","#56B4E9")

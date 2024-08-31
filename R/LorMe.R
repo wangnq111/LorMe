@@ -1,5 +1,5 @@
 #' @_PACKAGE
-#' @title LorMe package：Lightening One-code Resolving Microbial Ecology Program
+#' @title LorMe package: Lightening One-Code Resolving Microbial Ecology Program
 #' @name LorMe
 #' @description LorMe package summarizes a series of functions normally used in microbiome analysis
 #' analysis.

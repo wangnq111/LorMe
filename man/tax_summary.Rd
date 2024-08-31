@@ -2,12 +2,12 @@
 % Please edit documentation in R/tax_summary.R
 \name{tax_summary}
 \alias{tax_summary}
-\title{Package meta file, feature tables and taxonomy annotation into tax summary object}
+\title{Encapsulate meta file, feature tables and taxonomy annotation into tax summary object}
 \usage{
 tax_summary(
   groupfile,
   inputtable,
-  reads = T,
+  reads = TRUE,
   taxonomytable,
   into = "standard",
   sep = ";",
@@ -19,17 +19,17 @@ tax_summary(
 
 \item{inputtable}{OTU/ASV/species data frame with all numeric. Samples ID should be in column names.}
 
-\item{reads}{Logical.True for reads table and F for percentage table. Default: T}
+\item{reads}{Logical.True for reads table and FALSE for percentage table. Default: TRUE}
 
 \item{taxonomytable}{Taxonomy annotation data frame,with first column OTU/ASV/TAX number ID and second column taxonomy annotation. See details in example.}
 
-\item{into}{Names of separated taxonomy to create as character vector. Must select from c("Domain","Phylum","Class","Order","Family","Genus","Species").See details in \code{\link{separate}}.
+\item{into}{Names of separated taxonomy to create as character vector. Must select from c("Domain","Phylum","Class","Order","Family","Genus","Species").
 Shortcut input:1)By default."standard":c("Domain","Phylum","Class","Order","Family","Genus","Species"). Used for standard taxonomy annotation to OTU/ASV table.
 2)"complete":c("Domain","Kingdom","Phylum","Class","Order","Family","Genus","Species"). Used for complete taxonomy annotation to meta genomic table.}
 
-\item{sep}{Separator of taxonomy table.Default: ";".See details in \code{\link{separate}}.}
+\item{sep}{Separator of taxonomy table.Default: ";".}
 
-\item{outputtax}{Names of output taxonomy level table.Default:c("Phylum","Genus"). Shortcut input is available with 'standard' and 'complete' same as above.}
+\item{outputtax}{Names of output taxonomy level table. Default:c("Phylum","Genus"). Shortcut input is available with 'standard' and 'complete' same as above.}
 }
 \value{
 One list containing taxonomy table data frame,containing reads and percentage table for each specified output. Full taxonomy annotation data frame is output in global environment.
@@ -38,7 +38,7 @@ One list containing taxonomy table data frame,containing reads and percentage ta
 The function packages meta file, feature tables and taxonomy annotation into tax summary object
 }
 \note{
-1.For taxonomy annotation with 'Kingdom' level, please set 'into' parameter as 'complete'!!!
+For taxonomy annotation with 'Kingdom' level, please set 'into' parameter as 'complete'!!!
 }
 \examples{
 {

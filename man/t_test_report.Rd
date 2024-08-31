@@ -4,7 +4,14 @@
 \alias{t_test_report}
 \title{Print Student's t-Test report}
 \usage{
-t_test_report(data, treatment_col, value_col, paired, subject_col)
+t_test_report(
+  data,
+  treatment_col,
+  value_col,
+  paired,
+  subject_col,
+  report = TRUE
+)
 }
 \arguments{
 \item{data}{Data frame containing the treatment, value and other information.}
@@ -16,6 +23,8 @@ t_test_report(data, treatment_col, value_col, paired, subject_col)
 \item{paired}{Logical indicating whether you want a paired t-test.}
 
 \item{subject_col}{Only meaningful when Pair is ture. Numeric indicating where subject of treatment (column number) in data.}
+
+\item{report}{Logical. If print report to console. Default:TRUE}
 }
 \value{
 t_test_report returns list containing:

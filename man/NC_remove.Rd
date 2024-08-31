@@ -11,7 +11,7 @@ NC_remove(input, num, seed = 1)
 
 \item{num}{Max number of removed nodes. Default: Automatically match max number that can be removed.}
 
-\item{seed}{Random seed Number to be set. Default：1. See in \code{\link{set.seed}}}
+\item{seed}{Random seed Number to be set. Default: 1. See in \code{\link{set.seed}}}
 }
 \value{
 NC_remove returns data frame with removed nodes and corresponding natural connectivity

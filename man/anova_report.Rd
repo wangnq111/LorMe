@@ -8,9 +8,10 @@ anova_report(
   data,
   treatment_col,
   value_col,
-  prior = F,
+  prior = FALSE,
   comparison_method = "Auto",
-  equally_rep = T
+  equally_rep = TRUE,
+  report = TRUE
 )
 }
 \arguments{
@@ -25,6 +26,8 @@ anova_report(
 \item{comparison_method}{Default would automaticly choose method. Method of multiple comparison,must be one of "SNK", "Tukey", "bonferroni","LSD" or "Scheffe".}
 
 \item{equally_rep}{Logical. Whether all treatments have same number of replication.}
+
+\item{report}{Logical. If print report to console. Default:TRUE}
 }
 \value{
 anova_report returns list of:

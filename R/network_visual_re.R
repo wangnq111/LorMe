@@ -10,6 +10,8 @@
 #' @export
 network_visual_re=function(network_visual_obj,module_paint=FALSE,module_num=NULL,module_palette=c("aquamarine3","antiquewhite2","goldenrod2"),vertex.size=6,vertex.shape="circle"){
   if(module_paint==FALSE){
+    oldpar <- par(no.readonly = TRUE)
+    on.exit(par(oldpar))
     par(mfrow = c(1,1), mar=c(2,2,2,4),pty = "m")
     plot(network_visual_obj$configured_igraph_object,
          vertex.label=NA,
@@ -22,12 +24,14 @@ network_visual_re=function(network_visual_obj,module_paint=FALSE,module_num=NULL
       return(NULL)
     }
     t_mods_list_cs=network_visual_obj$parameters$module_list
-    if(length(which(module_num %in% names(t_mods_list_cs)==T))!=length(module_num)){
+    if(length(which(module_num %in% names(t_mods_list_cs)==TRUE))!=length(module_num)){
       warning("Invalid module_num! Please check if 'module_num' contained in 'network_visual_obj'")
       return(NULL)
     }
     show_list=t_mods_list_cs[names(t_mods_list_cs) %in% module_num]
-    t_cols <- color_scheme(module_palette,length(module_num),show = F)
+    t_cols <- color_scheme(module_palette,length(module_num),show = FALSE)
+    oldpar <- par(no.readonly = TRUE)
+    on.exit(par(oldpar))
     par(mfrow = c(1,1), mar=c(2,2,2,4),pty = "m")
     plot(network_visual_obj$configured_igraph_object,vertex.label=NA,vertex.size=network_visual_obj$parameters$vertice_size,layout=network_visual_obj$vertices_coordinates,vertex.shape="circle",
          mark.groups=show_list,mark.col=t_cols, mark.border="gray")

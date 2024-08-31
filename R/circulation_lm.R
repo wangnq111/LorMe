@@ -37,7 +37,7 @@ circulation_lm=function(y,xframe,margin){
    star_time <- Sys.time()
    if(margin==1){
     for (i in 1:nrow(xframe)){
-      if(sum(as.numeric(xframe[i,]),na.rm = T)==0){
+      if(sum(as.numeric(xframe[i,]),na.rm = TRUE)==0){
         pvalue=c(pvalue,NA)
         Rsquared=c(Rsquared,NA)
         adjRsquared=c(adjRsquared,NA)
@@ -68,7 +68,7 @@ circulation_lm=function(y,xframe,margin){
     }
   }else if(margin==2){
     while(i<=ncol(xframe)){
-      if(sum(as.numeric(xframe[,i]),na.rm = T)==0){
+      if(sum(as.numeric(xframe[,i]),na.rm = TRUE)==0){
         pvalue=c(pvalue,NA)
         Rsquared=c(Rsquared,NA)
         adjRsquared=c(adjRsquared,NA)

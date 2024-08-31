@@ -61,8 +61,8 @@
 #' }
 combine_and_translate<-function(inputframe,groupframe,itemname,indexname,inputtype){
   category<-colnames(groupframe)
-  if(inputtype==T){input<-cbind(groupframe,t(inputframe))}else
-    if(inputtype==F){input<-cbind(groupframe,inputframe)}
+  if(inputtype==TRUE){input<-cbind(groupframe,t(inputframe))}else
+    if(inputtype==FALSE){input<-cbind(groupframe,inputframe)}
     gather(input,"item","index",-c(category)) %T>%{
       colnames(.)[which(colnames(.)=="item")]=itemname
       colnames(.)[which(colnames(.)=="index")]=indexname} %>%return()}

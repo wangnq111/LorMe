@@ -26,7 +26,7 @@ manhattan(
 
 \item{top_n}{The number of top taxa to plot when mode is set to "most"}
 
-\item{palette}{Character. Palette for visualization,default:"Set1".See optional palette in \code{\link{brewer.pal.info}}. "Plan1" to "Plan10" were also optional,see in \code{\link{color_scheme}}}
+\item{palette}{Character. Palette for visualization,default:"Set1".Optional palette same as 'RColorBrewer'. "Plan1" to "Plan10" were also optional,see in \code{\link{color_scheme}}}
 
 \item{select_tax}{A vector of taxa to be selected for plotting when mode is "select".}
 
@@ -39,6 +39,7 @@ a list containing the Manhattan plot, circular Manhattan plot, source data, and 
 Generate Manhattan Plot  base on Deseq_analysis or indicator_analysis results
 }
 \examples{
+\donttest{
 {
   # Data preparation
   data("Two_group")
@@ -58,47 +59,48 @@ Generate Manhattan Plot  base on Deseq_analysis or indicator_analysis results
   )
 
   # Show all with Manhattan plot
-  manhattan_object <- manhattan(
-    inputframe = deseq_results,
-    taxlevel = "Phylum",
-    control_name = "Control"
-  )
-  print(manhattan_object$manhattan)  # Tradition Manhattan plot
-  print(manhattan_object$manhattan_circle)  # Circular Manhattan plot
-  print(manhattan_object$sourcedata)  # Source data for plot
-  print(manhattan_object$aes_color)  # Aesthetic color for plot
+    manhattan_object <- manhattan(
+      inputframe = deseq_results,
+      taxlevel = "Phylum",
+      control_name = "Control"
+    )
+    print(manhattan_object$manhattan)  # Tradition Manhattan plot
+    print(manhattan_object$manhattan_circle)  # Circular Manhattan plot
+    print(manhattan_object$sourcedata)  # Source data for plot
+    print(manhattan_object$aes_color)  # Aesthetic color for plot
 
   # Top 8 Phyla with most taxon
-  manhattan_object <- manhattan(
-    inputframe = indicator_results,
-    taxlevel = "Phylum",
-    control_name = "Control",
-    mode = "most",
-    top_n = 8,
-    palette = "Set1"
-  )
-  print(manhattan_object$manhattan)
+    manhattan_object <- manhattan(
+      inputframe = indicator_results,
+      taxlevel = "Phylum",
+      control_name = "Control",
+      mode = "most",
+      top_n = 8,
+      palette = "Set1"
+    )
+    print(manhattan_object$manhattan)
 
   # Specific phyla
   # Top nine dominant phyla
-  community <- community_plot(
-    taxobj = Two_group,
-    taxlevel = "Phylum",
-    n = 9,
-    palette = "Paired",
-    rmprefix = "p__"
-  )
+    community <- community_plot(
+      taxobj = Two_group,
+      taxlevel = "Phylum",
+      n = 9,
+      palette = "Paired",
+      rmprefix = "p__"
+    )
 
-  manhattan_object <- manhattan(
-    inputframe = indicator_results,
-    taxlevel = "Phylum",
-    control_name = "Control",
-    mode = "select",
-    palette = community$filled_color,
-    select_tax = names(community$filled_color),
-    rmprefix = "p__"
-  )
-  print(manhattan_object$manhattan)
-  print(manhattan_object$manhattan_circle)
+    manhattan_object <- manhattan(
+      inputframe = indicator_results,
+      taxlevel = "Phylum",
+      control_name = "Control",
+      mode = "select",
+      palette = community$filled_color,
+      select_tax = names(community$filled_color),
+      rmprefix = "p__"
+    )
+    print(manhattan_object$manhattan)
+    print(manhattan_object$manhattan_circle)
+}
 }
 }

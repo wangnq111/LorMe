@@ -16,7 +16,7 @@
 #' @param n  Only keep otu/gene/taxa appearing in n sample size
 #' @param threshold Threshold of correlation r value
 #' @param method A character string indicating which correlation coefficient  is to be computed. One of "pearson" or "spearman"
-#' @param display If display a preview plot of network based on igraph. F for the first attempt is recommended in case of too many vertices and edges.
+#' @param display If display a preview plot of network based on igraph. FALSE for the first attempt is recommended in case of too many vertices and edges.
 #'
 #' @import igraph
 #' @importFrom Hmisc rcorr
@@ -30,10 +30,8 @@
 #' 2. We display a preview plot so as to adjusting your network. Generally a global figure (like we show in examples) with less than 1000 vertices and 5000 edges/links
 #' is recommended. Further more,we recommend you to output the statistics and adjacency table and use software like cytoscape or gephi for better visualization.
 #'
-#' 3.\code{\link{left_join}}  from \code{\link{dplyr}} is available to match otu/gene/taxa annotaion with output results for further analysis.
-#'
 #' @note
-#' 1. Replicates should be at least 5,more than 8 is recommend. See details in \code{\link{rcorr}}.
+#' 1. Replicates should be at least 5,more than 8 is recommend.
 #'
 #' 2. In case of too many edges/links or not a global network plot, you can stop the process immediately to provent wasting too much time.
 #'
@@ -42,13 +40,14 @@
 #' @export
 #'
 #' @examples
+#' \donttest{
 #' {
 #'   ### Data preparation ###
 #'   data(testotu)
 #'   rownames(testotu) <- testotu[, 1]
 #'   inputotu <- testotu[, -c(1, ncol(testotu))]
 #'   head(inputotu)
-#'
+#'   set.seed(999)
 #'   ### One input network analysis ###
 #'   network_result <- network_analysis2(
 #'     inputotu,
@@ -91,21 +90,19 @@
 #'   )
 #'
 #'   #### Incorrect demonstration !! ###
-#'   ### WARNING: It may take too long to create the graph !! ###
-#'   # {
-#'   #   \dontrun{
-#'   #     network_result <- network_analysis2(inputotu, 3, 3, 0.8, "spearman", TRUE)
-#'   #   }
-#'   # }
+#'   {
+#'      network_result <- network_analysis2(inputotu, 3, 3, 0.8, "spearman", TRUE)
+#'   }
 #'   # Total edges/links: 10199
 #'   # Total vertices: 826
 #'   # Too many edges and not a global network
 #'
 #' }
-network_analysis2<-function(input,inputtype,n,threshold,method="spearman",display=T,input2,input2type){
+#' }
+network_analysis2<-function(input,inputtype,n,threshold,method="spearman",display=TRUE,input2,input2type){
   if(inputtype==1){input1<-input[,-c(1,ncol(input))];rownames(input1)<-input[,1]}else
   if(inputtype==2){input1<-input[,-1];rownames(input1)<-input[,1]}else
-  if(inputtype==3){input1<-input}else{print("Please choose correct inputtype(1,2,3)")}
+  if(inputtype==3){input1<-input}else{stop("Please choose correct inputtype(1,2,3)")}
   zero_count=function(input){length(which(input==0)) %>% return()}
   zerocount=apply(input1,1,zero_count)
   input1=input1[which(zerocount<=(ncol(input1)-n)),]
@@ -113,7 +110,7 @@ network_analysis2<-function(input,inputtype,n,threshold,method="spearman",displa
   if(missing(input2)){
     corr=rcorr(as.matrix(t(input1)),type=method)
     cor.p=corr$P;cor.p[is.na(cor.p)]<- 0
-    fdr=fdrtool(as.numeric(cor.p), statistic="pvalue",plot=F,verbose = F) ##Global fdr correlation##
+    fdr=fdrtool(as.numeric(cor.p), statistic="pvalue",plot=FALSE,verbose = FALSE) ##Global fdr correlation##
     cor.r=corr$r
     cor.q=matrix(fdr$qval,ncol=ncol(cor.p),nrow=nrow(cor.p));cor.q[is.nan(cor.q)]<- 0
     cor.r[cor.q>0.05|abs(cor.r)<threshold] = 0 ##fliter via threshold##
@@ -125,18 +122,18 @@ network_analysis2<-function(input,inputtype,n,threshold,method="spearman",displa
     cor.r=cor.r[-c(cutoff),-c(cutoff)];cor.r1=cor.r1[-c(cutoff),-c(cutoff)]}
     cor.r1[which(cor.r>0)]<-1;cor.r1[which(cor.r<0)]<- -1;
     adj_matrix=cor.r1
-    cor.r1[lower.tri(cor.r1,diag = T)]<-NA}else{
+    cor.r1[lower.tri(cor.r1,diag = TRUE)]<-NA}else{
 #####input&input2####
   if(input2type==1){input3<-input2[,-c(1,ncol(input2))];rownames(input3)<-input2[,1]}else
   if(input2type==2){input3<-input2[,-1];rownames(input3)<-input2[,1]}else
-  if(input2type==3){input3<-input2}else{print("Please choose correct inputtype(1,2,3)")}
+  if(input2type==3){input3<-input2}else{stop("Please choose correct inputtype(1,2,3)")}
   zero_count=function(input){length(which(input==0)) %>% return()}
   zerocount=apply(input3,1,zero_count)
   input3=input3[which(zerocount<=(ncol(input3)-n)),]
   input3=input3[which(rowSums(input3)>0),]
   corr=rcorr(x=as.matrix(t(input1)),y=as.matrix(t(input3)),type=method)
   cor.p=corr$P[1:nrow(input1),(nrow(input1)+1):(nrow(input1)+nrow(input3))];cor.p[is.na(cor.p)]<- 0
-  fdr=fdrtool(as.numeric(cor.p), statistic="pvalue",plot=F,verbose = F) ##Global fdr correlation##
+  fdr=fdrtool(as.numeric(cor.p), statistic="pvalue",plot=FALSE,verbose = FALSE) ##Global fdr correlation##
   cor.q=matrix(fdr$qval,ncol=ncol(cor.p),nrow=nrow(cor.p));cor.q[is.nan(cor.q)]<- 0
   cor.r=corr$r[1:nrow(input1),(nrow(input1)+1):(nrow(input1)+nrow(input3))]
   cor.r[cor.q>0.05|abs(cor.r)<threshold] = 0 ##fliter via threshold##
@@ -154,17 +151,16 @@ network_analysis2<-function(input,inputtype,n,threshold,method="spearman",displa
     gather("target","value",-source)
   adjacency<- adjacency[adjacency$value %in% c(1,-1),]
   adjacency$value=as.numeric(adjacency$value)
-  igraph1<-graph_from_data_frame(adjacency,directed = F)##全局输出##
+  igraph1<-graph_from_data_frame(adjacency,directed = FALSE)##全局输出##
   network_stat(igraph1)
-  if(length(E(igraph1))>10000){cat("\nWarning:too many edges/links!Better STOP the process")}
-  if(display==T){
+  if(length(E(igraph1))>10000){warning("\n Too many edges/links!Better STOP the process")}
+  if(display==TRUE){
     plot(igraph1,main="Co-occurrence network",vertex.frame.color=NA,vertex.label=NA,edge.width=1,
          vertex.size=5,edge.lty=1,edge.curved=TRUE,margin=c(0,0,0,0))}
   V(igraph1)$degree<-igraph::degree(igraph1)
-  set.seed(999)
   V(igraph1)$modularity <- membership(cluster_fast_greedy(igraph1))%>%as.numeric()
   nodes_list <- data.frame(nodes_id = V(igraph1)$name, degree = V(igraph1)$degree, modularity = V(igraph1)$modularity)
-  nodes_list<-nodes_list[order(nodes_list$nodes_id,decreasing = F),]
+  nodes_list<-nodes_list[order(nodes_list$nodes_id,decreasing = FALSE),]
  # if(missing(input2)){
     #calculate zipi
     communities <- cluster_fast_greedy(igraph1)
@@ -189,7 +185,7 @@ network_analysis2<-function(input,inputtype,n,threshold,method="spearman",displa
    # }
 
   output=data.frame(nodes_id = V(igraph1)$name, node_degree = V(igraph1)$degree, node_betw=betweenness(igraph1),
-                    node_evcent=evcent(igraph1,scale = F)$vector,Clustering_coefficient=transitivity(igraph1,type="local"),
+                    node_evcent=evcent(igraph1,scale = FALSE)$vector,Clustering_coefficient=transitivity(igraph1,type="local"),
                     No.module = V(igraph1)$modularity,Zi=zi_pi8$Zi,Pi=zi_pi8$Pi)
   outlist=c(list(output),list(adjacency),list(adj_matrix),list(igraph1))
   names(outlist)=c("Nodes_info","Adjacency_column_table","Adjacency_matrix","Igraph_object")

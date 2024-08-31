@@ -15,10 +15,11 @@
 #' @importFrom graphics par legend
 #'
 #' @examples
+#' \donttest{
 #' {
 #'   # Data preparation
 #'   data("Two_group")
-#'
+#'   set.seed(999)
 #'   # Analysis
 #'   network_results <- network_analysis(
 #'     taxobj = Two_group,
@@ -135,6 +136,7 @@
 #'     module_num = c(1, 6, 8)
 #'   )  # Show module with most BF and OF_BF indicators
 #' }
+#' }
 network_withdiff=function(network_obj,diff_frame,aes_col=NULL,tag_threshold=5){
   adjfile=network_obj$Adjacency_column_table
   verticefile=network_obj$Nodes_info
@@ -190,7 +192,7 @@ network_withdiff=function(network_obj,diff_frame,aes_col=NULL,tag_threshold=5){
 
   all_stat=table(verticefile$No.module[verticefile$tag!="None"]) %>% as.data.frame()
   colnames(all_stat)=c("No.module","sum_tag_number")
-  all_stat=all_stat[order(all_stat$sum_tag_number,decreasing = T),]
+  all_stat=all_stat[order(all_stat$sum_tag_number,decreasing = TRUE),]
   show_module=all_stat$No.module[all_stat$sum_tag_number>=tag_threshold] %>% as.character()
   if(length(show_module)==0){
     warning("None of modules contained more than ",tag_threshold," tag vertices, please decrease 'tag_threshold'")
@@ -198,10 +200,11 @@ network_withdiff=function(network_obj,diff_frame,aes_col=NULL,tag_threshold=5){
   }
   detailed_stat=table(verticefile[verticefile$tag!="None",c("No.module","tag")])  %>%
     as.data.frame() %>% spread("tag","Freq")
-  set.seed(1)
   coords_t_its <- layout_(t_net_its,with_fr(niter=9999, grid="auto"))
-  t_cols <- color_scheme(c("aquamarine3","antiquewhite2","goldenrod2"),length(show_module),show = F)
+  t_cols <- color_scheme(c("aquamarine3","antiquewhite2","goldenrod2"),length(show_module),show = FALSE)
   show_list=t_mods_list_cs[names(t_mods_list_cs) %in% show_module]
+  oldpar <- par(no.readonly = TRUE)
+  on.exit(par(oldpar))
   par(mfrow = c(1,1), mar=c(2,2,2,4),pty = "m")
   plot(t_net_its,vertex.label=NA,vertex.size=vertice_size,layout=coords_t_its,vertex.shape="circle",
        mark.groups=show_list,mark.col=t_cols, mark.border="gray")

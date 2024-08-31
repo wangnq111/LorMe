@@ -4,7 +4,7 @@
 \alias{color_scheme}
 \title{Get color scheme}
 \usage{
-color_scheme(Plan, expand = NULL, names = NULL, show = T)
+color_scheme(Plan, expand = NULL, names = NULL, show = TRUE)
 }
 \arguments{
 \item{Plan}{Character, 'Plan1' to 'Plan10' are optional.}

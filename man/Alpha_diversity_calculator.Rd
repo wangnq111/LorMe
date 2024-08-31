@@ -14,7 +14,7 @@ Alpha_diversity_calculator(taxobj, taxlevel, prefix = "")
 \item{prefix}{A character string as prefix of diversity index. Default:""}
 }
 \value{
-'Alpha_diversity_calculator' returns α-diversity of each sample in format of column table (dataframe) combined with group information in meta file.
+'Alpha_diversity_calculator' returns alpha-diversity of each sample in format of column table (dataframe) combined with group information in meta file.
 }
 \description{
 Calculate alpha diversity for each sample

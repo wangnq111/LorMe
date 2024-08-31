@@ -20,9 +20,9 @@ community_plot(
 
 \item{n}{Numeric. Top n taxa remained according to relative abundance. Default:10}
 
-\item{palette}{Character. Palette for visualization,default:"Spectral",recommended to use "Paired" for more than 15 tax.See supported palette in \code{\link{scale_colour_brewer}}}
+\item{palette}{Character. Palette for visualization,default:"Spectral",recommended to use "Paired" for more than 15 tax.}
 
-\item{nrow}{Numeric. Number of rows when wrap panels,default:NULL. See details in \code{\link{facet_wrap}}}
+\item{nrow}{Numeric. Number of rows when wrap panels,default:NULL.}
 
 \item{rmprefix}{Numeric. Removed prefix character in taxonomy annotation.Default:NULL. See details in example.}
 }

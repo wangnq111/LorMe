@@ -49,6 +49,7 @@ Function for visualization of microbial structure with PCAplot, PCoAplot and NMD
 data("Two_group")
 
 ###analysis####
+set.seed(999)
 community_structure<- structure_plot(taxobj = Two_group,taxlevel = "Base")
  #check output list in console (not run)
  ######Output list##
@@ -82,11 +83,13 @@ community_structure<- structure_plot(taxobj = Two_group,taxlevel = "Base")
  head(PCA_coord)
 
  #stick plot
+ set.seed(999)
  community_structure<- structure_plot(taxobj = Two_group,taxlevel = "Base",diagram = "stick")
  community_structure$PCoA_Plot
 
  #faced form
  data("Facet_group")
+ set.seed(999)
  community_structure<- structure_plot(taxobj = Facet_group,taxlevel = "Genus",diagram = "stick")
  community_structure$PERMANOVA_statistics
  community_structure$PCA_Plot

@@ -10,7 +10,7 @@ Deseq_analysis(
   comparison = NULL,
   cutoff,
   control_name,
-  paired = F,
+  paired = FALSE,
   subject = NULL
 )
 }
@@ -44,6 +44,7 @@ It is designed to work with microbiome data and can handle paired or non-paired 
 }
 }
 \examples{
+\donttest{
 if (requireNamespace("DESeq2", quietly = TRUE) &&
     requireNamespace("S4Vectors", quietly = TRUE) &&
     requireNamespace("tibble", quietly = TRUE)) {
@@ -98,27 +99,13 @@ if (requireNamespace("DESeq2", quietly = TRUE) &&
       aes_col = Three_group$configuration$treat_col
     )
     volcano_plot$FC_FDR
-
-    deseq_results_BFOF <- Deseq_analysis(
-      taxobj = Three_group,
-      taxlevel = "Genus",
-      comparison = c("BF", "OF"),
-      cutoff = 1,
-      control_name = "OF"
-    )
-    volcano_plot <- volcano_plot(
-      inputframe = deseq_results_BFOF,
-      cutoff = 1,
-      aes_col = Three_group$configuration$treat_col
-    )
-    volcano_plot$FC_FDR
   } else {
     message(
       "The 'DESeq2', 'S4Vectors', and/or 'tibble' package(s) are not installed. ",
       "Please install them to use all features of Deseq_analysis."
     )
   }
-
+}
 }
 \seealso{
 \code{\link[DESeq2]{DESeqDataSetFromMatrix}}, \code{\link[DESeq2]{DESeq}}, \code{\link[S4Vectors]{DataFrame}}, \code{\link[tibble]{as_tibble}}

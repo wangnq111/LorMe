@@ -27,6 +27,7 @@
 #' @seealso \code{\link[DESeq2]{DESeqDataSetFromMatrix}}, \code{\link[DESeq2]{DESeq}}, \code{\link[S4Vectors]{DataFrame}}, \code{\link[tibble]{as_tibble}}
 #' @author  Wang Ningqi <2434066068@qq.com>
 #' @examples
+#' \donttest{
 #' if (requireNamespace("DESeq2", quietly = TRUE) &&
 #'     requireNamespace("S4Vectors", quietly = TRUE) &&
 #'     requireNamespace("tibble", quietly = TRUE)) {
@@ -81,28 +82,14 @@
 #'       aes_col = Three_group$configuration$treat_col
 #'     )
 #'     volcano_plot$FC_FDR
-#'
-#'     deseq_results_BFOF <- Deseq_analysis(
-#'       taxobj = Three_group,
-#'       taxlevel = "Genus",
-#'       comparison = c("BF", "OF"),
-#'       cutoff = 1,
-#'       control_name = "OF"
-#'     )
-#'     volcano_plot <- volcano_plot(
-#'       inputframe = deseq_results_BFOF,
-#'       cutoff = 1,
-#'       aes_col = Three_group$configuration$treat_col
-#'     )
-#'     volcano_plot$FC_FDR
 #'   } else {
 #'     message(
 #'       "The 'DESeq2', 'S4Vectors', and/or 'tibble' package(s) are not installed. ",
 #'       "Please install them to use all features of Deseq_analysis."
 #'     )
 #'   }
-#'
-Deseq_analysis<-function(taxobj,taxlevel,comparison=NULL,cutoff,control_name,paired=F,subject=NULL){
+#'}
+Deseq_analysis<-function(taxobj,taxlevel,comparison=NULL,cutoff,control_name,paired=FALSE,subject=NULL){
   if (!requireNamespace("DESeq2", quietly = TRUE) ||
       !requireNamespace("S4Vectors", quietly = TRUE) ||
       !requireNamespace("tibble", quietly = TRUE)) {
@@ -136,10 +123,10 @@ Deseq_analysis<-function(taxobj,taxlevel,comparison=NULL,cutoff,control_name,pai
 
   group_length=length(comparison)
   if(group_length!=2){
-    stop("Comparsion group not assigned!",call. = F)
+    stop("Comparsion group not assigned!",call. = FALSE)
     return(NULL)
   }
-  if(paired==T){
+  if(paired==TRUE){
     ofdds = DESeq2::DESeqDataSetFromMatrix(countData = inputframe, S4Vectors::DataFrame(condition,subject),
                                    ~subject+condition)
   }else{

@@ -4,7 +4,7 @@
 \alias{Filter_function}
 \title{Filter OTU/ASV/metagenomic profile/gene profile by threshold}
 \usage{
-Filter_function(input, threshold, format, outformat)
+Filter_function(input, threshold, format, report = TRUE)
 }
 \arguments{
 \item{input}{Data frame of absolute abundance of standard OTU table,with the first column of OTUID and the final column of taxonomy annotation.
@@ -20,7 +20,7 @@ If your data frame is gene table or not a standard OTU table, please manually tr
 
 4:filter OTU/gene below relative abundance threshold in each sample(<)}
 
-\item{outformat}{1:absolute abundance(reads) table   2:relative abundance table}
+\item{report}{Logical. If print report to console. Default:TRUE}
 }
 \value{
 Dataframe of OTU/gene in format of absolute abundacne(reads) or relative abundance(\%)
@@ -41,40 +41,35 @@ data(testotu)
 filtered_otu <- Filter_function(
   input = testotu,
   threshold = 0.0001,
-  format = 1,
-  outformat = 1
+  format = 1
 )
 
 ### 2. Filter OTU with total relative abundance below 0.0001, return relative abundance ###
 filtered_otu <- Filter_function(
   input = testotu,
   threshold = 0.0001,
-  format = 1,
-  outformat = 2
+  format = 1
 )
 
 ### 3. Filter OTU with total reads below 20 ###
 filtered_otu <- Filter_function(
   input = testotu,
   threshold = 20,
-  format = 2,
-  outformat = 1
+  format = 2
 )
 
 ### 4. Filter OTU reads 0 over (>=) 11 samples ###
 filtered_otu <- Filter_function(
   input = testotu,
   threshold = 11,
-  format = 3,
-  outformat = 1
+  format = 3
 )
 
 ### 5. Filter OTU with relative abundance below 0.0001 in each sample ###
 filtered_otu <- Filter_function(
   input = testotu,
   threshold = 0.0001,
-  format = 4,
-  outformat = 1
+  format = 4
 )
 }
 \author{

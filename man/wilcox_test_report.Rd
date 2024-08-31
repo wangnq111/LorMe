@@ -4,7 +4,14 @@
 \alias{wilcox_test_report}
 \title{Print Wilcoxon Rank Sum and Signed Rank Tests reprot}
 \usage{
-wilcox_test_report(data, treatment_col, value_col, paired, subject_col)
+wilcox_test_report(
+  data,
+  treatment_col,
+  value_col,
+  paired = FALSE,
+  subject_col = NULL,
+  report = TRUE
+)
 }
 \arguments{
 \item{data}{Data frame containing the treatment, value and other information.}
@@ -16,15 +23,14 @@ wilcox_test_report(data, treatment_col, value_col, paired, subject_col)
 \item{paired}{Logical indicating whether you want a paired test.}
 
 \item{subject_col}{Only meaningful when Pair is ture. Numeric indicating where subject of treatment (column number) in data.}
+
+\item{report}{Logical. If print report to console. Default:TRUE}
 }
 \value{
 wilcox_test_report returns data frame of basic data description.
 }
 \description{
 Print Wilcoxon Rank Sum and Signed Rank Tests reprot
-}
-\note{
-Package \code{\link{coin}} is required in this function.
 }
 \examples{
 {

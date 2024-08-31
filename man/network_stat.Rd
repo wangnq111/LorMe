@@ -4,10 +4,12 @@
 \alias{network_stat}
 \title{Igraph network statistics}
 \usage{
-network_stat(input)
+network_stat(input, report = TRUE)
 }
 \arguments{
-\item{input}{Igraph graph object}
+\item{input}{An igraph object.}
+
+\item{report}{Logical. If print report to console. Default:TRUE}
 }
 \value{
 network statistics

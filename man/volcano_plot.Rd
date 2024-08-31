@@ -22,6 +22,7 @@ Generate Volcano plot base on Deseq_analysis or indicator_analysis results
 }
 \examples{
 ###data prepration###
+\donttest{
 {
   # Load data
   data("Two_group")
@@ -60,6 +61,7 @@ Generate Volcano plot base on Deseq_analysis or indicator_analysis results
   )
   print(volcano_plot$FC_FDR)  # Fold Change and FDR values
   print(volcano_plot$Mean_FC)  # Mean Fold Change values
+}
 }
 }
 \author{

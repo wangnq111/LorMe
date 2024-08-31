@@ -32,6 +32,7 @@
 #' data("Two_group")
 #'
 #' ###analysis####
+#' set.seed(999)
 #' community_structure<- structure_plot(taxobj = Two_group,taxlevel = "Base")
 #'  #check output list in console (not run)
 #'  ######Output list##
@@ -65,11 +66,13 @@
 #'  head(PCA_coord)
 #'
 #'  #stick plot
+#'  set.seed(999)
 #'  community_structure<- structure_plot(taxobj = Two_group,taxlevel = "Base",diagram = "stick")
 #'  community_structure$PCoA_Plot
 #'
 #'  #faced form
 #'  data("Facet_group")
+#'  set.seed(999)
 #'  community_structure<- structure_plot(taxobj = Facet_group,taxlevel = "Genus",diagram = "stick")
 #'  community_structure$PERMANOVA_statistics
 #'  community_structure$PCA_Plot
@@ -90,12 +93,10 @@ structure_plot=function(taxobj,taxlevel,ptsize=2,diagram=NULL,ellipse.level=0.85
   output=list()
   #PERMANOVA##
   if(is.null(facet_location)){
-    set.seed(999)
     adonis_results=adonis2(t(inputframe[,-1])~groupframe[,treat_location])
     rownames(adonis_results)[1]=colnames(groupframe)[treat_location]
     attr(adonis_results, "heading")[2]='adonis2'
   }else{
-    set.seed(999)
     adonis_results=adonis2(t(inputframe[,-1])~groupframe[,treat_location]*groupframe[,facet_location])
     rownames(adonis_results)[1:3]=c(colnames(groupframe)[treat_location],
                                     colnames(groupframe)[facet_location],
@@ -123,7 +124,7 @@ structure_plot=function(taxobj,taxlevel,ptsize=2,diagram=NULL,ellipse.level=0.85
   }
   PCAplot=ggplot(data=PCAframe,aes(x =PCAframe[,1],y=PCAframe[,2])) +
     labs(x=paste0("PC1:",PC1_lab,"%"),y=paste0("PC2:",PC2_lab,"%"),title="PCA",fill="Treatment")
-  if(is.null(facet_location)==F){
+  if(is.null(facet_location)==FALSE){
     PCAplot=PCAplot+facet_wrap(~groupframe[,facet_location],nrow=facet_row,scales = "free")
   }else{
     PCAplot=PCAplot+
@@ -144,7 +145,7 @@ structure_plot=function(taxobj,taxlevel,ptsize=2,diagram=NULL,ellipse.level=0.85
   }else if(diagram=="polygon"){
     PCAplot=PCAplot+
       geom_point(size=ptsize,alpha=.8,pch=21,color="black",aes(fill=factor(groupframe[,treat_location]))) +
-      geom_polygon(aes(fill=factor(groupframe[,treat_location])),alpha=.8,show.legend = F)
+      geom_polygon(aes(fill=factor(groupframe[,treat_location])),alpha=.8,show.legend = FALSE)
   }else{warning("Illegal input in parameter `diagram`")}}
   PCAplot=PCAplot+theme_zg()+guides(color="none")
   if(is.null(specific.color)){PCAplot=PCAplot}else{PCAplot=PCAplot+scale_color_manual(values = specific.color)+scale_fill_manual(values = specific.color)}
@@ -168,7 +169,7 @@ structure_plot=function(taxobj,taxlevel,ptsize=2,diagram=NULL,ellipse.level=0.85
   }
   PCoAplot=ggplot(data=PCoA_data,aes(x =PCoA_data[,1],y=PCoA_data[,2])) +
     labs(x=paste0("Pco1:",PCO1_lab,"%"),y=paste0("Pco2:",PCO2_lab,"%"),title="PCoA",fill="Treatment")
-  if(is.null(facet_location)==F){
+  if(is.null(facet_location)==FALSE){
     PCoAplot=PCoAplot+facet_wrap(~groupframe[,facet_location],nrow=facet_row,scales = "free")
   }else{
     PCoAplot=PCoAplot+
@@ -190,7 +191,7 @@ structure_plot=function(taxobj,taxlevel,ptsize=2,diagram=NULL,ellipse.level=0.85
     }else if(diagram=="polygon"){
       PCoAplot=PCoAplot+
         geom_point(size=ptsize,alpha=.8,pch=21,color="black",aes(fill=factor(groupframe[,treat_location]))) +
-        geom_polygon(aes(fill=factor(groupframe[,treat_location])),alpha=.8,show.legend = F)
+        geom_polygon(aes(fill=factor(groupframe[,treat_location])),alpha=.8,show.legend = FALSE)
     }else{warning("Illegal input in parameter `diagram`")}}
   PCoAplot=PCoAplot+theme_zg()+guides(color="none")
   if(is.null(specific.color)){PCoAplot=PCoAplot}else{PCoAplot=PCoAplot+scale_color_manual(values = specific.color)+scale_fill_manual(values = specific.color)}
@@ -212,7 +213,7 @@ structure_plot=function(taxobj,taxlevel,ptsize=2,diagram=NULL,ellipse.level=0.85
   }
   NMDSplot=ggplot(data=NMDSframe,aes(x =NMDSframe[,'MDS1'],y=NMDSframe[,'MDS2'])) +
     labs(x="NMDS1",y="NMDS2",title=paste0("stress",round(NMDS$NMDSstat$stress,2)),fill="Treatment")
-  if(is.null(facet_location)==F){
+  if(is.null(facet_location)==FALSE){
     NMDSplot=NMDSplot+facet_wrap(~groupframe[,facet_location],nrow=facet_row,scales = "free")
   }else{
     NMDSplot=NMDSplot+
@@ -234,7 +235,7 @@ structure_plot=function(taxobj,taxlevel,ptsize=2,diagram=NULL,ellipse.level=0.85
     }else if(diagram=="polygon"){
       NMDSplot=NMDSplot+
         geom_point(size=ptsize,alpha=.8,pch=21,color="black",aes(fill=factor(groupframe[,treat_location]))) +
-        geom_polygon(aes(fill=factor(groupframe[,treat_location])),alpha=.8,show.legend = F)
+        geom_polygon(aes(fill=factor(groupframe[,treat_location])),alpha=.8,show.legend = FALSE)
     }else{warning("Illegal input in parameter `diagram`")}}
   NMDSplot=NMDSplot+theme_zg()+guides(color="none")
   if(is.null(specific.color)){NMDSplot=NMDSplot}else{NMDSplot=NMDSplot+scale_color_manual(values = specific.color)+scale_fill_manual(values = specific.color)}

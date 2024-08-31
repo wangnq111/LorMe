@@ -10,12 +10,13 @@ auto_signif_test(
   value_col,
   paired,
   subject_col,
-  prior = F,
+  prior = FALSE,
   comparison_method = NULL,
-  equally_rep = T,
+  equally_rep = TRUE,
   output = "console",
   output_dir = "./",
-  filename = "auto_signif_test"
+  filename = "auto_signif_test",
+  report = TRUE
 )
 }
 \arguments{
@@ -40,6 +41,8 @@ auto_signif_test(
 \item{output_dir}{Default:"./". Available only when output="file". The direction of output file.}
 
 \item{filename}{A character string indicating file name of output file. Only work when output set as 'file'.}
+
+\item{report}{Logical. If print report to console. Default:TRUE}
 }
 \value{
 auto_signif_test returns results of significant test and print report in console or file. See details in example.
@@ -50,11 +53,9 @@ See results return in \code{\link{t_test_report}}, \code{\link{wilcox_test_repor
 Automatically choose significance testing
 }
 \note{
-1.Package \code{\link{agricolae}}, \code{\link{DescTools}}, \code{\link{multcompView}}, \code{\link{HH}}， \code{\link{coin}} are suggested in this function.
+1.when choose output="file", once caused error that terminate the program, use 'sink()' to end the written of exist files.
 
-2.when choose output="file", once caused error that terminate the program, use 'sink()' to end the written of exist files.
-
-3.Please confirm your data is in format of dataframe, else may cause bug! (e.g. Do not use 'read.xlsx' to load data into tibble format)
+2.Please confirm your data is in format of dataframe, else may cause bug! (e.g. Do not use 'read.xlsx' to load data into tibble format)
 }
 \examples{
 ### Here shows different types of experimental design ###

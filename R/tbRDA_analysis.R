@@ -4,12 +4,11 @@
 #' @description RDA analysis including co-linearity diagnostics and necessary statistics.
 #' @param otudata Feature table of all numeric variable, with annotation in row names
 #' @param envdata Environmental factor of all numeric variable,with sample-ID in row names and environmental factor in column names
-#' @param collinearity If done collinearity diagnostics. When T, the maximum of \code{\link{vif.cca}} is deleted until all factors vif.cca value below 10.
+#' @param collinearity If done collinearity diagnostics. Default,TRUE.
 #' @param perm.test Logical. If conduct permutation test. Default:TRUE.
 #'
-#'
 #' @note
-#' 1. In \code{\link{decorana}},when Axis length in first axis more than 4, you should choose CCA instead of RDA.
+#' 1. When Axis length in first axis more than 4, you should choose CCA instead of RDA.
 #' @author  Wang Ningqi <2434066068@qq.com>
 #' @return  Three permutation test result print ,one preview plot ,a RDA object(default name:otu.tab.1) and a summary of RDA object
 #' @export
@@ -28,8 +27,7 @@
 #'   sep_testotu <- Filter_function(
 #'     input = testotu,
 #'     threshold = 0.0001,
-#'     format = 1,
-#'     outformat = 2
+#'     format = 1
 #'   ) %>%
 #'   separate(
 #'     ., col = taxonomy,
@@ -101,14 +99,14 @@
 #'   # Print the RDA plot
 #'   print(RDAplot)
 
-tbRDA_analysis<-function(otudata,envdata,collinearity,perm.test=T){
+tbRDA_analysis<-function(otudata,envdata,collinearity,perm.test=TRUE){
   env <- stats::na.omit(log1p(envdata))
   otu.hell <- decostand(t(otudata), "hellinger")
   if(max(decorana(otu.hell)$rproj[,1])>4){warning("Axis length in first axis more than 4,please use CCA analysis!!!")}
   otu.tab.1<- vegan::rda(otu.hell ~ ., env)
   Diagnostic<-vif.cca(otu.tab.1)
   Diagnostic=Diagnostic[!is.na(Diagnostic)]
-  if(collinearity==T){
+  if(collinearity==TRUE){
     orgi<-length(Diagnostic)
     for (i in 1:orgi){             ##delate max until all value less than 10###
       if(max(Diagnostic)>10){
@@ -116,14 +114,14 @@ tbRDA_analysis<-function(otudata,envdata,collinearity,perm.test=T){
         otu.tab.1<- rda(otu.hell ~ ., env)
         Diagnostic<-vif.cca(otu.tab.1)
         Diagnostic=Diagnostic[!is.na(Diagnostic)]
-        i=i-1}}}else if (collinearity==F){} else{warning("Please choose T/F on collinearity");return()}
+        i=i-1}}}else if (collinearity==FALSE){} else{stop("Please choose TRUE/FALSE on collinearity");return()}
   summaryrda<-summary(otu.tab.1)
-  if(perm.test==T){
-    cat("###Global permutation test###","\n")
+  if(perm.test==TRUE){
+    message("###Global permutation test###","\n")
     print(anova.cca(otu.tab.1))
-    cat("###permutation test by term###","\n")
+    message("###permutation test by term###","\n")
     print(anova.cca(otu.tab.1, by = "term"))
-    cat("###permutation test by axis###","\n")
+    message("###permutation test by axis###","\n")
     print(anova.cca(otu.tab.1, by = "axis"))
     plot(otu.tab.1)
   }

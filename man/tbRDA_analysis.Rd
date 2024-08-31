@@ -4,14 +4,14 @@
 \alias{tbRDA_analysis}
 \title{tbRDA analysis}
 \usage{
-tbRDA_analysis(otudata, envdata, collinearity, perm.test = T)
+tbRDA_analysis(otudata, envdata, collinearity, perm.test = TRUE)
 }
 \arguments{
 \item{otudata}{Feature table of all numeric variable, with annotation in row names}
 
 \item{envdata}{Environmental factor of all numeric variable,with sample-ID in row names and environmental factor in column names}
 
-\item{collinearity}{If done collinearity diagnostics. When T, the maximum of \code{\link{vif.cca}} is deleted until all factors vif.cca value below 10.}
+\item{collinearity}{If done collinearity diagnostics. Default,TRUE.}
 
 \item{perm.test}{Logical. If conduct permutation test. Default:TRUE.}
 }
@@ -23,7 +23,7 @@ RDA analysis including co-linearity diagnostics and necessary statistics.
 }
 \note{
 \enumerate{
-\item In \code{\link{decorana}},when Axis length in first axis more than 4, you should choose CCA instead of RDA.
+\item When Axis length in first axis more than 4, you should choose CCA instead of RDA.
 }
 }
 \examples{
@@ -37,8 +37,7 @@ RDA analysis including co-linearity diagnostics and necessary statistics.
   sep_testotu <- Filter_function(
     input = testotu,
     threshold = 0.0001,
-    format = 1,
-    outformat = 2
+    format = 1
   ) \%>\%
   separate(
     ., col = taxonomy,

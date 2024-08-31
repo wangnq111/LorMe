@@ -35,7 +35,7 @@ sub_tax_summary=function(taxobj,...,specificnum=NULL,taxnum=NULL){
     sub_rownames= rownames(sub_group)
     select_num=which(rownames(taxobj$Groupfile) %in% sub_rownames)
   }else{select_num=specificnum}
-  select_temp=function(x){if(is.numeric(x[,-1]%>% as.matrix())==T){x[,c(1,select_num+1)]}else(x=x)}
+  select_temp=function(x){if(is.numeric(x[,-1]%>% as.matrix())==TRUE){x[,c(1,select_num+1)]}else(x=x)}
   if(length(which(names(taxobj)=="configuration"))==0){
     sub_obj=lapply(taxobj[which(!names(taxobj)%in% c("parameters"))],select_temp)
   }else{
@@ -44,13 +44,13 @@ sub_tax_summary=function(taxobj,...,specificnum=NULL,taxnum=NULL){
   }
   sub_obj$Groupfile=taxobj$Groupfile %>% .[select_num,]
   sub_obj$parameters=taxobj$parameters
-  if(is.null(taxnum)==F){
+  if(is.null(taxnum)==FALSE){
     if(length(taxnum)>nrow(sub_obj$Base_percent)){warning("taxnum does not match Base table, please check!!!")}
     Groupfiletemp=sub_obj$Groupfile
     select_Base_pct=sub_obj$Base_percent[taxnum,]
     select_Base_tax=sub_obj$Base_taxonomy[taxnum,]
     sink("./sub_tax_summary_temp.txt")
-    temptax_summary=tax_summary(groupfile =Groupfiletemp,inputtable =select_Base_pct[,-1],reads = F,taxonomytable = select_Base_tax[,c(2,3)],into = sub_obj$parameters$into,sep = sub_obj$parameters$sep,outputtax = sub_obj$parameters$outputtax)%>% suppressMessages()
+    temptax_summary=tax_summary(groupfile =Groupfiletemp,inputtable =select_Base_pct[,-1],reads = FALSE,taxonomytable = select_Base_tax[,c(2,3)],into = sub_obj$parameters$into,sep = sub_obj$parameters$sep,outputtax = sub_obj$parameters$outputtax)%>% suppressMessages()
     sink()
     file.remove("./sub_tax_summary_temp.txt")
     temptax_summary$Base=temptax_summary$Base_percent %T>% {.[,-1]=sweep(.[,-1],colSums(sub_obj$Base[,-1])%>%as.numeric,"*",MARGIN=2)%>% round(.,0)}

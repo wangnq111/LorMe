@@ -2,11 +2,11 @@
 #'
 #' @param taxobj tax summary objects computed by \code{\link{tax_summary}}.
 #' @param taxlevel taxonomy levels used for analysis. Must be one of c("Domain","Phylum","Class","Order","Family","Genus","Species","Base")
-#' @param reads Logical,default:F. Taxonomy abundance type used in analysis.FALSE for relative abundance, TRUE for absolute abundance.
+#' @param reads Logical,default:FALSE. Taxonomy abundance type used in analysis.FALSE for relative abundance, TRUE for absolute abundance.
 #' @param n Numeric. Number of sample size indicating kept asv/otu/gene/taxa appearing. Recommended to set more than half of total sample size.
 #' @param threshold Numeric.Threshold of absolute correlation value (r value for pearson method and rho value for spearman method).
 #' @param method Character, default: "spearman". A character indicating which correlation coefficient method to be computed. One of "pearson" or "spearman"
-#' @param display Logical, default:T. If display a preview plot of network based on igraph. F for the first attempt is recommended in case of too many vertices and edges.
+#' @param display Logical, default:TRUE. If display a preview plot of network based on igraph. FALSE for the first attempt is recommended in case of too many vertices and edges.
 #' @return  One list contains nodes information table, adjacency column table, adjacency matrix and 'igraph' object.
 #' @export
 #'
@@ -19,7 +19,7 @@
 #' is recommended. Further more,we recommend you to output the statistics and adjacency table and use software like cytoscape or gephi for better visualization.
 #'
 #' @note
-#' 1. Replicates should be at least 5,more than 8 is recommend. See details in \code{\link{rcorr}}.
+#' 1. Replicates should be at least 5,more than 8 is recommend.
 #'
 #' 2. In case of too many edges/links or not a global network plot, you can stop the process immediately to provent wasting too much time.
 #'
@@ -31,7 +31,7 @@
 #' {
 #'   ### Data preparation ###
 #'   data("Two_group")
-#'
+#'   set.seed(999)
 #'   ## Analysis
 #'   network_results <- network_analysis(
 #'     taxobj = Two_group,
@@ -57,11 +57,11 @@
 #'   network_stat(igraph_object)  # In case you want to see statistics again
 #'   # or do other analysis based on igraph.
 #' }
-network_analysis<-function(taxobj,taxlevel,reads=F,n,threshold,method="spearman",display=T){
+network_analysis<-function(taxobj,taxlevel,reads=FALSE,n,threshold,method="spearman",display=TRUE){
   if(!taxlevel %in% c("Domain","Kingdom","Phylum","Class","Order","Family","Genus","Species","Base")){
-    warning("Illegal 'taxlevel',please choose among c('Domain','Kingdom','Phylum','Class','Order','Family','Genus','Species','Base'")
+    stop("Illegal 'taxlevel',please choose among c('Domain','Kingdom','Phylum','Class','Order','Family','Genus','Species','Base'")
   }
-  if(reads==F){
+  if(reads==FALSE){
     input0=eval(parse(text=paste0("taxobj","$",taxlevel,"_percent")))
   }else{
     input0=eval(parse(text=paste0("taxobj","$",taxlevel)))
@@ -75,7 +75,7 @@ network_analysis<-function(taxobj,taxlevel,reads=F,n,threshold,method="spearman"
   ##network analysis
     corr=rcorr(as.matrix(t(input1)),type=method)
     cor.p=corr$P;cor.p[is.na(cor.p)]<- 0
-    fdr=fdrtool(as.numeric(cor.p), statistic="pvalue",plot=F,verbose = F) ##Global fdr correlation##
+    fdr=fdrtool(as.numeric(cor.p), statistic="pvalue",plot=FALSE,verbose = FALSE) ##Global fdr correlation##
     cor.r=corr$r
     cor.q=matrix(fdr$qval,ncol=ncol(cor.p),nrow=nrow(cor.p));cor.q[is.nan(cor.q)]<- 0
     cor.r[cor.q>0.05|abs(cor.r)<threshold] = 0 ##fliter via threshold##
@@ -87,24 +87,23 @@ network_analysis<-function(taxobj,taxlevel,reads=F,n,threshold,method="spearman"
       cor.r=cor.r[-c(cutoff),-c(cutoff)];cor.r1=cor.r1[-c(cutoff),-c(cutoff)]}
     cor.r1[which(cor.r>0)]<-1;cor.r1[which(cor.r<0)]<- -1;
     adj_matrix=cor.r1
-    cor.r1[lower.tri(cor.r1,diag = T)]<-NA
+    cor.r1[lower.tri(cor.r1,diag = TRUE)]<-NA
   ###creat adjacency###
   source<-rownames(cor.r1)
   adjacency<- data.frame(source,cor.r1) %>%
     gather("target","value",-source)
   adjacency<- adjacency[adjacency$value %in% c(1,-1),]
   adjacency$value=as.numeric(adjacency$value)
-  igraph1<-graph_from_data_frame(adjacency,directed = F)##全局输出##
+  igraph1<-graph_from_data_frame(adjacency,directed = FALSE)##全局输出##
   network_stat(igraph1)
-  if(length(E(igraph1))>10000){cat("\n Warning:too many edges/links!Better STOP the process")}
+  if(length(E(igraph1))>10000){warning("\n too many edges/links!Better STOP the process")}
   if(isTRUE(display)){
     plot(igraph1,main="Co-occurrence network",vertex.frame.color=NA,vertex.label=NA,edge.width=1,
          vertex.size=5,edge.lty=1,edge.curved=TRUE,margin=c(0,0,0,0))}
   V(igraph1)$degree=igraph::degree(igraph1)
-  set.seed(999)
+
   V(igraph1)$modularity <- membership(cluster_fast_greedy(igraph1))%>%as.numeric()
-  cor.tempr=cor.r[order(rownames(cor.r),decreasing = F),];cor.tempr=cor.tempr[,order(colnames(cor.tempr),decreasing = F)]
-  set.seed(999)
+  cor.tempr=cor.r[order(rownames(cor.r),decreasing = FALSE),];cor.tempr=cor.tempr[,order(colnames(cor.tempr),decreasing = FALSE)]
   #calculate zipi
   communities <- cluster_fast_greedy(igraph1)
   comm_membership <- igraph::membership(communities)
@@ -127,7 +126,7 @@ network_analysis<-function(taxobj,taxlevel,reads=F,n,threshold,method="spearman"
   )
   #merging
   output=data.frame(nodes_id = V(igraph1)$name, node_degree = V(igraph1)$degree, node_betw=betweenness(igraph1),
-                    node_evcent=evcent(igraph1,scale = F)$vector,Clustering_coefficient=transitivity(igraph1,type="local"),
+                    node_evcent=evcent(igraph1,scale = FALSE)$vector,Clustering_coefficient=transitivity(igraph1,type="local"),
                     No.module = V(igraph1)$modularity,Zi=zi_pi8$Zi,Pi=zi_pi8$Pi)
   output=left_join(output,data.frame(nodes_id=taxonomy[,1],taxonomy)) %>% suppressMessages()
   output=output[,-c(9)]

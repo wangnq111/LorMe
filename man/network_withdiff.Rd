@@ -22,10 +22,11 @@ A list containing the configured igraph object, vertices coordinates, parameters
 Meta network analysis integrating differential taxon into a network analysis
 }
 \examples{
+\donttest{
 {
   # Data preparation
   data("Two_group")
-
+  set.seed(999)
   # Analysis
   network_results <- network_analysis(
     taxobj = Two_group,
@@ -141,5 +142,6 @@ Meta network analysis integrating differential taxon into a network analysis
     module_paint = TRUE,
     module_num = c(1, 6, 8)
   )  # Show module with most BF and OF_BF indicators
+}
 }
 }

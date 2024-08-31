@@ -47,13 +47,13 @@
 #'
 compare_plot=function(inputframe,treat_location,value_location,aes_col=NULL,point=TRUE,facet_location=NULL,ylab_text=NULL){
   inputframe=as.data.frame(inputframe)
-  if(is.numeric(inputframe[,value_location])==F){
+  if(is.numeric(inputframe[,value_location])==FALSE){
     warning("'value_location' indicated non-numeric column,please check")
     return(NULL)
   }
   condition=unique(inputframe[,treat_location])
   if(is.null(aes_col)){
-    aes_col=color_scheme("Plan7",length(condition),show = F,names = condition)
+    aes_col=color_scheme("Plan7",length(condition),show = FALSE,names = condition)
   }
   if(length(condition)==1){
     warning("Only one Group contained! Invalid 'inputframe'")
@@ -96,10 +96,10 @@ compare_plot=function(inputframe,treat_location,value_location,aes_col=NULL,poin
   }
   #statistics
   if(is.null(facet_location)){
-    sig_results<-auto_signif_test(data =inputframe,treatment_col =treat_location,value_col =value_location,prior = T)
+    sig_results<-auto_signif_test(data =inputframe,treatment_col =treat_location,value_col =value_location,prior = TRUE)
   }else{
     inputframe1=data.frame(inputframe,combinetag=paste0(inputframe[,treat_location],"_",inputframe[,facet_location]))
-    all_sig_results<-auto_signif_test(data =inputframe1,treatment_col =ncol(inputframe1),value_col =value_location,prior = T)
+    all_sig_results<-auto_signif_test(data =inputframe1,treatment_col =ncol(inputframe1),value_col =value_location,prior = TRUE)
     grouped_sig_results=list()
     for(i in unique(inputframe[,facet_location])){
       subd=inputframe[inputframe[,facet_location]==i,]
@@ -108,7 +108,7 @@ compare_plot=function(inputframe,treat_location,value_location,aes_col=NULL,poin
       }else if(length(unique(subd[,treat_location]))==1){
         sig_results=NA
       }else{
-        sig_results<-auto_signif_test(data =subd,treatment_col=treat_location,value_col =value_location,prior = T)
+        sig_results<-auto_signif_test(data =subd,treatment_col=treat_location,value_col =value_location,prior = TRUE)
       }
       grouped_sig_results=c(grouped_sig_results,list(sig_results))
       names(grouped_sig_results)[length(grouped_sig_results)]=i
@@ -169,19 +169,18 @@ compare_plot=function(inputframe,treat_location,value_location,aes_col=NULL,poin
   }
 
   if(point==TRUE){
-    set.seed(999)
     bar=bar+
       geom_jitter(data=inputframe,pch=21,
                   aes(x=factor(inputframe[,treat_location]),y=inputframe[,value_location],fill=factor(inputframe[,treat_location])),
-                  size=1,alpha=.8,show.legend = F,width = 0.2)
+                  size=1,alpha=.8,show.legend = FALSE,width = 0.2)
     box=box+
       geom_jitter(pch=21,
                   aes(fill=factor(inputframe[,treat_location])),
-                  size=1,alpha=.8,show.legend = F,width = 0.2)
+                  size=1,alpha=.8,show.legend = FALSE,width = 0.2)
     violin=violin+
       geom_jitter(pch=21,
                   aes(fill=factor(inputframe[,treat_location])),
-                  size=1,alpha=.8,show.legend = F,width = 0.2)
+                  size=1,alpha=.8,show.legend = FALSE,width = 0.2)
   }
   if(!is.null(facet_location)){
     bar=bar+

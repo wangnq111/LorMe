@@ -10,7 +10,7 @@ network_analysis2(
   n,
   threshold,
   method = "spearman",
-  display = T,
+  display = TRUE,
   input2,
   input2type
 )
@@ -32,7 +32,7 @@ network_analysis2(
 
 \item{method}{A character string indicating which correlation coefficient  is to be computed. One of "pearson" or "spearman"}
 
-\item{display}{If display a preview plot of network based on igraph. F for the first attempt is recommended in case of too many vertices and edges.}
+\item{display}{If display a preview plot of network based on igraph. FALSE for the first attempt is recommended in case of too many vertices and edges.}
 
 \item{input2}{A second input data frame with otu/gene/taxa in row and sample ID in column. Default:NULL}
 
@@ -52,23 +52,22 @@ Then you can adjust your n/threshold/method paramter to generate a suitable visu
 \item We display a preview plot so as to adjusting your network. Generally a global figure (like we show in examples) with less than 1000 vertices and 5000 edges/links
 is recommended. Further more,we recommend you to output the statistics and adjacency table and use software like cytoscape or gephi for better visualization.
 }
-
-3.\code{\link{left_join}}  from \code{\link{dplyr}} is available to match otu/gene/taxa annotaion with output results for further analysis.
 }
 \note{
 \enumerate{
-\item Replicates should be at least 5,more than 8 is recommend. See details in \code{\link{rcorr}}.
+\item Replicates should be at least 5,more than 8 is recommend.
 \item In case of too many edges/links or not a global network plot, you can stop the process immediately to provent wasting too much time.
 }
 }
 \examples{
+\donttest{
 {
   ### Data preparation ###
   data(testotu)
   rownames(testotu) <- testotu[, 1]
   inputotu <- testotu[, -c(1, ncol(testotu))]
   head(inputotu)
-
+  set.seed(999)
   ### One input network analysis ###
   network_result <- network_analysis2(
     inputotu,
@@ -111,16 +110,14 @@ is recommended. Further more,we recommend you to output the statistics and adjac
   )
 
   #### Incorrect demonstration !! ###
-  ### WARNING: It may take too long to create the graph !! ###
-  # {
-  #   \dontrun{
-  #     network_result <- network_analysis2(inputotu, 3, 3, 0.8, "spearman", TRUE)
-  #   }
-  # }
+  {
+     network_result <- network_analysis2(inputotu, 3, 3, 0.8, "spearman", TRUE)
+  }
   # Total edges/links: 10199
   # Total vertices: 826
   # Too many edges and not a global network
 
+}
 }
 }
 \author{

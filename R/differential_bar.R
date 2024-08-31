@@ -170,25 +170,25 @@ differential_bar=function(taxobj,
     return(NULL)
   }
   barplot=ggplot(barframe,aes(barframe[,1],barframe[,'Mean'],fill = barframe[,'Treatment'])) +
-    scale_fill_manual(values=aes_col)+#分组颜色填充
-    scale_x_discrete(limits = anno_order) +#指定坐标轴需要显示的的范围
+    scale_fill_manual(values=aes_col)+
+    scale_x_discrete(limits = anno_order) +
     scale_y_continuous(expand = c(0,0),labels = scales::percent)+
     coord_flip() +#翻转XY轴
     labs(x="",y="Mean proportion")+
     theme(panel.background = element_rect(fill = 'transparent'),
           panel.grid = element_blank(),
           axis.ticks.length = unit(0.4,"lines"),
-          axis.ticks = element_line(color='black'),#坐标轴刻度线颜色
-          axis.line = element_line(colour = "black"),#坐标轴线颜色
-          axis.title.x=element_text(colour='black', size=10,face = "bold"),#X轴文本设置
-          axis.text=element_text(colour='black',size=8,face = "bold"),#坐标轴文本设定
-          legend.title=element_blank(),#图例标题为空
+          axis.ticks = element_line(color='black'),
+          axis.line = element_line(colour = "black"),
+          axis.title.x=element_text(colour='black', size=10,face = "bold"),
+          axis.text=element_text(colour='black',size=8,face = "bold"),
+          legend.title=element_blank(),
           legend.text=element_text(size=10,face = "bold",colour = "black",
-                                   margin = margin(r = 20)),#图例文本设定
-          legend.position = c(-1,-0.1),#图例位置，左下
-          legend.direction = "horizontal",#图例方向，水平排列
-          legend.key.width = unit(0.8,"cm"),#图例方块宽
-          legend.key.height = unit(0.5,"cm"))#图例方块高
+                                   margin = margin(r = 20)),
+          legend.position = c(-1,-0.1),
+          legend.direction = "horizontal",
+          legend.key.width = unit(0.8,"cm"),
+          legend.key.height = unit(0.5,"cm"))
   for (i in 1:(nrow(t_summary_anno_sig) - 1)){
     barplot <- barplot + annotate('rect', xmin = i+0.5, xmax = i+1.5, ymin = -Inf, ymax = Inf,
                                   fill = ifelse(i %% 2 == 0, 'white', 'gray95'))

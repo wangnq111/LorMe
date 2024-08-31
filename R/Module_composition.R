@@ -7,7 +7,7 @@
 #' @param taxlevel  taxonomy levels used for visualization.Must be one of c("Domain","Phylum","Class","Order","Family","Genus","Species","Base").Default:NULL.
 #' @param mode The mode for selecting which taxa to plot: "all" for all taxa, "most" for the top N taxa, and "select" for specific taxa selection
 #' @param top_n The number of top taxa to plot when mode is set to "most"
-#' @param palette Character. Palette for visualization,default:"Set1".See optional palette in \code{\link{brewer.pal.info}}. "Plan1" to "Plan10" were also optional,see in \code{\link{color_scheme}}
+#' @param palette Character. Palette for visualization,default:"Set1".See optional palette in same as 'RColorBrewer'. And "Plan1" to "Plan10" were also optional,see in \code{\link{color_scheme}}
 #' @param select_tax A vector of taxa to be selected for plotting when mode is "select".
 #' @param rmprefix A string prefix to be removed from the taxonomic annotation
 #'
@@ -110,13 +110,13 @@ Module_composition = function(
   }else{
     output_list=list()
     input_table = as.data.frame(network_obj$Nodes_info)
-    if(is.null(rmprefix)==F){
+    if(is.null(rmprefix)==FALSE){
       input_table[,taxlevel]=str_replace(input_table[,taxlevel],rmprefix,"")
     }
     for(i in No.module){
       tax_freq = input_table[, taxlevel]
       tax_freq=tax_freq[input_table$No.module == i] %>%
-        table() %>% sort(decreasing = T) %>% as.data.frame()
+        table() %>% sort(decreasing = TRUE) %>% as.data.frame()
       colnames(tax_freq)[1] = "Tax"
       tax_freq["Tax"]=as.character(tax_freq$Tax)
       if (mode == "all") {
@@ -126,18 +126,18 @@ Module_composition = function(
           warning("'top_n' not assigned!")
           return(NULL)}
         kept_tax=table(input_table[,taxlevel]) %>% sort() %>% names() %>% tail(top_n)
-        tax_freq$Tax[!tax_freq["Tax"] %in% kept_tax] ="Others"
+        tax_freq$Tax[!(tax_freq["Tax"]%>% as.matrix() %>% as.character()) %in% kept_tax] ="Others"
         tax_freq_summary=aggregate(tax_freq$Freq,by=list(Tax=tax_freq$Tax),FUN=sum)
         colnames(tax_freq_summary)[2]="Freq"
-        tax_freq_summary=tax_freq_summary[order(tax_freq_summary["Freq"],decreasing = T),]
+        tax_freq_summary=tax_freq_summary[order(tax_freq_summary["Freq"]%>% as.matrix() %>%as.numeric(),decreasing = TRUE),]
       }else if(mode=="select"){
         if(is.null(select_tax)){
           warning("'select_tax' not assigned!")
           return(NULL)}
-        tax_freq$Tax[!tax_freq["Tax"] %in% select_tax] ="Others"
+        tax_freq$Tax[!(tax_freq["Tax"]%>% as.matrix() %>% as.character())%in% select_tax] ="Others"
         tax_freq_summary=aggregate(tax_freq$Freq,by=list(Tax=tax_freq$Tax),FUN=sum)
         colnames(tax_freq_summary)[2]="Freq"
-        tax_freq_summary=tax_freq_summary[order(tax_freq_summary["Freq"],decreasing = T),]
+        tax_freq_summary=tax_freq_summary[order(tax_freq_summary["Freq"]%>% as.matrix() %>%as.numeric(),decreasing = TRUE),]
       }else{
         warning("Invalid 'mode', please choose among 'all','most' and 'select'")
         return(NULL)
@@ -154,7 +154,7 @@ Module_composition = function(
         tax_col=palette
       }else if(palette %in% paste0("Plan",1:10)){
         tax_col=color_scheme(Plan = palette,
-                             expand = tax_length,show=F)
+                             expand = tax_length,show=FALSE)
       }else{
         color_n<-brewer.pal.info[palette,]$maxcolors
         getPalette <-colorRampPalette(brewer.pal(color_n, palette))
@@ -168,7 +168,7 @@ Module_composition = function(
         }
       }
       p=ggplot(tax_freq_summary, aes_string(x="0", y='Freq', fill='Tax'))+
-        geom_bar(width = 1, stat = "identity",show.legend = T)+
+        geom_bar(width = 1, stat = "identity",show.legend = TRUE)+
         coord_polar("y", start=0)+
         scale_fill_manual(values = tax_col)+
         labs(x="",y="",title = paste0("Module #",i),fill=taxlevel)+

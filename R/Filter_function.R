@@ -14,8 +14,7 @@
 #' 3:filter OTU/gene reads 0 over threshold sample size(>)
 #'
 #' 4:filter OTU/gene below relative abundance threshold in each sample(<)
-#' @param outformat 1:absolute abundance(reads) table   2:relative abundance table
-#'
+#' @param report Logical. If print report to console. Default:TRUE
 #' @importFrom magrittr %>% %T>%
 #' @return Dataframe of OTU/gene in format of absolute abundacne(reads) or relative abundance(%)
 #' @export
@@ -33,42 +32,37 @@
 #' filtered_otu <- Filter_function(
 #'   input = testotu,
 #'   threshold = 0.0001,
-#'   format = 1,
-#'   outformat = 1
+#'   format = 1
 #' )
 #'
 #' ### 2. Filter OTU with total relative abundance below 0.0001, return relative abundance ###
 #' filtered_otu <- Filter_function(
 #'   input = testotu,
 #'   threshold = 0.0001,
-#'   format = 1,
-#'   outformat = 2
+#'   format = 1
 #' )
 #'
 #' ### 3. Filter OTU with total reads below 20 ###
 #' filtered_otu <- Filter_function(
 #'   input = testotu,
 #'   threshold = 20,
-#'   format = 2,
-#'   outformat = 1
+#'   format = 2
 #' )
 #'
 #' ### 4. Filter OTU reads 0 over (>=) 11 samples ###
 #' filtered_otu <- Filter_function(
 #'   input = testotu,
 #'   threshold = 11,
-#'   format = 3,
-#'   outformat = 1
+#'   format = 3
 #' )
 #'
 #' ### 5. Filter OTU with relative abundance below 0.0001 in each sample ###
 #' filtered_otu <- Filter_function(
 #'   input = testotu,
 #'   threshold = 0.0001,
-#'   format = 4,
-#'   outformat = 1
+#'   format = 4
 #' )
-Filter_function<-function(input,threshold,format,outformat){
+Filter_function<-function(input,threshold,format,report=TRUE){
   format_percent <- function(input){sweep(input,2,colSums(input),'/') %>% return()}#Fun:reads2percent#
   input_percentage<-cbind(input[,1],format_percent(input[,-c(1,ncol(input))]),input[,ncol(input)]) %T>%
     {colnames(.)[1]=colnames(input)[1];colnames(.)[ncol(input)]=colnames(input)[ncol(input)]}
@@ -87,16 +81,13 @@ Filter_function<-function(input,threshold,format,outformat){
     low_count <- function(input){length(which(input<threshold))%>% return()}##Fun:calculate low count
     lowcount=apply(input_percentage[,-c(1,ncol(input_percentage))],1,low_count)
     output <- input[which(lowcount!=(ncol(input)-2)),]}
-  else{warning("Errorrrrrrrrrrrrr!!!Wrong format!!!!")}
+  else{stop("Errorrrrrrrrrrrrr!!!Wrong format!!!!")}
+  if(report==TRUE){
   cat("#Filtering report \n#overview\n")
   report=(colSums(output[,2:(ncol(output)-1)])/colSums(input[,2:(ncol(output)-1)]))
   print(report)
   cat("#Summary\n")
   summary(report)%>%print()
-  if(outformat==1){return(output)}else
-    if(outformat==2){
-      output=data.frame(output[,1],format_percent(output[,2:(ncol(output)-1)]),output[,ncol(output)])
-      colnames(output)[c(1,ncol(output))]=colnames(input)[c(1,ncol(input))]
-      return(output)
-    }else{warning("Please choose right outformat!!")}
+  }
+  return(output)
   }

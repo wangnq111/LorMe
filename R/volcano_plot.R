@@ -13,6 +13,7 @@
 #' @import ggplot2
 #' @examples
 #' ###data prepration###
+#'\donttest{
 #' {
 #'   # Load data
 #'   data("Two_group")
@@ -51,6 +52,7 @@
 #'   )
 #'   print(volcano_plot$FC_FDR)  # Fold Change and FDR values
 #'   print(volcano_plot$Mean_FC)  # Mean Fold Change values
+#' }
 #' }
 volcano_plot=function(inputframe,cutoff=NULL,aes_col=c("#FE5C5C","#75ABDE")){
   inputframe=inputframe[which(!is.na(inputframe$padj)),]

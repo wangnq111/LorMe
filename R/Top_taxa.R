@@ -33,8 +33,7 @@
 #' sep_testotu <- Filter_function(
 #'   input = testotu,
 #'   threshold = 0.0001,
-#'   format = 1,
-#'   outformat = 2
+#'   format = 1
 #' ) %>%
 #'   separate(
 #'     ., col = taxonomy,
@@ -88,7 +87,7 @@ Top_taxa <- function(input, n, inputformat, outformat) {
       {
         warning("Please choose correct inputformat(1,2,3)")
       }
-  top_frame <-input1[order(rowMeans(input1[, -1]), decreasing = T), ]  ##order by total relative abundance#
+  top_frame <-input1[order(rowMeans(input1[, -1]), decreasing = TRUE), ]  ##order by total relative abundance#
   extra_rm = grep("Unassigned|Unclassified|norank", top_frame[, 1])
   if (length(extra_rm) != 0) {
     left_n = (1:nrow(top_frame))[-extra_rm]

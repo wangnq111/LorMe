@@ -2,7 +2,7 @@
 % Please edit documentation in R/LorMe.R
 \name{LorMe}
 \alias{LorMe}
-\title{LorMe package：Lightening One-code Resolving Microbial Ecology Program}
+\title{LorMe package: Lightening One-Code Resolving Microbial Ecology Program}
 \description{
 LorMe package summarizes a series of functions normally used in microbiome analysis
 analysis.

@@ -34,17 +34,17 @@
 #'
 #' ### PCA ###
 #' PCAresult <- Dimension_reduction(inputotu, groupinformation1, 1)
-#' PCAframe <- as.data.frame(PCAresult[1])  # Extract data for visualization
+#' PCAframe <- PCAresult$outframe   # Extract data for visualization
 #' head(PCAresult$data.pca$rotation,5)  # OTU coordinates
 #'
 #' ### PCOA ###
 #' PCOAresult <- Dimension_reduction(inputotu, groupinformation1, 2)
-#' PCOAframe <- as.data.frame(PCOAresult[1])  # Extract data for visualization
+#' PCOAframe <- PCOAresult$outframe  # Extract data for visualization
 #' head(PCOAresult$PCOA$values,2)  # Explanation of first two axis
 #'
 #' ### NMDS ###
 #' NMDSresult <- Dimension_reduction(inputotu, groupinformation1, 3)
-#' NMDSframe <- as.data.frame(NMDSresult[1])  # Extract data for visualization
+#' NMDSframe <- NMDSresult$outframe  # Extract data for visualization
 #' # Here we got a warning of `stress is (nearly) zero: you may have insufficient data`,
 #' # so make sure you have sufficient data for NMDS
 #' print(NMDSresult$NMDSstat$stress)  # Extract stress of NMDS

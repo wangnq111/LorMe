@@ -15,11 +15,10 @@
 #' 3:data frame of all numeric
 #' @param reads If the input data frame were from reads table or not(relative abundance table).(Useless when taxobj is set).
 #'
-#' @return when tax taxobj is set, returns column table with group information combined with for α-diversity of each sample,else returns data frame for α-diversity of each sample
+#' @return when tax taxobj is set, returns column table with group information combined with for alpha-diversity of each sample,else returns data frame for alpha-diversity of each sample
 #' @export
 #' @note
-#' 1.All the calculation function were from package \code{\link{vegan}}. When input data frame is
-#' relative abundance table,Chao and ACE are not available
+#' 1.When input data frame is in relative abundance table,Chao and ACE are not available
 #'
 #' @importFrom vegan specnumber estimateR
 #' @author  Wang Ningqi <2434066068@qq.com>
@@ -70,8 +69,7 @@
 #' Alpha <- Filter_function(
 #'   input = testotu,
 #'   threshold = 0,
-#'   format = 1,
-#'   outformat = 2
+#'   format = 1
 #' ) %>%
 #'   Alpha_diversity_calculator2(
 #'     input = .,
@@ -81,7 +79,7 @@
 #'   )
 #' head(Alpha)
 Alpha_diversity_calculator2<- function(taxobj=NULL,taxlevel = NULL,prefix="",input,inputformat,reads){
-  if(is.null(taxobj)==T){
+  if(is.null(taxobj)==TRUE){
     if(inputformat==1){matrix <-as.matrix(t(input[,-c(1,ncol(input))]))}else ##delete annotaion##
       if(inputformat==2){matrix <-as.matrix(t(input[,-1]))}else
         if(inputformat==3){matrix <-as.matrix(t(input))}else ##delete annotaion##
@@ -91,21 +89,21 @@ Alpha_diversity_calculator2<- function(taxobj=NULL,taxlevel = NULL,prefix="",inp
     matrix=as.matrix(t(input[,-1]))
     matrix=round(matrix,0)
     groupframe=taxobj$Groupfile
-    reads=T
+    reads=TRUE
   }
-  shannon<-vegan::diversity(matrix,index='shannon');richness<-specnumber(matrix) ##calculate α-diversity##
-  evenness<-shannon/log(richness);simpson<-vegan::diversity(matrix,"simpson") ##calculate α-diversity##
-  if(reads==F){
+  shannon<-vegan::diversity(matrix,index='shannon');richness<-specnumber(matrix) ##calculate alpha-diversity##
+  evenness<-shannon/log(richness);simpson<-vegan::diversity(matrix,"simpson") ##calculate alpha-diversity##
+  if(reads==FALSE){
     alpha.frame<-data.frame(shannon,richness,evenness,simpson) %T>%
       {colnames(.)<-c(paste0(prefix,"Shannon"),paste0(prefix,"Species number"),paste0(prefix,"Simpson"),paste0(prefix,"Evenness"))}}else
-        if(reads==T){
+        if(reads==TRUE){
           matrix=round(matrix,0)
-          chao<-estimateR(matrix)[2,];ACE<-estimateR(matrix)[4,]    ##calculate α-diversity##
+          chao<-estimateR(matrix)[2,];ACE<-estimateR(matrix)[4,]    ##calculate alpha-diversity##
           alpha.frame<-data.frame(shannon,richness,evenness,simpson,chao, ACE) %T>%
             {colnames(.)<-c(paste0(prefix,"Shannon"),paste0(prefix,"Species number"),paste0(prefix,"Simpson"),paste0(prefix,"Evenness"),paste0(prefix,"Chao"),paste0(prefix,"ACE"))}}
   else {warning("PLEASE CHOOSE reads parameter!!!")}
-  if(is.null(taxobj)==F){
-    combine_and_translate(inputframe = alpha.frame,groupframe = groupframe,itemname = "Indexname",indexname = "Indexvalue",inputtype = F)%>% return()}else{
+  if(is.null(taxobj)==FALSE){
+    combine_and_translate(inputframe = alpha.frame,groupframe = groupframe,itemname = "Indexname",indexname = "Indexvalue",inputtype = FALSE)%>% return()}else{
       return(alpha.frame)
     }
 }

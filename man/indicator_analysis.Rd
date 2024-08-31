@@ -4,7 +4,7 @@
 \alias{indicator_analysis}
 \title{Indicator Analysis}
 \usage{
-indicator_analysis(taxobj, taxlevel, func = "r.g", reads = F)
+indicator_analysis(taxobj, taxlevel, func = "r.g", reads = FALSE)
 }
 \arguments{
 \item{taxobj}{tax summary objects computed by \code{\link{tax_summary}}. Default:NULL.}
@@ -29,6 +29,7 @@ These packages are not automatically loaded and should be installed before using
 data("Two_group")
 if (requireNamespace("indicspecies", quietly = TRUE) &&
     requireNamespace("permute", quietly = TRUE)) {
+  set.seed(999)
   indicator_results <- indicator_analysis(
     taxobj = Two_group,
     taxlevel = "Genus"

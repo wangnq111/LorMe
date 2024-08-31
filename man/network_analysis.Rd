@@ -7,11 +7,11 @@
 network_analysis(
   taxobj,
   taxlevel,
-  reads = F,
+  reads = FALSE,
   n,
   threshold,
   method = "spearman",
-  display = T
+  display = TRUE
 )
 }
 \arguments{
@@ -19,7 +19,7 @@ network_analysis(
 
 \item{taxlevel}{taxonomy levels used for analysis. Must be one of c("Domain","Phylum","Class","Order","Family","Genus","Species","Base")}
 
-\item{reads}{Logical,default:F. Taxonomy abundance type used in analysis.FALSE for relative abundance, TRUE for absolute abundance.}
+\item{reads}{Logical,default:FALSE. Taxonomy abundance type used in analysis.FALSE for relative abundance, TRUE for absolute abundance.}
 
 \item{n}{Numeric. Number of sample size indicating kept asv/otu/gene/taxa appearing. Recommended to set more than half of total sample size.}
 
@@ -27,7 +27,7 @@ network_analysis(
 
 \item{method}{Character, default: "spearman". A character indicating which correlation coefficient method to be computed. One of "pearson" or "spearman"}
 
-\item{display}{Logical, default:T. If display a preview plot of network based on igraph. F for the first attempt is recommended in case of too many vertices and edges.}
+\item{display}{Logical, default:TRUE. If display a preview plot of network based on igraph. FALSE for the first attempt is recommended in case of too many vertices and edges.}
 }
 \value{
 One list contains nodes information table, adjacency column table, adjacency matrix and 'igraph' object.
@@ -46,7 +46,7 @@ is recommended. Further more,we recommend you to output the statistics and adjac
 }
 \note{
 \enumerate{
-\item Replicates should be at least 5,more than 8 is recommend. See details in \code{\link{rcorr}}.
+\item Replicates should be at least 5,more than 8 is recommend.
 \item In case of too many edges/links or not a global network plot, you can stop the process immediately to provent wasting too much time.
 }
 }
@@ -54,7 +54,7 @@ is recommended. Further more,we recommend you to output the statistics and adjac
 {
   ### Data preparation ###
   data("Two_group")
-
+  set.seed(999)
   ## Analysis
   network_results <- network_analysis(
     taxobj = Two_group,

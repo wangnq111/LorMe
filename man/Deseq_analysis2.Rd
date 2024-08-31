@@ -15,7 +15,7 @@ Deseq_analysis2(inputframe, condition, cutoff, control_name, paired, subject)
 
 \item{control_name}{A character indicating the control group name}
 
-\item{paired}{Logical to determine if paired comparision would be used. T or F.}
+\item{paired}{Logical to determine if paired comparision would be used. TRUE or FALSE.}
 
 \item{subject}{A character string which indicates paired design of samples}
 }
@@ -35,6 +35,7 @@ Deseq analysis
 }
 }
 \examples{
+\donttest{
 {
   ### Data preparation ###
   data(testotu)
@@ -65,6 +66,7 @@ Deseq analysis
       subject = subject
     )
   }
+}
 }
 }
 \seealso{

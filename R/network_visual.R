@@ -21,7 +21,7 @@
 #' {
 #'   # Data preparation
 #'   data("Two_group")
-#'
+#'   set.seed(999)
 #'   # Analysis
 #'   network_results <- network_analysis(
 #'     taxobj = Two_group,
@@ -72,20 +72,20 @@ network_visual=function(network_obj,mode="major_module",major_num=5,taxlevel=NUL
   adjfile=network_obj$Adjacency_column_table
   verticefile=network_obj$Nodes_info
 
-  t_net_its <- graph_from_data_frame(adjfile,directed=F,vertices = verticefile)
+  t_net_its <- graph_from_data_frame(adjfile,directed=FALSE,vertices = verticefile)
   #color
   if(mode=="major_module"){
-    module_stat=V(t_net_its)$No.module %>% table() %>% sort(decreasing=T)
+    module_stat=V(t_net_its)$No.module %>% table() %>% sort(decreasing=TRUE)
     if(major_num>length(module_stat)){
       major_num=length(module_stat)
       warning("Module number less than 'major_num',all modules were colored")
     }
     if(length(palette)>1){
       tax_col=color_scheme(Plan = palette,
-                           expand = major_num,show=F)
+                           expand = major_num,show=FALSE)
     }else if(palette %in% paste0("Plan",1:10)){
       tax_col=color_scheme(Plan = palette,
-                           expand = major_num,show=F)
+                           expand = major_num,show=FALSE)
     }else{
       color_n<-brewer.pal.info[palette,]$maxcolors
       getPalette <-colorRampPalette(brewer.pal(color_n, palette))
@@ -108,14 +108,14 @@ network_visual=function(network_obj,mode="major_module",major_num=5,taxlevel=NUL
     if(length(palette)>1){
       if(is.null(names(palette))){
         tax_col=color_scheme(Plan = palette,
-                             expand = length(select_tax),show=F)
+                             expand = length(select_tax),show=FALSE)
         names(tax_col)=select_tax
       }else{
         tax_col=palette
       }
     }else if(palette %in% paste0("Plan",1:10)){
       tax_col=color_scheme(Plan = palette,
-                           expand = length(select_tax),show=F)
+                           expand = length(select_tax),show=FALSE)
       names(tax_col)=select_tax
     }else{
       color_n<-brewer.pal.info[palette,]$maxcolors
@@ -131,7 +131,6 @@ network_visual=function(network_obj,mode="major_module",major_num=5,taxlevel=NUL
     warning("Invalid 'mode'! Please select between 'major_module' and 'major_tax'!")
     return(NULL)
   }
-  set.seed(1)
   coords_t_its <- layout_(t_net_its,with_fr(niter=9999, grid="auto"))
   plot(t_net_its,vertex.label=NA,vertex.size=vertex.size,layout=coords_t_its,vertex.shape="circle")
   outlist=c(list(t_net_its),list(coords_t_its))

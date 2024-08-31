@@ -1,23 +1,23 @@
 ####Version1.0.0###
 ###Author Wangningqi####
-#' @title Package meta file, feature tables and taxonomy annotation into tax summary object
+#' @title Encapsulate meta file, feature tables and taxonomy annotation into tax summary object
 #' @description The function packages meta file, feature tables and taxonomy annotation into tax summary object
 #' @param groupfile A data frame containing treatment information
 #' @param inputtable OTU/ASV/species data frame with all numeric. Samples ID should be in column names.
-#' @param reads Logical.True for reads table and F for percentage table. Default: T
+#' @param reads Logical.True for reads table and FALSE for percentage table. Default: TRUE
 #' @param taxonomytable Taxonomy annotation data frame,with first column OTU/ASV/TAX number ID and second column taxonomy annotation. See details in example.
-#' @param into Names of separated taxonomy to create as character vector. Must select from c("Domain","Phylum","Class","Order","Family","Genus","Species").See details in \code{\link{separate}}.
+#' @param into Names of separated taxonomy to create as character vector. Must select from c("Domain","Phylum","Class","Order","Family","Genus","Species").
 #'             Shortcut input:1)By default."standard":c("Domain","Phylum","Class","Order","Family","Genus","Species"). Used for standard taxonomy annotation to OTU/ASV table.
 #'                            2)"complete":c("Domain","Kingdom","Phylum","Class","Order","Family","Genus","Species"). Used for complete taxonomy annotation to meta genomic table.
-#' @param sep Separator of taxonomy table.Default: ";".See details in \code{\link{separate}}.
-#' @param outputtax Names of output taxonomy level table.Default:c("Phylum","Genus"). Shortcut input is available with 'standard' and 'complete' same as above.
+#' @param sep Separator of taxonomy table.Default: ";".
+#' @param outputtax Names of output taxonomy level table. Default:c("Phylum","Genus"). Shortcut input is available with 'standard' and 'complete' same as above.
 #'
 #' @author Wang Ningqi <2434066068@qq.com>
 #' @return One list containing taxonomy table data frame,containing reads and percentage table for each specified output. Full taxonomy annotation data frame is output in global environment.
 #' @export
 #'
 #' @note
-#' 1.For taxonomy annotation with 'Kingdom' level, please set 'into' parameter as 'complete'!!!
+#' For taxonomy annotation with 'Kingdom' level, please set 'into' parameter as 'complete'!!!
 #'
 #' @import magrittr
 #' @importFrom tidyr separate
@@ -66,8 +66,7 @@
 #'   head(test_object$Species_percent)  # View first 10 rows of species percentage
 #'   head(test_object$Genus)  # View first 10 rows of genus table
 #' }
-tax_summary=function(groupfile,inputtable,reads=T,taxonomytable,into="standard",sep=";",outputtax=c("Phylum","Genus")){
-  options(warn =-1)
+tax_summary=function(groupfile,inputtable,reads=TRUE,taxonomytable,into="standard",sep=";",outputtax=c("Phylum","Genus")){
   parameters=list(into,sep,outputtax)
   if(into=="standard"){
     into=c("Domain","Phylum","Class","Order","Family","Genus","Species")
@@ -169,7 +168,7 @@ tax_summary=function(groupfile,inputtable,reads=T,taxonomytable,into="standard",
     }
     output=c(output,output_temp)
   }
-  if(reads==F){
+  if(reads==FALSE){
     output$Base_percent=output$Base
     output$Base=NULL
   }

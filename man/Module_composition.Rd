@@ -26,7 +26,7 @@ Module_composition(
 
 \item{top_n}{The number of top taxa to plot when mode is set to "most"}
 
-\item{palette}{Character. Palette for visualization,default:"Set1".See optional palette in \code{\link{brewer.pal.info}}. "Plan1" to "Plan10" were also optional,see in \code{\link{color_scheme}}}
+\item{palette}{Character. Palette for visualization,default:"Set1".See optional palette in same as 'RColorBrewer'. And "Plan1" to "Plan10" were also optional,see in \code{\link{color_scheme}}}
 
 \item{select_tax}{A vector of taxa to be selected for plotting when mode is "select".}
 

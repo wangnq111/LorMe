@@ -13,17 +13,16 @@
 #' @param output A character string indicating output style. Default: "console", which print the report in console. And "file" is available to output report into text-file.
 #' @param output_dir Default:"./". Available only when output="file". The direction of output file.
 #' @param filename A character string indicating file name of output file. Only work when output set as 'file'.
+#' @param report Logical. If print report to console. Default:TRUE
 #'
 #' @return
 #' auto_signif_test returns results of significant test and print report in console or file. See details in example.
 #'
 #' See results return in \code{\link{t_test_report}}, \code{\link{wilcox_test_report}}, \code{\link{anova_report}}, \code{\link{kruskal_report}}.
 #' @note
-#' 1.Package \code{\link{agricolae}}, \code{\link{DescTools}}, \code{\link{multcompView}}, \code{\link{HH}}， \code{\link{coin}} are suggested in this function.
+#' 1.when choose output="file", once caused error that terminate the program, use 'sink()' to end the written of exist files.
 #'
-#' 2.when choose output="file", once caused error that terminate the program, use 'sink()' to end the written of exist files.
-#'
-#' 3.Please confirm your data is in format of dataframe, else may cause bug! (e.g. Do not use 'read.xlsx' to load data into tibble format)
+#' 2.Please confirm your data is in format of dataframe, else may cause bug! (e.g. Do not use 'read.xlsx' to load data into tibble format)
 #' @export
 #'
 #' @importFrom HH hov
@@ -82,7 +81,7 @@
 #' head(sig_results)  # Check outputs
 #' print(sig_results$comparison_letters)  # Note that letters become different
 #'
-auto_signif_test=function(data,treatment_col,value_col,paired,subject_col,prior=F,comparison_method=NULL,equally_rep=T,output="console",output_dir="./",filename="auto_signif_test"){
+auto_signif_test=function(data,treatment_col,value_col,paired,subject_col,prior=FALSE,comparison_method=NULL,equally_rep=TRUE,output="console",output_dir="./",filename="auto_signif_test",report=TRUE){
   data=as.data.frame(data)
   if(length(unique(data[,treatment_col]))==1){
     warning("Only one group detected, please check you data or 'treatment_col'")
@@ -94,13 +93,13 @@ auto_signif_test=function(data,treatment_col,value_col,paired,subject_col,prior=
     sink(filename)}
   data[,treatment_col]=factor(data[,treatment_col])
   ##pre_hypo####
-  cat("###Distribution hypothesis####\n")
-  if(missing(paired)){paired=F}
+  if(report==TRUE){cat("###Distribution hypothesis####\n")}
+  if(missing(paired)){paired=FALSE}
   if(missing(subject_col)){subject_col=NULL}
   ntreat=data[,treatment_col]  %>% unique() %>% length()
   if(ntreat==1){warnings("Only one treatment detected!!!")}else
     if(ntreat==2){
-      if(paired==F){model=lm(data[,value_col]~data[,treatment_col])
+      if(paired==FALSE){model=lm(data[,value_col]~data[,treatment_col])
       equal_variance=hov(data[,value_col]~data[,treatment_col])
       normality=shapiro.test(residuals(model))}else{
         #paired differences##
@@ -110,7 +109,7 @@ auto_signif_test=function(data,treatment_col,value_col,paired,subject_col,prior=
       }
     }else
       if(ntreat>2){
-        if(paired==F){
+        if(paired==FALSE){
           model=lm(data[,value_col]~data[,treatment_col])
           equal_variance=hov(data[,value_col]~data[,treatment_col])
         }else{
@@ -130,28 +129,29 @@ auto_signif_test=function(data,treatment_col,value_col,paired,subject_col,prior=
         normality=shapiro.test(residuals(model))
       }
   ##output report part1####
-  if(normality$p.value>0.05){
-    cat("Normality Test (Shapiro-Wilk): Passed (P = ",round(normality$p.value,3),")\n\n")}else{
-      cat("Normality Test (Shapiro-Wilk): Failed (P = ",normality$p.value,")\n")
-    }
-  if(ntreat!=2|paired==F){
-    if(equal_variance$p.value>0.05){
-      cat("Equal Variance Test (Brown-Forsythe):	Passed	(P = ",round(equal_variance$p.value,3),")\n")}else{
-        cat("Equal Variance Test (Brown-Forsythe):	Failed	(P = ",equal_variance$p.value,")\n")
+  if(report==TRUE){
+    if(normality$p.value>0.05){
+      cat("Normality Test (Shapiro-Wilk): Passed (P = ",round(normality$p.value,3),")\n\n")}else{
+        cat("Normality Test (Shapiro-Wilk): Failed (P = ",normality$p.value,")\n")
       }
-  }
-
+    if(ntreat!=2|paired==FALSE){
+      if(equal_variance$p.value>0.05){
+        cat("Equal Variance Test (Brown-Forsythe):	Passed	(P = ",round(equal_variance$p.value,3),")\n")}else{
+          cat("Equal Variance Test (Brown-Forsythe):	Failed	(P = ",equal_variance$p.value,")\n")
+        }
+    }
+    }
   ####differences####
-  if(paired==T){
+  if(paired==TRUE){
     if(ntreat==1){warnings("Only one treatment detected!!!")}else
       if(ntreat==2){
         if(normality$p.value>0.05){
-          t_test_results<-t_test_report(data = data,treatment_col = treatment_col,value_col = value_col,paired = T,subject_col = subject_col)
+          t_test_results<-t_test_report(data = data,treatment_col = treatment_col,value_col = value_col,paired = TRUE,subject_col = subject_col)
           message("Analysis finished")
           if(output=="file"){sink()}
           return(t_test_results)
         }else{
-          wilcox_result<-wilcox_test_report(data = data,treatment_col = treatment_col,value_col = value_col,paired = T,subject_col = subject_col)
+          wilcox_result<-wilcox_test_report(data = data,treatment_col = treatment_col,value_col = value_col,paired = TRUE,subject_col = subject_col)
           message("Analysis finished")
           if(output=="file"){sink()}
           return(wilcox_result)
@@ -164,7 +164,7 @@ auto_signif_test=function(data,treatment_col,value_col,paired,subject_col,prior=
         }
       }
   }else{
-    ##paired==F####
+    ##paired==FALSE####
     if(ntreat==1){warnings("Only one treatment detected!!!")}else
       if(ntreat==2){
         if(normality$p.value>0.05&equal_variance$p.value>0.05){
@@ -173,7 +173,7 @@ auto_signif_test=function(data,treatment_col,value_col,paired,subject_col,prior=
           if(output=="file"){sink()}
           return(t_test_results)
         }else{
-          wilcox_results<-wilcox_test_report(data = data,treatment_col = treatment_col,value_col = value_col,paired = F)
+          wilcox_results<-wilcox_test_report(data = data,treatment_col = treatment_col,value_col = value_col,paired = FALSE)
           message("Analysis finished")
           if(output=="file"){sink()}
           return(wilcox_results)

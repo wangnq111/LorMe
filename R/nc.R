@@ -29,7 +29,7 @@
 nc <- function(adj_matrix) {
   lambda0 <- as.matrix(adj_matrix)%>% abs() %>%
     eigen(only.values = TRUE)
-  lambda<-lambda0$values %>% sort(decreasing = T)
+  lambda<-lambda0$values %>% sort(decreasing = TRUE)
   lambda_sum <- 0
   for (i in 1:length(lambda)){
     lambda_sum = lambda_sum + exp(lambda[i])

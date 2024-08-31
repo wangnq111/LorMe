@@ -17,13 +17,14 @@
 #' data("Two_group")
 #' if (requireNamespace("indicspecies", quietly = TRUE) &&
 #'     requireNamespace("permute", quietly = TRUE)) {
+#'   set.seed(999)
 #'   indicator_results <- indicator_analysis(
 #'     taxobj = Two_group,
 #'     taxlevel = "Genus"
 #'   )
 #'   head(indicator_results)
 #' }
-indicator_analysis=function(taxobj,taxlevel,func="r.g",reads=F){
+indicator_analysis=function(taxobj,taxlevel,func="r.g",reads=FALSE){
   if (!requireNamespace("indicspecies", quietly = TRUE)) {
     stop("The 'indicspecies' package is required for this function. Please install it using install.packages('indicspecies').")
   }
@@ -35,25 +36,24 @@ indicator_analysis=function(taxobj,taxlevel,func="r.g",reads=F){
     return(NULL)
   }
   if(is.null(eval(parse(text=paste0("taxobj","$",taxlevel))))){
-    warning("Illegal 'taxlevel'!")
+    stop("Illegal 'taxlevel'!")
     return(NULL)
   }
   groupfile= eval(parse(text=paste0("taxobj$Groupfile")))
   condition= groupfile[eval(parse(text=paste0("taxobj$configuration$treat_location"))) ]
   condition= condition[,1]
   if(length(unique(condition))==1){
-    warning("Insufficient group for comparsion!")
+    stop("Insufficient group for comparsion!")
     return(NULL)
   }
   taxonomy=eval(parse(text=paste0("taxobj","$",taxlevel,"_taxonomy")))
-  if(reads==F){
+  if(reads==FALSE){
     input0=eval(parse(text=paste0("taxobj","$",taxlevel,"_percent")))
   }else{
     input0=eval(parse(text=paste0("taxobj","$",taxlevel)))
   }
   inputframe=data.frame(input0[,-1],row.names =taxonomy[,1])
-  cat("Calculating.......\n")
-  set.seed(999)
+  message("Calculating.......\n")
   indicator_results=indicspecies::multipatt(as.data.frame(t(inputframe)),condition,func = func,control=permute::how(nperm=1000)) %$%
     as.data.frame(sign)
   indicator_results$ID=rownames(indicator_results)

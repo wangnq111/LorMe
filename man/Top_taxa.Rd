@@ -42,8 +42,7 @@ testotu.pct <- data.frame(
 sep_testotu <- Filter_function(
   input = testotu,
   threshold = 0.0001,
-  format = 1,
-  outformat = 2
+  format = 1
 ) \%>\%
   separate(
     ., col = taxonomy,
