@@ -21,7 +21,7 @@ remotes::install_github("wangnq111/LorMe")
 
 
 # Illustration
-[Getting Started] (https://wangnq111.github.io/Gettingstarted.html)
+[Getting Started](https://wangnq111.github.io/Gettingstarted.html)
 ## Chinese version
 Chinese illustration available at 🏮 [LorMe中文版说明书](https://rural-dianella-be0.notion.site/LorMe-aac2ba66a3bf46bd89c103e78550e6f4) 🏮
 ## Visualization
