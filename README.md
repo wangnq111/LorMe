@@ -3,7 +3,7 @@
 Version](https://www.r-pkg.org/badges/version/LorMe)](https://cran.r-project.org/package=LorMe)
 <!-- badges: end -->
 # LorMe
-LorMe package for R：Lightening One-code Resolving Microbial Ecology Program. LorMe keeps updating and maintanence. 
+LorMe package for R：Lightening One-code Resolving Microbial Ecology Solution. LorMe keeps updating and maintanence. 
 
 # Suggestions and bug report
 2434066068@qq.com
