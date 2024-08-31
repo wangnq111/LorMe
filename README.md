@@ -1,3 +1,7 @@
+<!-- badges: start -->
+[![CRAN
+Version](https://www.r-pkg.org/badges/version/LorMe)](https://cran.r-project.org/package=LorMe)
+
 # LorMe
 LorMe package for R：Lightening One-code Resolving Microbial Ecology Program. LorMe keeps updating and maintanence. 
 
@@ -5,7 +9,11 @@ LorMe package for R：Lightening One-code Resolving Microbial Ecology Program. L
 2434066068@qq.com
 
 # Installation
-development version from GitHub :stuck_out_tongue_closed_eyes:
+Standard version from CRAN
+```{R}
+install.packages("LorMe")
+```
+Development version from GitHub :stuck_out_tongue_closed_eyes:
 ```{R}
 if (!require(remotes)) install.packages("remotes")
 remotes::install_github("wangnq111/LorMe")
@@ -13,6 +21,7 @@ remotes::install_github("wangnq111/LorMe")
 
 
 # Illustration
+[Getting Started] (https://wangnq111.github.io/Gettingstarted.html)
 ## Chinese version
 Chinese illustration available at 🏮 [LorMe中文版说明书](https://rural-dianella-be0.notion.site/LorMe-aac2ba66a3bf46bd89c103e78550e6f4) 🏮
 ## Visualization
