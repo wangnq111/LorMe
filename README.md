@@ -4,11 +4,10 @@ Version](https://www.r-pkg.org/badges/version/LorMe)](https://cran.r-project.org
 [![Downloads from the RStudio CRAN
 mirror](https://cranlogs.r-pkg.org/badges/LorMe)](https://cran.r-project.org/package=LorMe)
 <!-- badges: end -->
-# LorMe
-LorMe package for R：Lightening One-code Resolving Microbial Ecology Solution. LorMe keeps updating and maintanence. 
+# LorMe package for R：Lightening One-code Resolving Microbial Ecology Solution
+LorMe Provides a robust collection of functions tailored for microbial ecology analysis, encompassing both data analysis and visualization. It introduces an encapsulation feature that streamlines the process into a summary object. With the initial configuration of this summary object, users can execute a wide range of analyses with a single line of code, requiring only two essential parameters for setup. The package delivers comprehensive outputs including analysis objects, statistical outcomes, and visualization-ready data, enhancing the efficiency of research workflows. Designed with user-friendliness in mind, it caters to both novices and seasoned researchers, offering an intuitive interface coupled with adaptable customization options to meet diverse analytical needs. LorMe keeps updating and maintanence. 
 
-# Suggestions and bug report
-2434066068@qq.com
+<img src="./man/figures/functions.png" width="60%" style="display: block; margin: auto;" />
 
 # Installation
 Standard version from CRAN
@@ -26,6 +25,10 @@ remotes::install_github("wangnq111/LorMe")
 [Getting Started](https://wangnq111.github.io/Gettingstarted.html)
 ## Chinese version
 Chinese illustration available at 🏮 [LorMe中文版说明书](https://rural-dianella-be0.notion.site/LorMe-aac2ba66a3bf46bd89c103e78550e6f4) 🏮
+
+# Suggestions and bug report
+2434066068@qq.com
+
 ## Visualization
 
 ### Community Feature
