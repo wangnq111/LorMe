@@ -66,7 +66,7 @@ community_plot=function(taxobj,taxlevel,n=10,palette="Spectral",nrow=NULL,rmpref
     warning("Illegal 'taxlevel'!")
     return(NULL)
   }
-  if(is.null(taxobj["configuration"])){warning("taxonomic summary object not configured yet, call '?object_config' for configuration")}
+  if(is.null(taxobj$configuration)){stop("taxonomic summary object not configured yet, call '?object_config' for configuration")}
   color_n<-brewer.pal.info[palette,]$maxcolors
   getPalette <-colorRampPalette(brewer.pal(color_n, palette))
   inputframe=eval(parse(text=paste0("taxobj","$",taxlevel,"_percent")))

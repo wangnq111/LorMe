@@ -109,8 +109,11 @@ tax_summary=function(groupfile,inputtable,reads=TRUE,taxonomytable,into="standar
   output=c(output,list(groupfile))
   names(output)[1]="Groupfile"
   base_table=data.frame(ID=taxonomytable[,1],inputtable)
+  if(is.numeric(base_table$ID)){base_table$ID=as.character(base_table$ID)}
   base_table_pct=data.frame(ID=taxonomytable[,1],sweep(inputtable,colSums(inputtable),"/",MARGIN = 2))
+  if(is.numeric(base_table_pct$ID)){base_table_pct$ID=as.character(base_table_pct$ID)}
   base_taxonomy=data.frame(ID=taxonomytable[,1],taxonomy_update)
+  if(is.numeric(base_taxonomy$ID)){base_taxonomy$ID=as.character(base_taxonomy)}
   output_temp=list(base_table,base_table_pct,base_taxonomy)
   names(output_temp)[1]="Base"
   names(output_temp)[2]="Base_percent"

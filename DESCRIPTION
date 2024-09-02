@@ -1,6 +1,6 @@
 Package: LorMe
 Title: Lightening One-Code Resolving Microbial Ecology Solution
-Version: 1.0.0
+Version: 1.0.1
 Authors@R: 
     c(person(given = "Ningqi",
            family = "Wang",
@@ -10,7 +10,7 @@ Authors@R:
            family = "Zhang",
            role = c("aut"),
            email = "18888198926@163.com",),
-           person(given = "Geofei",
+           person(given = "Gaofei",
            family = "Jiang",
            role = c("aut"),
            email = "gjiang@njau.edu.cn",))

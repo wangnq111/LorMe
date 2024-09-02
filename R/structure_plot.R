@@ -82,7 +82,7 @@ structure_plot=function(taxobj,taxlevel,ptsize=2,diagram=NULL,ellipse.level=0.85
   if(!taxlevel %in% c("Domain","Kingdom","Phylum","Class","Order","Family","Genus","Species","Base")){
     warning("Illegal 'taxlevel',please choose among c('Domain','Kingdom','Phylum','Class','Order','Family','Genus','Species','Base'")
   }
-  if(!"configuration" %in% names(taxobj)){warnings("taxonomy summary object not configured yet, call '?object_config' for configuration")}
+  if(is.null(taxobj$configuration)){stop("taxonomic summary object not configured yet, call '?object_config' for configuration")}
   inputframe=eval(parse(text=paste0("taxobj","$",taxlevel,"_percent")))
   input=data.frame(inputframe[,-1],row.names = paste0(taxlevel,1:nrow(inputframe)))
   groupframe=taxobj$Groupfile

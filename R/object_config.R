@@ -52,6 +52,17 @@ object_config=function(taxobj,treat_location,facet_location=NULL,rep_location,su
   gp=taxobj[["Groupfile"]]
   cond=unique(gp[,treat_location])
   fit=which(cond %in%treat_order)
+  if(treat_location>ncol(taxobj$Groupfile)){
+    stop("Invalid 'treat_location',Please check again!")
+  }
+  if(rep_location>ncol(taxobj$Groupfile)){
+    stop("Invalid 'treat_location',Please check again!")
+  }
+  taxobj$Groupfile[,rep_location]=as.numeric(taxobj$Groupfile[,rep_location]) %>% suppressWarnings()
+
+  if(length(which(is.na(taxobj$Groupfile[,rep_location])==TRUE))>1){
+    stop("Invalid 'rep_location',please confirm replication column in you metadata is in 'numeric'!")
+  }
   if(!is.null(treat_order)){
     if( length(fit)!=length(cond)){
       warning('treat_order does not match your treatment, please check!')

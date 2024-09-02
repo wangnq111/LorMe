@@ -135,7 +135,7 @@ differential_bar=function(taxobj,
     t_summary=rbind(t_summary,data.frame(ID,p.value,estimate,conf.low,conf.high,mean1,mean2))
     i=i+1
   }
-  colnames(t_summary)[6:7]=unique(taxobj$Groupfile$Group) %>% sort()
+  colnames(t_summary)[6:7]=unique(condition)  %>% sort()
   t_summary$padj=p.adjust(t_summary$p.value,"BH")
   colnames(t_summary)[1]=colnames(taxonomy)[1]
   t_summary_anno=left_join(t_summary,taxonomy) %>% suppressMessages()

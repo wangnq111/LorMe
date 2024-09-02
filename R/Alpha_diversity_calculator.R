@@ -37,7 +37,7 @@ Alpha_diversity_calculator<- function(taxobj,taxlevel,prefix=""){
     warning("Illegal 'taxlevel'!")
     return(NULL)
   }
-  if(is.null(taxobj["configuration"])){warning("taxonomic summary object not configured yet, call '?object_config' for configuration")}
+  if(is.null(taxobj$configuration)){stop("taxonomic summary object not configured yet, call '?object_config' for configuration")}
   input=eval(parse(text=paste0("taxobj","$",taxlevel)))
   matrix=as.matrix(t(input[,-1]))
   matrix=round(matrix,0)
