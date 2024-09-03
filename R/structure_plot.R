@@ -227,7 +227,7 @@ structure_plot=function(taxobj,taxlevel,ptsize=2,diagram=NULL,ellipse.level=0.85
     if(diagram=="ellipse"){
       NMDSplot=NMDSplot+
         geom_point(size=ptsize,alpha=.8,pch=21,color="black",aes(fill=factor(groupframe[,treat_location]))) +
-        stat_ellipse(level=ellipse.level,lty=2)
+        stat_ellipse(level=ellipse.level,lty=2,aes(color=factor(groupframe[,treat_location])))
     }else if(diagram=="stick"){
       NMDSplot=NMDSplot+
         geom_segment(aes(xend = NMDSframe[,'cent1'], yend = NMDSframe[,'cent2'],color=factor(groupframe[,treat_location])), show.legend = FALSE,size=.3,alpha=.8) +
