@@ -20,7 +20,7 @@ Module_composition(
 
 \item{No.module}{Numeric or numeric vector of No.module}
 
-\item{taxlevel}{taxonomy levels used for visualization.Must be one of c("Domain","Phylum","Class","Order","Family","Genus","Species","Base").Default:NULL.}
+\item{taxlevel}{Taxonomy levels used for visualization.Must be one of c("Domain","Phylum","Class","Order","Family","Genus","Species","Base").Default:"Phylum".}
 
 \item{mode}{The mode for selecting which taxa to plot: "all" for all taxa, "most" for the top N taxa, and "select" for specific taxa selection}
 
@@ -52,7 +52,7 @@ providing a visual and data summary based on taxonomic levels.
     threshold = 0.7
   )
 
-  # Show all modules
+  # Show all taxa
   module_results <- Module_composition(
     network_obj = network_Two_group,
     No.module = c(2, 5),

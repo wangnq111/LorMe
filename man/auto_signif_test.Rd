@@ -2,7 +2,7 @@
 % Please edit documentation in R/Pre_assumption.R
 \name{auto_signif_test}
 \alias{auto_signif_test}
-\title{Automatically significance testing}
+\title{Automatic significance test}
 \usage{
 auto_signif_test(
   data,
@@ -50,7 +50,7 @@ auto_signif_test returns results of significant test and print report in console
 See results return in \code{\link{t_test_report}}, \code{\link{wilcox_test_report}}, \code{\link{anova_report}}, \code{\link{kruskal_report}}.
 }
 \description{
-Automatically choose significance testing
+Automatically conduct significance testing
 }
 \note{
 1.when choose output="file", once caused error that terminate the program, use 'sink()' to end the written of exist files.

@@ -15,13 +15,13 @@ Deseq_analysis(
 )
 }
 \arguments{
-\item{taxobj}{Taxonomic summary objects containing the taxonomic information, relative abundance, metafile and configuration.}
+\item{taxobj}{Configured tax summary objects.See in \code{\link{object_config}}.}
 
 \item{taxlevel}{The taxonomic level for the analysis.Must be one of c("Domain","Phylum","Class","Order","Family","Genus","Species","Base")}
 
 \item{comparison}{A vector of conditions to compare. Default: NULL, all unique conditions are compared (only for Two groups).}
 
-\item{cutoff}{The log2 fold change cutoff for considering a taxon as differentially expressed.}
+\item{cutoff}{The log2 fold change cutoff for considering as differential taxon.}
 
 \item{control_name}{Character. The name of the control group for the comparison.}
 

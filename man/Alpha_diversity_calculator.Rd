@@ -7,9 +7,9 @@
 Alpha_diversity_calculator(taxobj, taxlevel, prefix = "")
 }
 \arguments{
-\item{taxobj}{tax summary objects computed by \code{\link{tax_summary}}. Default:NULL.}
+\item{taxobj}{Configured tax summary objects.See in \code{\link{object_config}}.}
 
-\item{taxlevel}{taxonomy levels used for visualization.Must be one of c("Domain","Phylum","Class","Order","Family","Genus","Species","Base").Default:NULL.}
+\item{taxlevel}{taxonomy levels used for visualization.Must be one of c("Domain","Phylum","Class","Order","Family","Genus","Species","Base").}
 
 \item{prefix}{A character string as prefix of diversity index. Default:""}
 }

@@ -7,9 +7,9 @@
 indicator_analysis(taxobj, taxlevel, func = "r.g", reads = FALSE)
 }
 \arguments{
-\item{taxobj}{tax summary objects computed by \code{\link{tax_summary}}. Default:NULL.}
+\item{taxobj}{Configured tax summary objects.See in \code{\link{object_config}}.}
 
-\item{taxlevel}{taxonomy levels used for visualization.Must be one of c("Domain","Phylum","Class","Order","Family","Genus","Species","Base").Default:NULL.}
+\item{taxlevel}{taxonomy levels used for visualization.Must be one of c("Domain","Phylum","Class","Order","Family","Genus","Species","Base").}
 
 \item{func}{Default: "r.g".The function to use for the indicator analysis, see in \code{\link[indicspecies]{multipatt}}}
 

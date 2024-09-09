@@ -15,14 +15,14 @@ differential_bar(
 )
 }
 \arguments{
-\item{taxobj}{Tax summary objects computed by \code{\link{tax_summary}}. Default: NULL.}
+\item{taxobj}{Configured tax summary objects.See in \code{\link{object_config}}.}
 
 \item{taxlevel}{Taxonomy levels used for visualization. Must be one of
-c("Domain","Phylum","Class","Order","Family","Genus","Species","Base"). Default: NULL.}
+c("Domain","Phylum","Class","Order","Family","Genus","Species","Base").}
 
 \item{comparison}{A vector of conditions to compare. Default: NULL, all unique conditions are compared (only for Two groups).}
 
-\item{rel_threshold}{Threshold filtering taxa for differential analysis.}
+\item{rel_threshold}{Threshold filtering taxa for differential analysis. Default:0.005}
 
 \item{anno_row}{Default: 'taxonomy'. Rownames for visualization. Options are 'taxonomy' for showing taxonomic information and 'ID' for showing taxonomic ID.}
 
