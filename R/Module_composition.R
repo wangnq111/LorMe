@@ -4,7 +4,7 @@
 #'
 #' @param network_obj Network analysis results generated from \code{\link{network_analysis}}
 #' @param No.module Numeric or numeric vector of No.module
-#' @param taxlevel  taxonomy levels used for visualization.Must be one of c("Domain","Phylum","Class","Order","Family","Genus","Species","Base").Default:NULL.
+#' @param taxlevel  Taxonomy levels used for visualization.Must be one of c("Domain","Phylum","Class","Order","Family","Genus","Species","Base").Default:"Phylum".
 #' @param mode The mode for selecting which taxa to plot: "all" for all taxa, "most" for the top N taxa, and "select" for specific taxa selection
 #' @param top_n The number of top taxa to plot when mode is set to "most"
 #' @param palette Character. Palette for visualization,default:"Set1".See optional palette in same as 'RColorBrewer'. And "Plan1" to "Plan10" were also optional,see in \code{\link{color_scheme}}
@@ -32,7 +32,7 @@
 #'     threshold = 0.7
 #'   )
 #'
-#'   # Show all modules
+#'   # Show all taxa
 #'   module_results <- Module_composition(
 #'     network_obj = network_Two_group,
 #'     No.module = c(2, 5),

@@ -1,6 +1,6 @@
 #version 1.2.0
-#' Automatically significance testing
-#' @description Automatically choose significance testing
+#' Automatic significance test
+#' @description Automatically conduct significance testing
 #'
 #' @param data Data frame containing the treatment, value and other information.
 #' @param treatment_col Numeric indicating where treatment locates (column number) in data.
