@@ -22,9 +22,7 @@ remotes::install_github("wangnq111/LorMe")
 LorMe will only update the major and minor versions on CRAN, but will update each patch version on GitHub. 
 The following are the update logs that differ from the CRAN version:
 
-02/09/2024 Patch version 1.0.1 Hot fix: Added a self-check program to the configuration function; Fixed compatibility issues in 'differential_bar'; Corrected the vector types of some elements in the encapsulated functions.
-03/09/2024 Patch version 1.0.1 Hot fix: fixed confidence circles in the NMDS plot of structure_plot were not displayed according to groups
-09/09/2024 Patch version 1.0.1 Hot fix: modified some description in examples.
+14/09/2024 LorMe in CRAN and github updated to version 1.1.0 
 
 # Illustration
 [Getting Started](https://wangnq111.github.io/Gettingstarted.html)
