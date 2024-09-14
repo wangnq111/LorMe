@@ -37,11 +37,16 @@ Module_abundance=function(
     No.module
 ){
   rowframe=network_obj$config$Groupfile
+  inputdata=network_obj$config$input_data
+  columsum=colSums(inputdata[,-1])
+  if(columsum[1]>1){
+    inputdata[,-1]=sweep(inputdata[,-1],columsum,"/",MARGIN=2)
+  }
   for(i in No.module){
     input_table = as.data.frame(network_obj$Nodes_info)
     nodes_list=input_table$nodes_id[input_table$No.module==i]
     inputtax=network_obj$config$input_taxonomy
-    select_table=network_obj$config$input_data[(inputtax[,1])%in% nodes_list ,]
+    select_table=inputdata[(inputtax[,1])%in% nodes_list ,]
     rowframe=data.frame(rowframe,colSums(select_table[,-1]))
     colnames(rowframe)[ncol(rowframe)]=paste0("Module",i)
   }

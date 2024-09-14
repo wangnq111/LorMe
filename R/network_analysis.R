@@ -5,6 +5,7 @@
 #' @param reads Logical,default:FALSE. Taxonomy abundance type used in analysis.FALSE for relative abundance, TRUE for absolute abundance.
 #' @param n Numeric. Number of sample size indicating kept asv/otu/gene/taxa appearing. Recommended to set more than half of total sample size.
 #' @param threshold Numeric.Threshold of absolute correlation value (r value for pearson method and rho value for spearman method).
+#' @param rel_threshold Numeric.Threshold of relative abundance included in the network analysis.Default:0
 #' @param method Character, default: "spearman". A character indicating which correlation coefficient method to be computed. One of "pearson" or "spearman"
 #' @param display Logical, default:TRUE. If display a preview plot of network based on igraph. FALSE for the first attempt is recommended in case of too many vertices and edges.
 #' @return  One list contains nodes information table, adjacency column table, adjacency matrix and 'igraph' object.
@@ -57,7 +58,7 @@
 #'   network_stat(igraph_object)  # In case you want to see statistics again
 #'   # or do other analysis based on igraph.
 #' }
-network_analysis<-function(taxobj,taxlevel,reads=FALSE,n,threshold,method="spearman",display=TRUE){
+network_analysis<-function(taxobj,taxlevel,reads=FALSE,n,threshold,rel_threshold=0,method="spearman",display=TRUE){
   if(!taxlevel %in% c("Domain","Kingdom","Phylum","Class","Order","Family","Genus","Species","Base")){
     stop("Illegal 'taxlevel',please choose among c('Domain','Kingdom','Phylum','Class','Order','Family','Genus','Species','Base'")
   }
@@ -65,29 +66,40 @@ network_analysis<-function(taxobj,taxlevel,reads=FALSE,n,threshold,method="spear
     input0=eval(parse(text=paste0("taxobj","$",taxlevel,"_percent")))
   }else{
     input0=eval(parse(text=paste0("taxobj","$",taxlevel)))
-    }
+  }
   taxonomy=eval(parse(text=paste0("taxobj","$",taxlevel,"_taxonomy")))
   input1=data.frame(input0[,-1],row.names =taxonomy[,1])
+  if(reads==FALSE){
+    if((which(rowMeans(input1)>rel_threshold) %>% length())==0){
+      stop("'rel_threshold' was too high!Please set lower!" )
+    }
+    input1=input1[rowMeans(input1)>rel_threshold,]
+  }else{
+    if((which(rowMeans(sweep(input1,colSums(input1),"/",MARGIN=2))>rel_threshold) %>% length())==0){
+      stop("'rel_threshold' was too high!Please set lower!" )
+    }
+    input1=input1[rowMeans(sweep(input1,colSums(input1),"/",MARGIN=2))>rel_threshold,]
+  }
   zero_count=function(input){length(which(input==0)) %>% return()}
   zerocount=apply(input1,1,zero_count)
   input1=input1[which(zerocount<=(ncol(input1)-n)),]
   input1=input1[which(rowSums(input1)>0),]
   ##network analysis
-    corr=rcorr(as.matrix(t(input1)),type=method)
-    cor.p=corr$P;cor.p[is.na(cor.p)]<- 0
-    fdr=fdrtool(as.numeric(cor.p), statistic="pvalue",plot=FALSE,verbose = FALSE) ##Global fdr correlation##
-    cor.r=corr$r
-    cor.q=matrix(fdr$qval,ncol=ncol(cor.p),nrow=nrow(cor.p));cor.q[is.nan(cor.q)]<- 0
-    cor.r[cor.q>0.05|abs(cor.r)<threshold] = 0 ##fliter via threshold##
-    cor.r[is.na(cor.r)]<-0 ##NA变0##
-    cor.r[which(cor.r>0.9999)]<-0 ###对角线的1变成0##
-    cor.r1=cor.r;cor.r1[which(cor.r1!=0)]<-1 ##无方向矩阵用于igraph##
-    cutoff=which(rowSums(cor.r1)== 0)
-    if(length(cutoff)==0){cor.r=cor.r;cor.r1=cor.r1}else{
-      cor.r=cor.r[-c(cutoff),-c(cutoff)];cor.r1=cor.r1[-c(cutoff),-c(cutoff)]}
-    cor.r1[which(cor.r>0)]<-1;cor.r1[which(cor.r<0)]<- -1;
-    adj_matrix=cor.r1
-    cor.r1[lower.tri(cor.r1,diag = TRUE)]<-NA
+  corr=rcorr(as.matrix(t(input1)),type=method)
+  cor.p=corr$P;cor.p[is.na(cor.p)]<- 0
+  fdr=fdrtool(as.numeric(cor.p), statistic="pvalue",plot=FALSE,verbose = FALSE) ##Global fdr correlation##
+  cor.r=corr$r
+  cor.q=matrix(fdr$qval,ncol=ncol(cor.p),nrow=nrow(cor.p));cor.q[is.nan(cor.q)]<- 0
+  cor.r[cor.q>0.05|abs(cor.r)<threshold] = 0 ##fliter via threshold##
+  cor.r[is.na(cor.r)]<-0 ##NA变0##
+  cor.r[which(cor.r>0.9999)]<-0 ###对角线的1变成0##
+  cor.r1=cor.r;cor.r1[which(cor.r1!=0)]<-1 ##无方向矩阵用于igraph##
+  cutoff=which(rowSums(cor.r1)== 0)
+  if(length(cutoff)==0){cor.r=cor.r;cor.r1=cor.r1}else{
+    cor.r=cor.r[-c(cutoff),-c(cutoff)];cor.r1=cor.r1[-c(cutoff),-c(cutoff)]}
+  cor.r1[which(cor.r>0)]<-1;cor.r1[which(cor.r<0)]<- -1;
+  adj_matrix=cor.r1
+  cor.r1[lower.tri(cor.r1,diag = TRUE)]<-NA
   ###creat adjacency###
   source<-rownames(cor.r1)
   adjacency<- data.frame(source,cor.r1) %>%

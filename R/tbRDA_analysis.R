@@ -64,7 +64,7 @@
 #'   )
 #'
 #'   # Environmental statistics
-#'   print(RDAresult$envstat)
+#'   print(RDAresult$factor_statistics)
 #'
 #'   # Visualization using ggplot
 #'   rda_object <- RDAresult$rda_object
