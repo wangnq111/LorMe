@@ -10,6 +10,7 @@ network_analysis(
   reads = FALSE,
   n,
   threshold,
+  rel_threshold = 0,
   method = "spearman",
   display = TRUE
 )
@@ -24,6 +25,8 @@ network_analysis(
 \item{n}{Numeric. Number of sample size indicating kept asv/otu/gene/taxa appearing. Recommended to set more than half of total sample size.}
 
 \item{threshold}{Numeric.Threshold of absolute correlation value (r value for pearson method and rho value for spearman method).}
+
+\item{rel_threshold}{Numeric.Threshold of relative abundance included in the network analysis.Default:0}
 
 \item{method}{Character, default: "spearman". A character indicating which correlation coefficient method to be computed. One of "pearson" or "spearman"}
 

@@ -37,35 +37,28 @@ data(testotu)
 #### If your data frame does not contain the OTUID column or taxonomy column,
 #### you can add a simulated column to fit the input format like testotu ##
 
-### 1. Filter OTU with total relative abundance below 0.0001, return absolute abundance ###
+### 1. Filter OTU with total relative abundance below 0.0001###
 filtered_otu <- Filter_function(
   input = testotu,
   threshold = 0.0001,
   format = 1
 )
 
-### 2. Filter OTU with total relative abundance below 0.0001, return relative abundance ###
-filtered_otu <- Filter_function(
-  input = testotu,
-  threshold = 0.0001,
-  format = 1
-)
-
-### 3. Filter OTU with total reads below 20 ###
+### 2. Filter OTU with total reads below 20 ###
 filtered_otu <- Filter_function(
   input = testotu,
   threshold = 20,
   format = 2
 )
 
-### 4. Filter OTU reads 0 over (>=) 11 samples ###
+### 3. Filter OTU reads 0 over (>=) 11 samples ###
 filtered_otu <- Filter_function(
   input = testotu,
   threshold = 11,
   format = 3
 )
 
-### 5. Filter OTU with relative abundance below 0.0001 in each sample ###
+### 4. Filter OTU with relative abundance below 0.0001 in each sample ###
 filtered_otu <- Filter_function(
   input = testotu,
   threshold = 0.0001,

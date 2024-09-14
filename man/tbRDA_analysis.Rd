@@ -74,7 +74,7 @@ RDA analysis including co-linearity diagnostics and necessary statistics.
   )
 
   # Environmental statistics
-  print(RDAresult$envstat)
+  print(RDAresult$factor_statistics)
 
   # Visualization using ggplot
   rda_object <- RDAresult$rda_object
