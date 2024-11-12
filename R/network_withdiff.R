@@ -208,7 +208,7 @@ network_withdiff=function(network_obj,diff_frame,aes_col=NULL,tag_threshold=5){
   par(mfrow = c(1,1), mar=c(2,2,2,4),pty = "m")
   plot(t_net_its,vertex.label=NA,vertex.size=vertice_size,layout=coords_t_its,vertex.shape="circle",
        mark.groups=show_list,mark.col=t_cols, mark.border="gray")
-  legend_text=paste0("Module #",show_module)
+  legend_text=paste0("Module #",names(show_list))
   #plot.new()
   legend("topright", c(names(aes_col),"None"), col= c(aes_col,"gray"),
          text.col = c(aes_col,"gray"),
