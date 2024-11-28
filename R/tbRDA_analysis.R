@@ -14,7 +14,8 @@
 #' @export
 #'
 #' @importFrom stats na.omit
-#' @importFrom vegan decostand decorana rda vif.cca anova.cca RsquareAdj
+#' @importFrom utils packageVersion
+#' @importFrom vegan decostand decorana rda vif.cca anova.cca RsquareAdj scores
 #'
 #' @examples
 #'   ### Data preparation ###
@@ -115,7 +116,11 @@ tbRDA_analysis<-function(otudata,envdata,collinearity,perm.test=TRUE){
         Diagnostic<-vif.cca(otu.tab.1)
         Diagnostic=Diagnostic[!is.na(Diagnostic)]
         i=i-1}}}else if (collinearity==FALSE){} else{stop("Please choose TRUE/FALSE on collinearity");return()}
-  summaryrda<-summary(otu.tab.1)
+  if (packageVersion("vegan") < "2.7.0") {
+      summaryrda<-summary(otu.tab.1)
+  } else { # summary and scores are separated in modern vegan
+      summaryrda<-c(summary(otu.tab.1), scores(otu.tab.1))
+  }
   if(perm.test==TRUE){
     message("###Global permutation test###","\n")
     print(anova.cca(otu.tab.1))
