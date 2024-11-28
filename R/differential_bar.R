@@ -1,10 +1,10 @@
 #' Generate Differential Bar Plot and Error bar Plot
 #'
-#' @param taxobj Tax summary objects computed by \code{\link{tax_summary}}. Default: NULL.
+#' @param taxobj Configured tax summary objects.See in \code{\link{object_config}}.
 #' @param taxlevel Taxonomy levels used for visualization. Must be one of
-#'   c("Domain","Phylum","Class","Order","Family","Genus","Species","Base"). Default: NULL.
+#'   c("Domain","Phylum","Class","Order","Family","Genus","Species","Base").
 #' @param comparison A vector of conditions to compare. Default: NULL, all unique conditions are compared (only for Two groups).
-#' @param rel_threshold Threshold filtering taxa for differential analysis.
+#' @param rel_threshold Threshold filtering taxa for differential analysis. Default:0.005
 #' @param anno_row Default: 'taxonomy'. Rownames for visualization. Options are 'taxonomy' for showing taxonomic information and 'ID' for showing taxonomic ID.
 #' @param aes_col A named vector of colors to be used in the plots.
 #' @param limit_num Numeric. The maximum number of significant results to display. Default: NULL, showing all differential taxa.
@@ -106,6 +106,10 @@ differential_bar=function(taxobj,
     condition= condition[, 1]
   }
   if(is.null(aes_col)){
+    if(is.null(taxobj$configuration$treat_col)){
+      aes_col=c("#E69F00","#56B4E9")
+      warning("Color not assigned,generated automaticly")
+    }
     aes_col=taxobj$configuration$treat_col
   }
   if (is.null(names(aes_col)[1])) {
