@@ -1,8 +1,8 @@
 #' Calculate alpha diversity based on tax summary object
 #' @description  Calculate alpha diversity for each sample
 #'
-#' @param taxobj tax summary objects computed by \code{\link{tax_summary}}. Default:NULL.
-#' @param taxlevel taxonomy levels used for visualization.Must be one of c("Domain","Phylum","Class","Order","Family","Genus","Species","Base").Default:NULL.
+#' @param taxobj Configured tax summary objects.See in \code{\link{object_config}}.
+#' @param taxlevel taxonomy levels used for visualization.Must be one of c("Domain","Phylum","Class","Order","Family","Genus","Species","Base").
 #' @param prefix A character string as prefix of diversity index. Default:""
 #'
 #' @return 'Alpha_diversity_calculator' returns alpha-diversity of each sample in format of column table (dataframe) combined with group information in meta file.
@@ -47,7 +47,7 @@ Alpha_diversity_calculator<- function(taxobj,taxlevel,prefix=""){
   matrix=round(matrix,0)
   chao<-estimateR(matrix)[2,];ACE<-estimateR(matrix)[4,]    ##calculate alpha-diversity##
   alpha.frame<-data.frame(shannon,richness,evenness,simpson,chao, ACE) %T>%
-    {colnames(.)<-c(paste0(prefix,"Shannon"),paste0(prefix,"Species number"),paste0(prefix,"Simpson"),paste0(prefix,"Evenness"),paste0(prefix,"Chao"),paste0(prefix,"ACE"))}
+    {colnames(.)<-c(paste0(prefix,"Shannon"),paste0(prefix,"Species number"),paste0(prefix,"Evenness"),paste0(prefix,"Simpson"),paste0(prefix,"Chao"),paste0(prefix,"ACE"))}
   alpha.frame<-combine_and_translate(inputframe = alpha.frame,groupframe = groupframe,itemname = "Indexname",indexname = "Indexvalue",inputtype = FALSE)
   outplot=list()
   for(i in unique(alpha.frame[,"Indexname"])){

@@ -95,12 +95,12 @@ Alpha_diversity_calculator2<- function(taxobj=NULL,taxlevel = NULL,prefix="",inp
   evenness<-shannon/log(richness);simpson<-vegan::diversity(matrix,"simpson") ##calculate alpha-diversity##
   if(reads==FALSE){
     alpha.frame<-data.frame(shannon,richness,evenness,simpson) %T>%
-      {colnames(.)<-c(paste0(prefix,"Shannon"),paste0(prefix,"Species number"),paste0(prefix,"Simpson"),paste0(prefix,"Evenness"))}}else
+      {colnames(.)<-c(paste0(prefix,"Shannon"),paste0(prefix,"Species number"),paste0(prefix,"Evenness"),paste0(prefix,"Simpson"))}}else
         if(reads==TRUE){
           matrix=round(matrix,0)
           chao<-estimateR(matrix)[2,];ACE<-estimateR(matrix)[4,]    ##calculate alpha-diversity##
           alpha.frame<-data.frame(shannon,richness,evenness,simpson,chao, ACE) %T>%
-            {colnames(.)<-c(paste0(prefix,"Shannon"),paste0(prefix,"Species number"),paste0(prefix,"Simpson"),paste0(prefix,"Evenness"),paste0(prefix,"Chao"),paste0(prefix,"ACE"))}}
+            {colnames(.)<-c(paste0(prefix,"Shannon"),paste0(prefix,"Species number"),paste0(prefix,"Evenness"),paste0(prefix,"Simpson"),paste0(prefix,"Chao"),paste0(prefix,"ACE"))}}
   else {warning("PLEASE CHOOSE reads parameter!!!")}
   if(is.null(taxobj)==FALSE){
     combine_and_translate(inputframe = alpha.frame,groupframe = groupframe,itemname = "Indexname",indexname = "Indexvalue",inputtype = FALSE)%>% return()}else{
