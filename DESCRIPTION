@@ -1,6 +1,6 @@
 Package: LorMe
 Title: Lightening One-Code Resolving Microbial Ecology Solution
-Version: 1.0.1
+Version: 1.1.1
 Authors@R: 
     c(person(given = "Ningqi",
            family = "Wang",
