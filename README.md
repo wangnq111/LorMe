@@ -22,7 +22,8 @@ remotes::install_github("wangnq111/LorMe")
 LorMe will only update the major and minor versions on CRAN, but will update each patch version on GitHub. 
 The following are the update logs that differ from the CRAN version:
 
-14/09/2024 LorMe in CRAN and github updated to version 1.1.0 
+16/12/2024 LorMe in github updated to version 1.1.1:
+Hot fix: Fixed the incorrect error message expression in 'object_config'; Resolved a bug in 'network_withdiff' where the display order of modules was inconsistent;Fixed a bug where the evenness and Simpson index were incorrectly labeled during alpha diversity calculations.
 
 # Illustration
 [Getting Started](https://wangnq111.github.io/Gettingstarted.html)
