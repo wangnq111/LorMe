@@ -54,6 +54,9 @@ Module_abundance=function(
   outplot=list()
   for(i in unique(columnframe[,"Module"])){
     subdata=columnframe[columnframe[,"Module"]==i,]
+    if(!is.null(network_obj$config$taxobj_configuration$treat_order)){
+      subdata[,network_obj$config$taxobj_configuration$treat_location]=factor(subdata[,network_obj$config$taxobj_configuration$treat_location],levels = network_obj$config$taxobj_configuration$treat_order)
+    }
     results=compare_plot(inputframe = subdata,treat_location = network_obj$config$taxobj_configuration$treat_location,value_location = ncol(subdata),aes_col = network_obj$config$taxobj_configuration$treat_col,point = TRUE,ylab_text = i)
     outplot=c(outplot,list(results))
     names(outplot)[length(outplot)]=paste0("Plotobj_",i)
