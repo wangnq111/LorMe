@@ -10,11 +10,11 @@ LorMe Provides a robust collection of functions tailored for microbial ecology a
 <img src="./man/figures/functions.png" width="100%" style="display: block; margin: auto;" />
 
 # Installation
-Standard version from CRAN
+Standard version from CRAN(V1.1.0)
 ```{R}
 install.packages("LorMe")
 ```
-Development version from GitHub :stuck_out_tongue_closed_eyes:
+Development version from GitHub (V1.1.1) :stuck_out_tongue_closed_eyes:
 ```{R}
 if (!require(remotes)) install.packages("remotes")
 remotes::install_github("wangnq111/LorMe")
@@ -24,6 +24,8 @@ The following are the update logs that differ from the CRAN version:
 
 16/12/2024 LorMe in github updated to version 1.1.1:
 Hot fix: Fixed the incorrect error message expression in 'object_config'; Resolved a bug in 'network_withdiff' where the display order of modules was inconsistent;Fixed a bug where the evenness and Simpson index were incorrectly labeled during alpha diversity calculations.
+23/12/2024 Hot fix in version 1.1.1:
+Fixed the bug where Alpha_diversity_calculator did not recognize the fixed treatment order and facet configuration
 
 # Illustration
 [Getting Started](https://wangnq111.github.io/Gettingstarted.html)
