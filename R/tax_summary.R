@@ -23,6 +23,8 @@
 #' @importFrom tidyr separate
 #' @importFrom utils tail
 #' @importFrom stats aggregate
+#' @importFrom dplyr mutate across everything
+#' @importFrom stringr str_replace_all
 #' @examples
 #' {
 #'   # Load data
@@ -83,6 +85,12 @@ tax_summary=function(groupfile,inputtable,reads=TRUE,taxonomytable,into="standar
   if((which(outputtax %in% comp_tax)%>% length())!=length(outputtax)){warning("Illegal input characters in parameter `outputtax`")}
   taxonomy=data.frame(taxonomytable,full_taxonomy=taxonomytable[,2]) %>%
     separate(.,col=3,into=into,sep=sep)
+  replace_unassigned <- function(data) {
+    data <- data %>%
+      mutate(across(everything(), ~ str_replace_all(., "^[\\s]*([a-z])__$", "\\1__Unassigned")))
+    return(data)
+  }
+  taxonomy <- replace_unassigned(taxonomy)
   taxonomy[is.na(taxonomy)]="Unassigned"
   taxonomy_update=taxonomy
   message("Taxonomy tidying...")

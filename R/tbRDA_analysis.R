@@ -14,7 +14,7 @@
 #' @export
 #'
 #' @importFrom stats na.omit
-#' @importFrom vegan decostand decorana rda vif.cca anova.cca RsquareAdj
+#' @importFrom vegan decostand decorana rda vif.cca anova.cca RsquareAdj scores
 #'
 #' @examples
 #'   ### Data preparation ###
@@ -69,9 +69,10 @@
 #'   # Visualization using ggplot
 #'   rda_object <- RDAresult$rda_object
 #'   rda_summary <- RDAresult$rdasummary
-#'   rda_env <- as.data.frame(rda_summary$biplot)
-#'   rda_sample <- as.data.frame(rda_summary$sites)
-#'   rda_otu <- as.data.frame(rda_summary$species)
+#'   rda_scores <- RDAresult$rdascores
+#'   rda_env <- as.data.frame(rda_scores$biplot)
+#'   rda_sample <- as.data.frame(rda_scores$sites)
+#'   rda_otu <- as.data.frame(rda_scores$species)
 #'
 #'   xlab <- paste0("RDA1:", round(RDAresult$rdasummary$concont$importance[2, 1], 4) * 100, "%")
 #'   ylab <- paste0("RDA2:", round(RDAresult$rdasummary$concont$importance[2, 2], 4) * 100, "%")
@@ -98,7 +99,6 @@
 #'
 #'   # Print the RDA plot
 #'   print(RDAplot)
-
 tbRDA_analysis<-function(otudata,envdata,collinearity,perm.test=TRUE){
   env <- stats::na.omit(log1p(envdata))
   otu.hell <- decostand(t(otudata), "hellinger")
@@ -116,6 +116,7 @@ tbRDA_analysis<-function(otudata,envdata,collinearity,perm.test=TRUE){
         Diagnostic=Diagnostic[!is.na(Diagnostic)]
         i=i-1}}}else if (collinearity==FALSE){} else{stop("Please choose TRUE/FALSE on collinearity");return()}
   summaryrda<-summary(otu.tab.1)
+  rdascores<-scores(otu.tab.1)
   if(perm.test==TRUE){
     message("###Global permutation test###","\n")
     print(anova.cca(otu.tab.1))
@@ -135,7 +136,7 @@ tbRDA_analysis<-function(otudata,envdata,collinearity,perm.test=TRUE){
   rownames(envstat)[nrow(envstat)]<- envstat[nrow(envstat),6]<-"Total"
   envstat[nrow(envstat),1:4]=NA
   envstat<-envstat
-  outlist=c(list(summaryrda),list(envstat),list(otu.tab.1))
-  names(outlist)=c("rdasummary","factor_statistics","rda_object")
+  outlist=c(list(summaryrda),list(rdascores),list(envstat),list(otu.tab.1))
+  names(outlist)=c("rdasummary","rdascores","factor_statistics","rda_object")
   return(outlist)
 }
