@@ -149,6 +149,9 @@ compare_plot=function(inputframe,treat_location,value_location,aes_col=NULL,poin
     }
     letterp=(1.1*letterframe$Mean+letterframe$std) %>% max()
     letters<- data.frame(letterframe,letterp)
+    if(is.factor(inputframe[,facet_location])){
+      letters[,colnames(inputframe)[facet_location]]=factor(letters[,colnames(inputframe)[facet_location]],levels =levels(inputframe[,facet_location]) )
+    }
     bar=bar+
       geom_text(data=letters,aes(x=as.factor(compare),y=letterp,label=letters[,'Letters']),size=6)
 
@@ -209,7 +212,6 @@ compare_plot=function(inputframe,treat_location,value_location,aes_col=NULL,poin
     letterframe=tidyr::separate(data = letterframe,col="compare",into =tempinto ,sep = "_")
     letterp=(1.1*letterframe$Mean+letterframe$std) %>% max()
     letters<- data.frame(letterframe,letterp)
-
     barall=ggplot(input_mean_frame,aes(x=as.factor(Treatment_Name),y=Mean,fill=as.factor(input_mean_frame[,ncol(input_mean_frame)])))+
       scale_y_continuous(expand = c(0,0),limits = c(0,ylimitmax))+
       labs(x='',fill='',y=ylab_text)+
@@ -242,4 +244,3 @@ compare_plot=function(inputframe,treat_location,value_location,aes_col=NULL,poin
   }
   return(outlist)
 }
-

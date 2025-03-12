@@ -38,6 +38,8 @@ Alpha_diversity_calculator<- function(taxobj,taxlevel,prefix=""){
     return(NULL)
   }
   if(is.null(taxobj$configuration)){stop("taxonomic summary object not configured yet, call '?object_config' for configuration")}
+  facet_order = taxobj$configuration$facet_order
+  facet_location=taxobj$configuration$facet_location
   input=eval(parse(text=paste0("taxobj","$",taxlevel)))
   matrix=as.matrix(t(input[,-1]))
   matrix=round(matrix,0)
@@ -49,6 +51,11 @@ Alpha_diversity_calculator<- function(taxobj,taxlevel,prefix=""){
   alpha.frame<-data.frame(shannon,richness,evenness,simpson,chao, ACE) %T>%
     {colnames(.)<-c(paste0(prefix,"Shannon"),paste0(prefix,"Species number"),paste0(prefix,"Evenness"),paste0(prefix,"Simpson"),paste0(prefix,"Chao"),paste0(prefix,"ACE"))}
   alpha.frame<-combine_and_translate(inputframe = alpha.frame,groupframe = groupframe,itemname = "Indexname",indexname = "Indexvalue",inputtype = FALSE)
+  if(!is.null(facet_order)){
+    if(!is.null(facet_location)){
+      alpha.frame[,facet_location]=factor(alpha.frame[,facet_location],levels=facet_order)
+    }
+    }
   outplot=list()
   for(i in unique(alpha.frame[,"Indexname"])){
     subdata=alpha.frame[alpha.frame[,"Indexname"]==i,]
