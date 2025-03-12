@@ -79,9 +79,10 @@ RDA analysis including co-linearity diagnostics and necessary statistics.
   # Visualization using ggplot
   rda_object <- RDAresult$rda_object
   rda_summary <- RDAresult$rdasummary
-  rda_env <- as.data.frame(rda_summary$biplot)
-  rda_sample <- as.data.frame(rda_summary$sites)
-  rda_otu <- as.data.frame(rda_summary$species)
+  rda_scores <- RDAresult$rdascores
+  rda_env <- as.data.frame(rda_scores$biplot)
+  rda_sample <- as.data.frame(rda_scores$sites)
+  rda_otu <- as.data.frame(rda_scores$species)
 
   xlab <- paste0("RDA1:", round(RDAresult$rdasummary$concont$importance[2, 1], 4) * 100, "\%")
   ylab <- paste0("RDA2:", round(RDAresult$rdasummary$concont$importance[2, 2], 4) * 100, "\%")
