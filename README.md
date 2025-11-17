@@ -10,18 +10,18 @@ LorMe Provides a robust collection of functions tailored for microbial ecology a
 <img src="./man/figures/functions.png" width="100%" style="display: block; margin: auto;" />
 
 # Installation
-Standard version from CRAN(V1.2.0)
+Standard version from CRAN(V2.0.0)
 ```{R}
 install.packages("LorMe")
 ```
-Development version from GitHub (V1.2.0) :stuck_out_tongue_closed_eyes:
+Development version from GitHub (V2.0.0) :stuck_out_tongue_closed_eyes:
 ```{R}
 if (!require(remotes)) install.packages("remotes")
 remotes::install_github("wangnq111/LorMe")
 ```
 LorMe will only update the major and minor versions on CRAN, but will update each patch version on GitHub. 
 The following are the update logs that differ from the CRAN version:
-12/03/25 LorMe in CRAN and github both updated to version 1.2.0
+17/11/25 LorMe in CRAN and github both updated to version 2.0.0
 # Illustration
 [Getting Started](https://wangnq111.github.io/Gettingstarted.html)
 ## Chinese version
@@ -67,3 +67,4 @@ Painted differential taxon
 
 #### Module composition pie chart
 <img src="./man/figures/README_Modulepie.png" width="60%" style="display: block; margin: auto;" />
+
