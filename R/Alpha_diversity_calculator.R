@@ -43,7 +43,7 @@ Alpha_diversity_calculator<- function(taxobj,taxlevel,prefix=""){
   input=eval(parse(text=paste0("taxobj","$",taxlevel)))
   matrix=as.matrix(t(input[,-1]))
   matrix=round(matrix,0)
-  groupframe=taxobj$Groupfile
+  groupframe=taxobj$groupfile
   shannon<-vegan::diversity(matrix,index='shannon');richness<-specnumber(matrix) ##calculate alpha-diversity##
   evenness<-shannon/log(richness);simpson<-vegan::diversity(matrix,"simpson") ##calculate alpha-diversity##
   matrix=round(matrix,0)

@@ -90,7 +90,7 @@ differential_bar=function(taxobj,
     warning("Illegal 'taxlevel'!")
     return(NULL)
   }
-  groupfile = eval(parse(text = paste0("taxobj$Groupfile")))
+  groupfile = eval(parse(text = paste0("taxobj$groupfile")))
   condition = groupfile[eval(parse(text = paste0("taxobj$configuration$treat_location")))]
   condition = condition[, 1]
   if (is.null(comparison)) {
@@ -101,7 +101,7 @@ differential_bar=function(taxobj,
       stop("comparision does not match, Please check 'comparision'")
     }
     taxobj = sub_tax_summary(taxobj = taxobj, specificnum = which(condition %in% comparison))
-    groupfile= eval(parse(text = paste0("taxobj$Groupfile")))
+    groupfile= eval(parse(text = paste0("taxobj$groupfile")))
     condition= groupfile[eval(parse(text = paste0("taxobj$configuration$treat_location")))]
     condition= condition[, 1]
   }
@@ -113,7 +113,7 @@ differential_bar=function(taxobj,
     aes_col=taxobj$configuration$treat_col
   }
   if (is.null(names(aes_col)[1])) {
-    names(aes_col)=unique(taxobj$Groupfile[,taxobj$configuration$treat_location]) %>% sort()
+    names(aes_col)=unique(taxobj$groupfile[,taxobj$configuration$treat_location]) %>% sort()
     warning("Color names not assigned,use automatic assignment")
   }
   aes_col=aes_col[names(aes_col) %in% unique(condition)]

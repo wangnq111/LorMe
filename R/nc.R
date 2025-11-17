@@ -6,6 +6,7 @@
 #' @export
 #'
 #' @examples
+#' \donttest{
 #' {
 #'   ### Data preparation ###
 #'   data("Two_group")
@@ -25,6 +26,7 @@
 #'   # Check initial natural connectivity
 #'   nc_initial <- nc(network_matrix)
 #'   print(nc_initial)  # Print the initial natural connectivity
+#' }
 #' }
 nc <- function(adj_matrix) {
   lambda0 <- as.matrix(adj_matrix)%>% abs() %>%

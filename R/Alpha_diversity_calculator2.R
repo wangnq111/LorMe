@@ -88,7 +88,7 @@ Alpha_diversity_calculator2<- function(taxobj=NULL,taxlevel = NULL,prefix="",inp
     input=eval(parse(text=paste0("taxobj","$",taxlevel)))
     matrix=as.matrix(t(input[,-1]))
     matrix=round(matrix,0)
-    groupframe=taxobj$Groupfile
+    groupframe=taxobj$groupfile
     reads=TRUE
   }
   shannon<-vegan::diversity(matrix,index='shannon');richness<-specnumber(matrix) ##calculate alpha-diversity##

@@ -29,6 +29,7 @@
 #' @importFrom dplyr left_join
 #' @importFrom fdrtool fdrtool
 #' @examples
+#'  \donttest{
 #' {
 #'   ### Data preparation ###
 #'   data("Two_group")
@@ -57,6 +58,7 @@
 #'   igraph_object <- network_results$Igraph_object
 #'   network_stat(igraph_object)  # In case you want to see statistics again
 #'   # or do other analysis based on igraph.
+#' }
 #' }
 network_analysis<-function(taxobj,taxlevel,reads=FALSE,n,threshold,rel_threshold=0,method="spearman",display=TRUE){
   if(!taxlevel %in% c("Domain","Kingdom","Phylum","Class","Order","Family","Genus","Species","Base")){
@@ -142,9 +144,9 @@ network_analysis<-function(taxobj,taxlevel,reads=FALSE,n,threshold,rel_threshold
                     No.module = V(igraph1)$modularity,Zi=zi_pi8$Zi,Pi=zi_pi8$Pi)
   output=left_join(output,data.frame(nodes_id=taxonomy[,1],taxonomy)) %>% suppressMessages()
   output=output[,-c(9)]
-  Groupfile=eval(parse(text=paste0("taxobj","$","Groupfile")))
-  config=list(input0,taxonomy,Groupfile,taxlevel,n,threshold,taxobj$configuration)
-  names(config)=c("input_data","input_taxonomy","Groupfile","taxlevel","n","threshold","taxobj_configuration")
+  groupfile=eval(parse(text=paste0("taxobj","$","groupfile")))
+  config=list(input0,taxonomy,groupfile,taxlevel,n,threshold,taxobj$configuration)
+  names(config)=c("input_data","input_taxonomy","groupfile","taxlevel","n","threshold","taxobj_configuration")
   outlist=c(list(output),list(adjacency),list(adj_matrix),list(igraph1),list(config))
   names(outlist)=c("Nodes_info","Adjacency_column_table","Adjacency_matrix","Igraph_object","config")
   return(outlist)

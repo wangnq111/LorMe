@@ -20,6 +20,7 @@
 #' @importFrom grDevices colorRampPalette
 #
 #' @examples
+#' \donttest{
 #'  #Data loading
 #'  data("Two_group")
 #'
@@ -93,6 +94,7 @@
 #'     rmprefix = "p__"
 #'   )
 #'   print(module_results$Module2$Pie_plot_Module2)
+#'   }
 Module_composition = function(
     network_obj,
     No.module,

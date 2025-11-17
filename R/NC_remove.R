@@ -10,6 +10,7 @@
 #'
 #' @importFrom utils txtProgressBar setTxtProgressBar
 #' @examples
+#' \donttest{
 #' {
 #'   ### Data preparation ###
 #'   data("Two_group")
@@ -35,6 +36,7 @@
 #'
 #'   # Set target number for natural connectivity analysis
 #'   nc_remove <- NC_remove(input = network_matrix, num = 400)
+#' }
 #' }
 NC_remove=function(input,num,seed=1){
   max_num=(c(rownames(input)[rowMeans(abs(input))>0],colnames(input)[colMeans(abs(input))>0]) %>%

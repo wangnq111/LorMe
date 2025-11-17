@@ -18,6 +18,7 @@
 #' @importFrom graphics par legend
 #'
 #' @examples
+#' \donttest{
 #' {
 #'   # Data preparation
 #'   data("Two_group")
@@ -67,6 +68,7 @@
 #'     taxlevel = "Phylum",
 #'     select_tax = "p__Proteobacteria"
 #'   )
+#' }
 #' }
 network_visual=function(network_obj,mode="major_module",major_num=5,taxlevel=NULL,select_tax=NULL,palette="Set1",vertex.size=6){
   adjfile=network_obj$Adjacency_column_table
@@ -133,6 +135,58 @@ network_visual=function(network_obj,mode="major_module",major_num=5,taxlevel=NUL
   }
   coords_t_its <- layout_(t_net_its,with_fr(niter=9999, grid="auto"))
   plot(t_net_its,vertex.label=NA,vertex.size=vertex.size,layout=coords_t_its,vertex.shape="circle")
+  # ---- Add legend ----
+  legend_labels <- NULL
+  legend_colors <- NULL
+
+  if (mode == "major_module") {
+    legend_labels <- paste0("Module #",select_module)
+    legend_colors <- tax_col[select_module]
+
+  } else if (mode == "major_tax") {
+    legend_labels <- names(tax_col)
+    legend_colors <- as.vector(tax_col)
+  }
+  #na removal
+  valid_idx <- legend_colors != "gray" & !is.na(legend_colors)
+  legend_labels <- legend_labels[valid_idx]
+  legend_colors <- legend_colors[valid_idx]
+
+  # ----- Draw legend outside / to the right, with multiple columns / scaled text -----
+  if (length(legend_labels) > 0) {
+    # compute sensible cex based on number of legend items
+    max_items <- length(legend_labels)
+    cex_legend <- if (max_items <= 6) 1 else max(0.55, 1 - (max_items - 6) * 0.04)
+
+    # determine columns as earlier
+    labels_per_col <- 8
+    ncol_legend <- max(1, ceiling(max_items / labels_per_col))
+
+    # compute legend frame (border) colors to match plotted vertex.frame.color
+    .darken_color <- function(col, factor = 0.6) {
+      if (is.na(col) || identical(col, "gray") || identical(col, "grey")) return("gray40")
+      rgbm <- grDevices::col2rgb(col) * factor
+      grDevices::rgb(rgbm[1,]/255, rgbm[2,]/255, rgbm[3,]/255)
+    }
+    legend_frame_colors <- vapply(legend_colors, .darken_color, FUN.VALUE = character(1))
+
+    # allow drawing outside plot region
+    par(xpd = NA)
+    legend(
+      "topright",
+      inset = c(-0.01, 0),
+      legend = legend_labels,
+      pch = 21,                          # use symbol that supports border + fill
+      pt.bg = legend_colors,             # fill color
+      col = legend_frame_colors,         # border color
+      pt.cex = pmax(0.6, vertex.size / 4),
+      cex = cex_legend,
+      ncol = ncol_legend,
+      bty = "n",
+      title = ifelse(mode == "major_module", "Modules", taxlevel)
+    )
+    par(xpd = FALSE)
+  }
   outlist=c(list(t_net_its),list(coords_t_its))
   names(outlist)=c("configured_igraph_object","vertices_coordinates")
   return(outlist)

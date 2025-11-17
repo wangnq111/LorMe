@@ -9,34 +9,39 @@
 #' @importFrom magrittr %>%
 #' @importFrom tidyr gather
 #'
-#' @examples#data preparation
+#' @examples
+#' \donttest{
+#' # data preparation
 #' data("Two_group")
-#' ##network analysis
-#' network_results<- network_analysis(taxobj = Two_group,taxlevel = "Genus",n = 10,threshold = 0.8)
+#' ## network analysis
+#' network_results <- network_analysis(taxobj = Two_group,
+#'                                     taxlevel = "Genus",
+#'                                     n = 10,
+#'                                     threshold = 0.8)
 #' require(ggplot2)
-#' #one module
-#' moduleframe=Module_abundance(network_obj =network_results,No.module = 3 )
-#' moduleframe$rowframe   #combine into metafile
-#' moduleframe$columnframe #column table
-#' #statistics
+#' # one module
+#' moduleframe <- Module_abundance(network_obj = network_results, No.module = 3)
+#' moduleframe$rowframe        # combine into metafile
+#' moduleframe$columnframe     # column table
+#' # statistics
 #' moduleframe$plotlist$Plotobj_Module3$Statistics
-#' #extract plot
+#' # extract plot
 #' moduleframe$plotlist$Plotobj_Module3$Barplot
 #' moduleframe$plotlist$Plotobj_Module3$Boxplot
 #' moduleframe$plotlist$Plotobj_Module3$Violinplot
 #'
-#'
-#' #multiple modules
-#' moduleframe=Module_abundance(network_results,c(1,3,6))
+#' # multiple modules
+#' moduleframe <- Module_abundance(network_results, c(1, 3, 6))
 #' moduleframe$rowframe
-#' moduleframe$columnframe #column table can be used in ggplot visualization
-#' #same as above to extract plots and statistics
+#' moduleframe$columnframe # column table can be used in ggplot visualization
+#' # same as above to extract plots and statistics
 #' moduleframe$plotlist$Plotobj_Module6$Barplot
+#' }
 Module_abundance=function(
     network_obj,
     No.module
 ){
-  rowframe=network_obj$config$Groupfile
+  rowframe=network_obj$config$groupfile
   inputdata=network_obj$config$input_data
   columsum=colSums(inputdata[,-1])
   if(columsum[1]>1){
@@ -50,7 +55,7 @@ Module_abundance=function(
     rowframe=data.frame(rowframe,colSums(select_table[,-1]))
     colnames(rowframe)[ncol(rowframe)]=paste0("Module",i)
   }
-  columnframe=gather(rowframe,"Module","Rel",-c(colnames(network_obj$config$Groupfile)))
+  columnframe=gather(rowframe,"Module","Rel",-c(colnames(network_obj$config$groupfile)))
   outplot=list()
   for(i in unique(columnframe[,"Module"])){
     subdata=columnframe[columnframe[,"Module"]==i,]

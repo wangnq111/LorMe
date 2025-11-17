@@ -1,7 +1,7 @@
 #' Indicator Analysis
 #' @description Performs the indicator analysis based on taxonomic summary object
-#' @param taxobj tax summary objects computed by \code{\link{tax_summary}}. Default:NULL.
-#' @param taxlevel taxonomy levels used for visualization.Must be one of c("Domain","Phylum","Class","Order","Family","Genus","Species","Base").Default:NULL.
+#' @param taxobj Configured tax summary objects.See in \code{\link{object_config}}.
+#' @param taxlevel taxonomy levels used for visualization.Must be one of c("Domain","Phylum","Class","Order","Family","Genus","Species","Base").
 #' @param func Default: "r.g".The function to use for the indicator analysis, see in \code{\link[indicspecies]{multipatt}}
 #' @param reads A logical value indicating whether the input data is in terms of raw reads (TRUE) or relative abundance (FALSE)
 #'
@@ -39,7 +39,7 @@ indicator_analysis=function(taxobj,taxlevel,func="r.g",reads=FALSE){
     stop("Illegal 'taxlevel'!")
     return(NULL)
   }
-  groupfile= eval(parse(text=paste0("taxobj$Groupfile")))
+  groupfile= eval(parse(text=paste0("taxobj$groupfile")))
   condition= groupfile[eval(parse(text=paste0("taxobj$configuration$treat_location"))) ]
   condition= condition[,1]
   if(length(unique(condition))==1){

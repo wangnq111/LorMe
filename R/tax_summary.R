@@ -1,4 +1,4 @@
-####Version1.0.0###
+####Version2.0.0###
 ###Author Wangningqi####
 #' @title Encapsulate meta file, feature tables and taxonomy annotation into tax summary object
 #' @description The function packages meta file, feature tables and taxonomy annotation into tax summary object
@@ -13,11 +13,11 @@
 #' @param outputtax Names of output taxonomy level table. Default:c("Phylum","Genus"). Shortcut input is available with 'standard' and 'complete' same as above.
 #'
 #' @author Wang Ningqi <2434066068@qq.com>
-#' @return One list containing taxonomy table data frame,containing reads and percentage table for each specified output. Full taxonomy annotation data frame is output in global environment.
+#' @return LorMe object containing taxonomy table data frame,containing reads and percentage table for each specified output.
 #' @export
 #'
 #' @note
-#' For taxonomy annotation with 'Kingdom' level, please set 'into' parameter as 'complete'!!!
+#' For taxonomy annotation with both 'Domain' and 'Kingdom' level, please set 'into' parameter as 'complete'!!!
 #'
 #' @import magrittr
 #' @importFrom tidyr separate
@@ -115,7 +115,7 @@ tax_summary=function(groupfile,inputtable,reads=TRUE,taxonomytable,into="standar
   message("Genarating tables...")
   output=list()
   output=c(output,list(groupfile))
-  names(output)[1]="Groupfile"
+  names(output)[1]="groupfile"
   base_table=data.frame(ID=taxonomytable[,1],inputtable)
   if(is.numeric(base_table$ID)){base_table$ID=as.character(base_table$ID)}
   base_table_pct=data.frame(ID=taxonomytable[,1],sweep(inputtable,colSums(inputtable),"/",MARGIN = 2))
@@ -188,5 +188,10 @@ tax_summary=function(groupfile,inputtable,reads=TRUE,taxonomytable,into="standar
   message("Done")
   cat("\nContained elements:\n")
   names(output) %>% print()
-  return(output)
+  output_obj <- methods::new("LorMe",
+                    groupfile = output$groupfile,
+                    data      = output[setdiff(names(output), c("groupfile", "parameters"))],
+                    configuration    = output$parameters)
+  methods::validObject(output_obj)
+  return(output_obj)
 }
