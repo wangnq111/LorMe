@@ -1,6 +1,6 @@
 Package: LorMe
-Title: Lightening One-Code Resolving Microbial Ecology Solution
-Version: 1.2.0
+Title: Lightweight One-Line Resolving Microbial Ecology Program
+Version: 2.0.0
 Authors@R: 
     c(person(given = "Ningqi",
            family = "Wang",
@@ -22,6 +22,7 @@ LazyData: true
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.3.2
 Imports: 
+    methods,
     ape,
     ggalluvial,
     ggplot2,
@@ -52,5 +53,7 @@ Suggests:
     indicspecies,
     S4Vectors,
     tibble,
-    DESeq2
+    DESeq2,
+    phyloseq,
+    microeco
 Config/testthat/edition: 3
