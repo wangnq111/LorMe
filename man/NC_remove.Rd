@@ -20,6 +20,7 @@ NC_remove returns data frame with removed nodes and corresponding natural connec
 Natural connectivity analysis
 }
 \examples{
+\donttest{
 {
   ### Data preparation ###
   data("Two_group")
@@ -45,6 +46,7 @@ Natural connectivity analysis
 
   # Set target number for natural connectivity analysis
   nc_remove <- NC_remove(input = network_matrix, num = 400)
+}
 }
 }
 \author{

@@ -16,6 +16,7 @@ Numeric value of natural connectivity
 Calculate Network Natural Connectivity
 }
 \examples{
+\donttest{
 {
   ### Data preparation ###
   data("Two_group")
@@ -35,5 +36,6 @@ Calculate Network Natural Connectivity
   # Check initial natural connectivity
   nc_initial <- nc(network_matrix)
   print(nc_initial)  # Print the initial natural connectivity
+}
 }
 }

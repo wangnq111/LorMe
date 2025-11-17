@@ -54,6 +54,7 @@ is recommended. Further more,we recommend you to output the statistics and adjac
 }
 }
 \examples{
+ \donttest{
 {
   ### Data preparation ###
   data("Two_group")
@@ -82,5 +83,6 @@ is recommended. Further more,we recommend you to output the statistics and adjac
   igraph_object <- network_results$Igraph_object
   network_stat(igraph_object)  # In case you want to see statistics again
   # or do other analysis based on igraph.
+}
 }
 }

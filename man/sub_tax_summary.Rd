@@ -25,22 +25,14 @@ Subsetting tax summary objects
   data("Three_group")
 
   # Check meta file
-  print(Three_group$Groupfile)
+  print(Three_group$groupfile)
 
   # Subsetting tax summary objects
 
   # Select BF and OF groups
   sub_testtax_summary <- sub_tax_summary(Three_group, Group \%in\% c("BF", "OF"))
-  print(sub_testtax_summary$Groupfile)
+  print(sub_testtax_summary$groupfile)
 
-  # Subsetting according to taxonomy
-
-  Proteo <- sub_tax_summary(
-    Three_group,
-    taxnum = which(Three_group$Base_taxonomy$Phylum == "p__Proteobacteria")
-  )
-  print(Proteo$Phylum_percent)  # Check phylum table
-  print(Proteo$Genus_percent)   # Check genus table
 }
 \author{
 Wang Ningqi \href{mailto:2434066068@qq.com}{2434066068@qq.com}

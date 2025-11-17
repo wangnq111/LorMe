@@ -111,7 +111,7 @@ is recommended. Further more,we recommend you to output the statistics and adjac
 
   #### Incorrect demonstration !! ###
   {
-     network_result <- network_analysis2(inputotu, 3, 3, 0.8, "spearman", TRUE)
+     network_result <- safe_run(network_analysis2(inputotu, 3, 3, 0.8, "spearman", TRUE))
   }
   # Total edges/links: 10199
   # Total vertices: 826

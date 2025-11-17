@@ -32,13 +32,13 @@ Shortcut input:1)By default."standard":c("Domain","Phylum","Class","Order","Fami
 \item{outputtax}{Names of output taxonomy level table. Default:c("Phylum","Genus"). Shortcut input is available with 'standard' and 'complete' same as above.}
 }
 \value{
-One list containing taxonomy table data frame,containing reads and percentage table for each specified output. Full taxonomy annotation data frame is output in global environment.
+LorMe object containing taxonomy table data frame,containing reads and percentage table for each specified output.
 }
 \description{
 The function packages meta file, feature tables and taxonomy annotation into tax summary object
 }
 \note{
-For taxonomy annotation with 'Kingdom' level, please set 'into' parameter as 'complete'!!!
+For taxonomy annotation with both 'Domain' and 'Kingdom' level, please set 'into' parameter as 'complete'!!!
 }
 \examples{
 {

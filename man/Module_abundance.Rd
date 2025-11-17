@@ -18,27 +18,31 @@ A list containing module abundance in metafile and column table of corresponding
 Calculate network module abundance for each sample
 }
 \examples{
-#data preparation
+\donttest{
+# data preparation
 data("Two_group")
-##network analysis
-network_results<- network_analysis(taxobj = Two_group,taxlevel = "Genus",n = 10,threshold = 0.8)
+## network analysis
+network_results <- network_analysis(taxobj = Two_group,
+                                    taxlevel = "Genus",
+                                    n = 10,
+                                    threshold = 0.8)
 require(ggplot2)
-#one module
-moduleframe=Module_abundance(network_obj =network_results,No.module = 3 )
-moduleframe$rowframe   #combine into metafile
-moduleframe$columnframe #column table
-#statistics
+# one module
+moduleframe <- Module_abundance(network_obj = network_results, No.module = 3)
+moduleframe$rowframe        # combine into metafile
+moduleframe$columnframe     # column table
+# statistics
 moduleframe$plotlist$Plotobj_Module3$Statistics
-#extract plot
+# extract plot
 moduleframe$plotlist$Plotobj_Module3$Barplot
 moduleframe$plotlist$Plotobj_Module3$Boxplot
 moduleframe$plotlist$Plotobj_Module3$Violinplot
 
-
-#multiple modules
-moduleframe=Module_abundance(network_results,c(1,3,6))
+# multiple modules
+moduleframe <- Module_abundance(network_results, c(1, 3, 6))
 moduleframe$rowframe
-moduleframe$columnframe #column table can be used in ggplot visualization
-#same as above to extract plots and statistics
+moduleframe$columnframe # column table can be used in ggplot visualization
+# same as above to extract plots and statistics
 moduleframe$plotlist$Plotobj_Module6$Barplot
+}
 }

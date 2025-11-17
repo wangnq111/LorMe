@@ -40,6 +40,7 @@ This function analyzes the composition of modules within a network object,
 providing a visual and data summary based on taxonomic levels.
 }
 \examples{
+\donttest{
  #Data loading
  data("Two_group")
 
@@ -113,4 +114,5 @@ providing a visual and data summary based on taxonomic levels.
     rmprefix = "p__"
   )
   print(module_results$Module2$Pie_plot_Module2)
+  }
 }

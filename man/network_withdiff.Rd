@@ -90,7 +90,7 @@ Meta network analysis integrating differential taxon into a network analysis
     network_obj = network_results,
     diff_frame = indicator_results,
     tag_threshold = 10
-  )  # Set lower
+  ) # Set lower
   # Check contained tags for each model
   print(network_diff_obj$tag_statistics$sum_of_tags)
   # Check contained different tags for each model

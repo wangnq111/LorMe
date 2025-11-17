@@ -36,6 +36,7 @@ A list containing the configured igraph object and the coordinates of the vertic
 Visualizes a network based on a network object from \code{\link{network_analysis}}.
 }
 \examples{
+\donttest{
 {
   # Data preparation
   data("Two_group")
@@ -85,5 +86,6 @@ Visualizes a network based on a network object from \code{\link{network_analysis
     taxlevel = "Phylum",
     select_tax = "p__Proteobacteria"
   )
+}
 }
 }
