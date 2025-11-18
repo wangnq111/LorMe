@@ -115,7 +115,7 @@
 #'
 #' Three_group_analysis <- LorMe_pipeline(Three_group)
 #' }
-LorMe_pipeline1=function(taxobj,step="all"){
+LorMe_pipeline=function(taxobj,step="all"){
   if(length(which(step %in%  c("all", "profile", "diff", "sub_net", "all_net")==TRUE))!=length(step)){
     stop("Invalid characters in parameter 'step', please choose among  c('all', 'profile', 'diff', 'sub_net', 'all_net')")
     return()
