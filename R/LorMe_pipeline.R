@@ -224,9 +224,12 @@ LorMe_pipeline=function(taxobj,step="all"){
                                               control_name =  deseq_control,
                                               paired =  opt$deseq$paired,
                                               subject =  opt$deseq$subject))%>% suppressMessages()
-        if(is.null(diffbar_result)){fail_list=c(fail_list,"DESeq")}
+        if(is.null(diffbar_result)){fail_list=c(fail_list,"Differential bar")}
         if(is.null(Deseq_results)){
           message("Deseq returns NULL, please note")
+          fail_list=c(fail_list,"DESeq")
+          Deseq_manhattan=NULL
+          Deseq_volcano=NULL
         }else{
           Deseq_volcano=safe_run(volcano_plot(Deseq_results,cutoff = opt$deseq$cutoff,aes_col = methods::slot(taxobj,"configuration")$treat_col))
           if(is.null(opt$manh$controlname)){
