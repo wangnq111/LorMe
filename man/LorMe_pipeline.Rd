@@ -101,6 +101,7 @@ Two_group_analysis$diffbar_result$Barplot |
   Two_group_analysis$diffbar_result$Differenceplot
 
 # Subnetworks
+require(magrittr)
 Two_group_analysis$sub_network_results$Treatment_sub_network \%>\%
   network_visual()
 
