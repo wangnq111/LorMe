@@ -411,7 +411,7 @@ LorMe_pipeline=function(taxobj,step="all"){
       }  else {
         nrep=opt$all_net$n
       }
-      if (nrep>as.numeric(table(treat_stat)[i])){
+      if (nrep>as.numeric(length(treat_stat))){
         nrep=length(treat_stat)
       }
       combine_network_results=safe_run(network_analysis(taxobj ,A_level,
