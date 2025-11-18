@@ -66,7 +66,7 @@ sub_tax_summary=function(taxobj,...,specificnum=NULL,taxnum=NULL){
       suppressMessages()
     sink()
     file.remove("./sub_tax_summary_temp.txt")
-    temptax_summary$Base=temptax_summary$Base_percent %T>%
+    methods::slot(temptax_summary,"data")$Base=temptax_summary$Base_percent %T>%
       {.[,-1]=sweep(.[,-1],colSums(sub_obj$Base[,-1])%>%as.numeric,"*",MARGIN=2)%>% round(.,0)}
     if("standard" %in% temptax_summary$configuration$outputtax){
       outputtax=c("Domain","Phylum","Class","Order","Family","Genus","Species")
@@ -76,16 +76,22 @@ sub_tax_summary=function(taxobj,...,specificnum=NULL,taxnum=NULL){
     for(i in outputtax){
       add=eval(parse(text=paste0("temptax_summary","$",i,"_percent"))) %T>%
         {.[,-1]=sweep(.[,-1],colSums(sub_obj$Base[,-1])%>%as.numeric,"*",MARGIN=2)%>% round(.,0)}
-      temptax_summary=c(temptax_summary,list(add))
-      names(temptax_summary)[length(names(temptax_summary))]=i
+      methods::slot(temptax_summary,"data")=c(methods::slot(temptax_summary,"data"),list(add))
+      names(methods::slot(temptax_summary,"data"))[length(names( methods::slot(temptax_summary,"data")))]=i
     }
-    temptax_summary$configuration=taxobj$configuration
-    temptax_summary$groupfile=groupfiletemp
-    sub_obj=temptax_summary[names(temptax_summary) %in% names(sub_obj)]
+    methods::slot(temptax_summary,"configuration")=taxobj$configuration
+    methods::slot(temptax_summary,"groupfile")=groupfiletemp
+    sub_obj=methods::slot(temptax_summary,"data")[names(methods::slot(temptax_summary,"data")) %in% names(sub_obj)]
     sub_obj$configuration=taxobj$configuration
+    sub_obj$groupfile=groupfiletemp
     rm(temptax_summary)
   }
 
+  output_obj <- methods::new("LorMe",
+                             groupfile = sub_obj$groupfile,
+                             data      = sub_obj[setdiff(names(sub_obj), c("groupfile", "parameters","configuration"))],
+                             configuration    = sub_obj$configuration)
+
   sink()%>% suppressWarnings()
-  return(sub_obj)
+  return(output_obj)
 }
