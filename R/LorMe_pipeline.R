@@ -115,7 +115,7 @@
 #'
 #' Three_group_analysis <- LorMe_pipeline(Three_group)
 #' }
-LorMe_pipeline=function(taxobj,step="all"){
+LorMe_pipeline1=function(taxobj,step="all"){
   if(length(which(step %in%  c("all", "profile", "diff", "sub_net", "all_net")==TRUE))!=length(step)){
     stop("Invalid characters in parameter 'step', please choose among  c('all', 'profile', 'diff', 'sub_net', 'all_net')")
     return()
@@ -363,7 +363,10 @@ LorMe_pipeline=function(taxobj,step="all"){
         }else{
           if(is.null(opt$sub_net$n)){
             nrep=as.numeric(table(treat_stat)[i])
-          }  else if (opt$sub_net$n>as.numeric(table(treat_stat)[i])){
+          }  else {
+            nrep= opt$sub_net$n
+          }
+          if (opt$sub_net$n>as.numeric(table(treat_stat)[i])){
             nrep=as.numeric(table(treat_stat)[i])
           }
           message("")
@@ -378,7 +381,7 @@ LorMe_pipeline=function(taxobj,step="all"){
           if(is.null(sub_network_temp)){fail_list=c(fail_list,paste0("Treatment ",i,"-sub network"))}
           sub_network_results=c(sub_network_results,list(sub_network_temp))
           if(is.null(sub_network_results[[1]])){
-            warning("Return NULL in running sub network for treatment",i)
+            warning("Return NULL in running sub network for treatment '",i,"'")
           }else{
             names(sub_network_results)[length(sub_network_results)]=paste0(i,"_sub_network")
           }
@@ -402,7 +405,10 @@ LorMe_pipeline=function(taxobj,step="all"){
     if(run_comb_net==TRUE){
       if(is.null(opt$all_net$n)){
         nrep=round(0.5*length(treat_stat),0)
-      }  else if (opt$all_net$n>as.numeric(length(treat_stat)[i])){
+      }  else {
+        nrep=opt$all_net$n
+      }
+      if (opt$all_net$n>as.numeric(table(treat_stat)[i])){
         nrep=length(treat_stat)
       }
       combine_network_results=safe_run(network_analysis(taxobj ,A_level,
@@ -427,4 +433,3 @@ LorMe_pipeline=function(taxobj,step="all"){
   }
   return(all_results)
 }
-
