@@ -4,7 +4,7 @@ Version](https://www.r-pkg.org/badges/version/LorMe)](https://cran.r-project.org
 [![Downloads from the RStudio CRAN
 mirror](https://cranlogs.r-pkg.org/badges/LorMe)](https://cran.r-project.org/package=LorMe)
 <!-- badges: end -->
-# LorMe package for R：Lightening One-code Resolving Microbial Ecology Solution
+# Lightweight One-Line Resolving Microbial Ecology Program
 LorMe Provides a robust collection of functions tailored for microbial ecology analysis, encompassing both data analysis and visualization. It introduces an encapsulation feature that streamlines the process into a summary object. With the initial configuration of this summary object, users can execute a wide range of analyses with a single line of code, requiring only two essential parameters for setup. The package delivers comprehensive outputs including analysis objects, statistical outcomes, and visualization-ready data, enhancing the efficiency of research workflows. Designed with user-friendliness in mind, it caters to both novices and seasoned researchers, offering an intuitive interface coupled with adaptable customization options to meet diverse analytical needs. LorMe keeps updating and maintanence. 
 
 <img src="./man/figures/functions.png" width="100%" style="display: block; margin: auto;" />
@@ -67,4 +67,5 @@ Painted differential taxon
 
 #### Module composition pie chart
 <img src="./man/figures/README_Modulepie.png" width="60%" style="display: block; margin: auto;" />
+
 
