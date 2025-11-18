@@ -369,7 +369,7 @@ LorMe_pipeline=function(taxobj,step="all"){
           }  else {
             nrep= opt$sub_net$n
           }
-          if (opt$sub_net$n>as.numeric(table(treat_stat)[i])){
+          if (nrep>as.numeric(table(treat_stat)[i])){
             nrep=as.numeric(table(treat_stat)[i])
           }
           message("")
@@ -411,7 +411,7 @@ LorMe_pipeline=function(taxobj,step="all"){
       }  else {
         nrep=opt$all_net$n
       }
-      if (opt$all_net$n>as.numeric(table(treat_stat)[i])){
+      if (nrep>as.numeric(table(treat_stat)[i])){
         nrep=length(treat_stat)
       }
       combine_network_results=safe_run(network_analysis(taxobj ,A_level,

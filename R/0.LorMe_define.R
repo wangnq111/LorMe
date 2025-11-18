@@ -1,8 +1,6 @@
 #' @importFrom methods setOldClass setClassUnion setClass setMethod getMethod "slot" "slotNames"
 NULL
 
-#（移除原来检测 baseenv() 中 DollarNames 的那段无效代码）
-# 注意：R 的补全机制使用的是 utils::.DollarNames；我们在 .onLoad 注册 S3 方法以确保补全生效。
 
 if (requireNamespace("ape", quietly = TRUE)) {
 
