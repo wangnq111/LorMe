@@ -119,7 +119,7 @@ compare_plot=function(inputframe,treat_location,value_location,aes_col=NULL,poin
   bar=ggplot(input_mean_frame,aes(x=as.factor(Treatment_Name),y=Mean))+
     scale_y_continuous(expand = c(0,0),limits = c(0,ylimitmax))+
     labs(x='',fill='',y=ylab_text)+
-    geom_bar(stat = 'identity',size=0.2,width=0.5,aes(fill=as.factor(Treatment_Name)),color='#000000',alpha=0.8)+
+    geom_bar(stat = 'identity',linewidth=0.2,width=0.5,aes(fill=as.factor(Treatment_Name)),color='#000000',alpha=0.8)+
     geom_errorbar(aes(ymin=Mean-Sd,ymax=Mean+Sd),size=0.2,width=0.2)
   if(ylimitmin<0){
     bar=bar+
@@ -215,7 +215,7 @@ compare_plot=function(inputframe,treat_location,value_location,aes_col=NULL,poin
     barall=ggplot(input_mean_frame,aes(x=as.factor(Treatment_Name),y=Mean,fill=as.factor(input_mean_frame[,ncol(input_mean_frame)])))+
       scale_y_continuous(expand = c(0,0),limits = c(0,ylimitmax))+
       labs(x='',fill='',y=ylab_text)+
-      geom_bar(stat = 'identity',position = position_dodge(width = 0.5),size=0.2,width=0.5,color='#000000',alpha=0.8)+
+      geom_bar(stat = 'identity',position = position_dodge(width = 0.5),linewidth=0.2,width=0.5,color='#000000',alpha=0.8)+
       geom_errorbar(position = position_dodge(0.5),aes(ymin=Mean-Sd,ymax=Mean+Sd),size=0.2,width=0.2)+
       geom_text(data=letters,aes(x=as.factor(letters[,1]),y=letterp,label=letters[,'Letters'],group=as.factor(letters[,2])),size=6,position=position_dodge(0.5))+
       theme_zg()

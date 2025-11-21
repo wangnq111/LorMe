@@ -104,6 +104,9 @@
 #' ## Reset to default options
 #' LorMe_defaults()
 #'
+#' ## Get options for re-analysis
+#' options(LorMe = Two_group_analysis$Analysis_option) # Then try the previous analysis command
+#'
 #' ## Example: three-group comparison with custom options
 #' LorMe_options(
 #'   global = list(
@@ -434,5 +437,7 @@ LorMe_pipeline=function(taxobj,step="all"){
       message(paste0("### ",fail," analysis"))
     }
   }
+  all_results=c(all_results,list(opt))
+  names(all_results)[length(all_results)]="Analysis_option"
   return(all_results)
 }

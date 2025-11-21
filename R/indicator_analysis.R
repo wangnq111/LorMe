@@ -77,7 +77,7 @@ indicator_analysis=function(taxobj,taxlevel,func="r.g",reads=FALSE){
     indicator_results_anno$tag[indicator_results_anno[,paste0("s.",treat_order[1])]==0&indicator_results_anno[,paste0("s.",treat_order[2])]==1&indicator_results_anno[,paste0("s.",treat_order[3])]==1&indicator_results_anno$p.value<0.05]=paste0(treat_order[2],"_",treat_order[3])
     }else{
       for(i in unique(condition)){
-        indicator_results_anno$tag[indicator_results_anno[,paste0("s.",i)]==1&rowSums(indicator_results_anno[,1:length(unique(condition))]==1)&indicator_results_anno$p.value<0.05]=i
+        indicator_results_anno$tag[indicator_results_anno[,paste0("s.",i)]==1&rowSums(indicator_results_anno[,1:length(unique(condition))]==1)==1&indicator_results_anno$p.value<0.05]=i
       }
     }
   colnames(indicator_results_anno)[which(colnames(indicator_results_anno)=="p.value")]="padj"
