@@ -5,9 +5,33 @@ Version](https://www.r-pkg.org/badges/version/LorMe)](https://cran.r-project.org
 mirror](https://cranlogs.r-pkg.org/badges/LorMe)](https://cran.r-project.org/package=LorMe)
 <!-- badges: end -->
 # Lightweight One-Line Resolving Microbial Ecology Program
-LorMe Provides a robust collection of functions tailored for microbial ecology analysis, encompassing both data analysis and visualization. It introduces an encapsulation feature that streamlines the process into a summary object. With the initial configuration of this summary object, users can execute a wide range of analyses with a single line of code, requiring only two essential parameters for setup. The package delivers comprehensive outputs including analysis objects, statistical outcomes, and visualization-ready data, enhancing the efficiency of research workflows. Designed with user-friendliness in mind, it caters to both novices and seasoned researchers, offering an intuitive interface coupled with adaptable customization options to meet diverse analytical needs. LorMe keeps updating and maintanence. 
+LorMe: A Lightweight, Modular, and Extensible Microbiome Analysis Workflow
 
+LorMe is an R package designed to provide a streamlined, reproducible, and modular workflow for microbiome data analysis. Centered on a unified object structure and a global parameter system, LorMe integrates data preprocessing, taxonomic summarization, differential analysis, ecological network construction, and visualization into a coherent and user-friendly pipeline.
+
+LorMe is built around three core principles: simplicity, consistency, and extensibility. Users start with only three basic inputs—metadata, feature table, and taxonomy table—and LorMe automatically encapsulates them into a standardized analysis-ready object. The package also supports seamless conversion from popular formats such as phyloseq and microeco, ensuring compatibility with existing workflows.
+
+**Key Features**
+
+**Unified object system**: All analyses operate on a standardized LorMe object, ensuring consistent structure and reproducible workflows.
+
+**Global parameter management**: A centralized configuration system controls all analysis modules, reducing repeated parameter settings.
+
+**One-line pipeline execution**: Run complete analyses—including diversity, composition, differential taxa, network, and meta-network—in a single command.
+
+**Modular analytical components**: Each module (alpha/beta diversity, DESeq2, indicator analysis, composition profiling, networks) can be used independently or within pipelines.
+
+**Built-in publication-ready visualizations**: High-quality plotting templates with customizable color schemes and layouts.
+
+**Seamless compatibility**: Direct import from phyloseq or microeco objects without manual preprocessing.
+
+With these strengths, LorMe provides an efficient, standardized, and intuitive framework for microbiome data analysis and figure generation. 
+
+**Architecture of LorMe package**
 <img src="./man/figures/functions.png" width="100%" style="display: block; margin: auto;" />
+**Workflow of LorMe package**
+<img src="./man/figures/workflow.png" width="100%" style="display: block; margin: auto;" />
+
 
 # Installation
 Standard version from CRAN(V2.0.0)
@@ -31,41 +55,9 @@ Chinese illustration available at 🏮 [LorMe中文版说明书](https://rural-d
 2434066068@qq.com
 
 ## Visualization
+**Representitive visualizations**
+<img src="./man/figures/rep.png" width="100%" style="display: block; margin: auto;" />
 
-### Community Feature
-#### Alpha diversity
-<img src="./man/figures/README_Alpha.png" width="60%" style="display: block; margin: auto;" />
 
-#### Community Structure
-Support three styles: ellipse (as in the below),stick and polygon
-<img src="./man/figures/README_structure.png" width="60%" style="display: block; margin: auto;" />
-
-#### Community Composition
-Support three styles: Bar plot (as in the below), Area plot and alluvial plot
-<img src="./man/figures/README_community.png" width="60%" style="display: block; margin: auto;" />
-
-### Differential Analysis
-#### Differential Bar
-<img src="./man/figures/README_Diff.png" width="70%" style="display: block; margin: auto;" />
-
-#### Volcano Plot
-Support Fold change-FDR plot and Mean-Fold change plot
-<img src="./man/figures/README_volcano.png" width="60%" style="display: block; margin: auto;" />
-
-#### Manhatton Plot
-Support both classical style and circular style
-<img src="./man/figures/README_Manhattan.png" width="100%" style="display: block; margin: auto;" />
-
-### Network analysis
-#### Classical network
-Painted top five largest modules
-<img src="./man/figures/README_network.png" width="60%" style="display: block; margin: auto;" />
-
-#### Meta network
-Painted differential taxon
-<img src="./man/figures/README_Metanetwork.png" width="60%" style="display: block; margin: auto;" />
-
-#### Module composition pie chart
-<img src="./man/figures/README_Modulepie.png" width="60%" style="display: block; margin: auto;" />
 
 
