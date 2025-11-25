@@ -5,8 +5,6 @@ Version](https://www.r-pkg.org/badges/version/LorMe)](https://cran.r-project.org
 mirror](https://cranlogs.r-pkg.org/badges/LorMe)](https://cran.r-project.org/package=LorMe)
 <!-- badges: end -->
 # Lightweight One-Line Resolving Microbial Ecology Program
-LorMe: A Lightweight, Modular, and Extensible Microbiome Analysis Workflow
-
 LorMe is an R package designed to provide a streamlined, reproducible, and modular workflow for microbiome data analysis. Centered on a unified object structure and a global parameter system, LorMe integrates data preprocessing, taxonomic summarization, differential analysis, ecological network construction, and visualization into a coherent and user-friendly pipeline.
 
 LorMe is built around three core principles: simplicity, consistency, and extensibility. Users start with only three basic inputs—metadata, feature table, and taxonomy table—and LorMe automatically encapsulates them into a standardized analysis-ready object. The package also supports seamless conversion from popular formats such as phyloseq and microeco, ensuring compatibility with existing workflows.
@@ -57,6 +55,7 @@ Chinese illustration available at 🏮 [LorMe中文版说明书](https://rural-d
 ## Visualization
 **Representitive visualizations**
 <img src="./man/figures/rep.png" width="100%" style="display: block; margin: auto;" />
+
 
 
 
