@@ -1,6 +1,6 @@
 Package: LorMe
 Title: Lightweight One-Line Resolving Microbial Ecology Program
-Version: 2.0.1
+Version: 2.0.2
 Authors@R: 
     c(person(given = "Ningqi",
            family = "Wang",
