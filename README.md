@@ -30,7 +30,7 @@ LorMe is built around three core principles: simplicity, consistency, and extens
 With these strengths, LorMe provides an efficient, standardized, and intuitive framework for microbiome data analysis and figure generation. 
 
 **Architecture of LorMe package**
-<img src="./man/figures/functions.png" width="100%" style="display: block; margin: auto;" />
+<img src="./man/figures/arc.png" width="100%" style="display: block; margin: auto;" />
 **Workflow of LorMe package**
 <img src="./man/figures/workflow.png" width="100%" style="display: block; margin: auto;" />
 
@@ -59,6 +59,7 @@ Chinese illustration available at 🏮 [LorMe中文版说明书](https://rural-d
 ## Visualization
 **Representitive visualizations**
 <img src="./man/figures/rep.png" width="100%" style="display: block; margin: auto;" />
+
 
 
 
