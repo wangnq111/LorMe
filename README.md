@@ -36,18 +36,18 @@ With these strengths, LorMe provides an efficient, standardized, and intuitive f
 
 
 # Installation
-Standard version from CRAN(V2.0.0)
+Standard version from CRAN(V2.0.2)
 ```{R}
 install.packages("LorMe")
 ```
-Development version from GitHub (V2.0.0) :stuck_out_tongue_closed_eyes:
+Development version from GitHub (V2.0.2) :stuck_out_tongue_closed_eyes:
 ```{R}
 if (!require(remotes)) install.packages("remotes")
 remotes::install_github("wangnq111/LorMe")
 ```
 LorMe will only update the major and minor versions on CRAN, but will update each patch version on GitHub. 
 The following are the update logs that differ from the CRAN version:
-17/11/25 LorMe in CRAN and github both updated to version 2.0.0
+12/01/26 LorMe in CRAN and github both updated to version 2.0.2
 # Illustration
 [Getting Started](https://wangnq111.github.io/Gettingstarted.html)
 ## Chinese version
@@ -59,6 +59,7 @@ Chinese illustration available at 🏮 [LorMe中文版说明书](https://rural-d
 ## Visualization
 **Representitive visualizations**
 <img src="./man/figures/rep.png" width="100%" style="display: block; margin: auto;" />
+
 
 
 
