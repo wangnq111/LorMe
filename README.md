@@ -9,7 +9,7 @@ LorMe is an R package designed to provide a streamlined, reproducible, and modul
 
 LorMe is built around three core principles: simplicity, consistency, and extensibility. Users start with only three basic inputs—metadata, feature table, and taxonomy table—and LorMe automatically encapsulates them into a standardized analysis-ready object. The package also supports seamless conversion from popular formats such as phyloseq and microeco, ensuring compatibility with existing workflows.
 
-**Citation**: Wang, N., Zhang, Y., Yang, X., Gao, Y., Xia, H., Xu, Y., Shen, Q., Jousset, A., Jiang, G., and Wei, Z. (2025). LorMe: a streamlined and interoperable R framework for end-to-end microbiome analysis. bioRxiv, 2025.2011.2026.690896.
+**Citation**: Ningqi Wang, Yaozhong Zhang, Xinrui Yangon, et al. LorMe: a streamlined and interoperable R framework for end-to-end microbiome analysis, Microbiome and One Health. 2026;1:100003. https://doi.org/10.1016/j.micoh.2026.100003
 
 
 
