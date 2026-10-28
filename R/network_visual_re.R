@@ -29,11 +29,12 @@ network_visual_re=function(network_visual_obj,module_paint=FALSE,module_num=NULL
       return(NULL)
     }
     show_list=t_mods_list_cs[names(t_mods_list_cs) %in% module_num]
+    show_list=show_list[as.character(module_num)]
     t_cols <- color_scheme(module_palette,length(module_num),show = FALSE)
     oldpar <- par(no.readonly = TRUE)
     on.exit(par(oldpar))
     par(mfrow = c(1,1), mar=c(2,2,2,4),pty = "m")
-    plot(network_visual_obj$configured_igraph_object,vertex.label=NA,vertex.size=network_visual_obj$parameters$vertice_size,layout=network_visual_obj$vertices_coordinates,vertex.shape="circle",
+    plot(network_visual_obj$configured_igraph_object,vertex.label=NA,vertex.size=vertex.size,layout=network_visual_obj$vertices_coordinates,vertex.shape=vertex.shape,
          mark.groups=show_list,mark.col=t_cols, mark.border="gray")
     legend_text=paste0("Module #",module_num)
     #plot.new()

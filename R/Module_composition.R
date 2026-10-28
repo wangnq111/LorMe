@@ -79,7 +79,7 @@
 #'     No.module = 2,
 #'     taxlevel = "Phylum",
 #'     mode = "select",
-#'     select_tax = c("Proteobacteria", "Actinobacteria")
+#'     select_tax = c("p__Proteobacteria", "p__Actinobacteria")
 #'   )
 #'   print(module_results$Module2$Pie_plot_Module2)
 #'
@@ -115,14 +115,24 @@ Module_composition = function(
     if(is.null(rmprefix)==FALSE){
       input_table[,taxlevel]=str_replace(input_table[,taxlevel],rmprefix,"")
     }
+    tax_freq_all = input_table[, taxlevel] %>%
+      table() %>% sort(decreasing = TRUE) %>% as.data.frame()
     for(i in No.module){
       tax_freq = input_table[, taxlevel]
       tax_freq=tax_freq[input_table$No.module == i] %>%
         table() %>% sort(decreasing = TRUE) %>% as.data.frame()
+      if(nrow(tax_freq)==1){
+        tax_freq=data.frame(.=colnames(tax_freq),Freq=tax_freq$.)
+      }
       colnames(tax_freq)[1] = "Tax"
       tax_freq["Tax"]=as.character(tax_freq$Tax)
       if (mode == "all") {
         tax_freq_summary = tax_freq
+        kept_tax=table(input_table[,taxlevel]) %>% sort() %>% names()
+        if(length(kept_tax)>14){
+          kept_tax=tail(kept_tax,14)
+        }
+        tax_freq$Tax[!(tax_freq["Tax"]%>% as.matrix() %>% as.character()) %in% kept_tax] ="Others"
       }else if(mode=="most"){
         if(is.null(top_n)){
           warning("'top_n' not assigned!")
@@ -144,7 +154,17 @@ Module_composition = function(
         warning("Invalid 'mode', please choose among 'all','most' and 'select'")
         return(NULL)
       }
-      tax_freq_summary$Tax=factor(tax_freq_summary$Tax,levels=c(tax_freq_summary$Tax[which(tax_freq_summary$Tax!="Others")],"Others"))
+      if(mode!="select"){
+        tax_freq_summary$Tax=factor(tax_freq_summary$Tax,levels=c(kept_tax,"Others"))
+      }else{
+        if("Others" %in% select_tax){
+          tax_freq_summary$Tax=factor(tax_freq_summary$Tax,levels=select_tax)
+        }else{
+          tax_freq_summary$Tax=factor(tax_freq_summary$Tax,levels=c(select_tax,"Others"))
+        }
+
+      }
+
       if(mode=="all"){
         tax_length=unique(input_table$Phylum) %>% length()
       }else if(mode=="most"){

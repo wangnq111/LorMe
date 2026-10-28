@@ -21,7 +21,7 @@
 #'
 #' @importFrom ggplot2 ggplot aes labs facet_wrap geom_hline geom_vline geom_point stat_ellipse geom_segment geom_polygon guides scale_color_manual
 #' @importFrom dplyr left_join
-#' @importFrom vegan adonis2
+#' @importFrom vegan adonis2 vegdist betadisper permutest
 #' @importFrom magrittr %>%
 #' @note
 #' 1. Do not use NMDS when warning: In metaMDS(t(inputframe)) :stress is (nearly) zero: you may have insufficient data
@@ -51,6 +51,8 @@
 #'  ######Done##
 #'  #check PERMANOVA results
 #'  community_structure$PERMANOVA_statistics
+#'  #check PERMDISP results
+#'  community_structure$PERMDISP_statistics
 #'
 #'  #extract plot
 #'  community_structure$PCA_Plot
@@ -75,6 +77,7 @@
 #'  set.seed(999)
 #'  community_structure<- structure_plot(taxobj = Facet_group,taxlevel = "Genus",diagram = "stick")
 #'  community_structure$PERMANOVA_statistics
+#'  community_structure$PERMDISP_statistics
 #'  community_structure$PCA_Plot
 #'  community_structure$PCoA_Plot
 #'  community_structure$NMDS_Plot
@@ -102,14 +105,39 @@ structure_plot=function(taxobj,taxlevel,ptsize=2,diagram=NULL,ellipse.level=0.85
     adonis_results=adonis2(t(inputframe[,-1])~groupframe[,treat_location])
     rownames(adonis_results)[1]=colnames(groupframe)[treat_location]
     attr(adonis_results, "heading")[2]='adonis2'
+    betadisp_results1=vegdist(t(inputframe[,-1]), method = "bray") %>%
+      betadisper(
+        group = groupframe[,treat_location],
+        type = "median"
+      ) %>%
+      permutest( permutations = 999)
+    betadisp_results=list(betadisp_results1)
+    names(betadisp_results)[1]="PERMDISP_Treatment"
   }else{
     adonis_results=adonis2(t(inputframe[,-1])~groupframe[,treat_location]*groupframe[,facet_location],by = "terms")
     rownames(adonis_results)[1:3]=c(colnames(groupframe)[treat_location],
                                     colnames(groupframe)[facet_location],
                                     paste0(colnames(groupframe)[treat_location],"*",colnames(groupframe)[facet_location]))
     attr(adonis_results, "heading")[2]='adonis2'
+
+    dist_frame=vegdist(t(inputframe[,-1]), method = "bray")
+    betadisp_results1=
+      betadisper(dist_frame,
+        group = groupframe[,treat_location],
+        type = "median"
+      ) %>%
+      permutest( permutations = 999)
+    betadisp_results2=
+      betadisper(dist_frame,
+                 group = groupframe[,facet_location],
+                 type = "median"
+      ) %>%
+      permutest( permutations = 999)
+    betadisp_results=c(list(betadisp_results1),list(betadisp_results2))
+    names(betadisp_results)[1:2]=c("PERMDISP_Treatment","PERMDISP_Facet")
   }
   message("###PERMANOVA has done###")
+  message("###PERMDISP has done###")
   ##PCA##
   PCA=Dimension_reduction(input,groupframe,1)
   data.pca=PCA$data.pca
@@ -250,11 +278,13 @@ structure_plot=function(taxobj,taxlevel,ptsize=2,diagram=NULL,ellipse.level=0.85
   message("###NMDS has done###")
   output=c(output,list(adonis_results))
   names(output)[10]="PERMANOVA_statistics"
-  ##list##
+  output=c(output,list(betadisp_results))
+  names(output)[11]="PERMDISP_statistics"
   ##list##
   message("##Output list##")
-  message("#PERMANOVA#")
+  message("#Statistics#")
   message("PERMANOVA:named as('PERMANOVA_statistics')#")
+  message("PERMDISP:named as('PERMDISP_statistics')#")
   message("#Plot#")
   message("PCAplot:named as('PCA_Plot')(1/3)")
   message("PCoAplot:named as('PCoA_Plot')(2/3)")

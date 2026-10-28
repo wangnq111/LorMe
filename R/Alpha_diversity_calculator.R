@@ -48,6 +48,9 @@ Alpha_diversity_calculator<- function(taxobj,taxlevel,prefix=""){
   evenness<-shannon/log(richness);simpson<-vegan::diversity(matrix,"simpson") ##calculate alpha-diversity##
   matrix=round(matrix,0)
   chao<-estimateR(matrix)[2,];ACE<-estimateR(matrix)[4,]    ##calculate alpha-diversity##
+  if(NaN %in% ACE){
+    ACE[is.nan(ACE)]=0
+  }
   alpha.frame<-data.frame(shannon,richness,evenness,simpson,chao, ACE) %T>%
     {colnames(.)<-c(paste0(prefix,"Shannon"),paste0(prefix,"Species number"),paste0(prefix,"Evenness"),paste0(prefix,"Simpson"),paste0(prefix,"Chao"),paste0(prefix,"ACE"))}
   alpha.frame<-combine_and_translate(inputframe = alpha.frame,groupframe = groupframe,itemname = "Indexname",indexname = "Indexvalue",inputtype = FALSE)
@@ -72,5 +75,9 @@ Alpha_diversity_calculator<- function(taxobj,taxlevel,prefix=""){
   }
   outlist=c(list(alpha.frame),list(outplot))
   names(outlist)=c("alphaframe","plotlist")
+  if(0 %in% ACE){
+    nan_item=ACE[ACE==0]
+    message=paste0("Sample ",names(nan_item)," were esitimated NaN for ACE\n")
+    warning(message)}
   return(outlist)
 }
