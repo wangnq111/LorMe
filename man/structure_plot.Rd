@@ -68,6 +68,8 @@ community_structure<- structure_plot(taxobj = Two_group,taxlevel = "Base")
  ######Done##
  #check PERMANOVA results
  community_structure$PERMANOVA_statistics
+ #check PERMDISP results
+ community_structure$PERMDISP_statistics
 
  #extract plot
  community_structure$PCA_Plot
@@ -92,6 +94,7 @@ community_structure<- structure_plot(taxobj = Two_group,taxlevel = "Base")
  set.seed(999)
  community_structure<- structure_plot(taxobj = Facet_group,taxlevel = "Genus",diagram = "stick")
  community_structure$PERMANOVA_statistics
+ community_structure$PERMDISP_statistics
  community_structure$PCA_Plot
  community_structure$PCoA_Plot
  community_structure$NMDS_Plot

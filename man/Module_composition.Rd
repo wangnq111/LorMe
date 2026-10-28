@@ -99,7 +99,7 @@ providing a visual and data summary based on taxonomic levels.
     No.module = 2,
     taxlevel = "Phylum",
     mode = "select",
-    select_tax = c("Proteobacteria", "Actinobacteria")
+    select_tax = c("p__Proteobacteria", "p__Actinobacteria")
   )
   print(module_results$Module2$Pie_plot_Module2)
 
