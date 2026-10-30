@@ -36,11 +36,11 @@ With these strengths, LorMe provides an efficient, standardized, and intuitive f
 
 
 # Installation
-Standard version from CRAN(V2.0.2)
+Standard version from CRAN(V2.0.3)
 ```{R}
 install.packages("LorMe")
 ```
-Development version from GitHub (V2.0.2) :stuck_out_tongue_closed_eyes:
+Development version from GitHub (V2.0.3) :stuck_out_tongue_closed_eyes:
 ```{R}
 if (!require(remotes)) install.packages("remotes")
 remotes::install_github("wangnq111/LorMe")
